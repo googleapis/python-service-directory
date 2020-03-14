@@ -127,13 +127,6 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
     @staticmethod
-    def namespace_path(project: str, location: str, namespace: str) -> str:
-        """Return a fully-qualified namespace string."""
-        return "projects/{project}/locations/{location}/namespaces/{namespace}".format(
-            project=project, location=location, namespace=namespace
-        )
-
-    @staticmethod
     def endpoint_path(
         project: str, location: str, namespace: str, service: str, endpoint: str
     ) -> str:
@@ -144,6 +137,13 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
             namespace=namespace,
             service=service,
             endpoint=endpoint,
+        )
+
+    @staticmethod
+    def namespace_path(project: str, location: str, namespace: str) -> str:
+        """Return a fully-qualified namespace string."""
+        return "projects/{project}/locations/{location}/namespaces/{namespace}".format(
+            project=project, location=location, namespace=namespace
         )
 
     def __init__(

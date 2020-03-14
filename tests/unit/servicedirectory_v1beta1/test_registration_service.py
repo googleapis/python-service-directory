@@ -1564,18 +1564,6 @@ def test_service_path():
     assert expected == actual
 
 
-def test_namespace_path():
-    project = "squid"
-    location = "clam"
-    namespace = "whelk"
-
-    expected = "projects/{project}/locations/{location}/namespaces/{namespace}".format(
-        project=project, location=location, namespace=namespace
-    )
-    actual = RegistrationServiceClient.namespace_path(project, location, namespace)
-    assert expected == actual
-
-
 def test_endpoint_path():
     project = "squid"
     location = "clam"
@@ -1593,4 +1581,16 @@ def test_endpoint_path():
     actual = RegistrationServiceClient.endpoint_path(
         project, location, namespace, service, endpoint
     )
+    assert expected == actual
+
+
+def test_namespace_path():
+    project = "squid"
+    location = "clam"
+    namespace = "whelk"
+
+    expected = "projects/{project}/locations/{location}/namespaces/{namespace}".format(
+        project=project, location=location, namespace=namespace
+    )
+    actual = RegistrationServiceClient.namespace_path(project, location, namespace)
     assert expected == actual
