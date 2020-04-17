@@ -250,7 +250,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
                 )
             self._transport = transport
         elif client_options is None or (
-            client_options.api_endpoint == None
+            client_options.api_endpoint is None
             and client_options.client_cert_source is None
         ):
             # Don't trigger mTLS if we get an empty ClientOptions.

@@ -45,7 +45,7 @@ def test__get_default_mtls_endpoint():
     sandbox_mtls_endpoint = "example.mtls.sandbox.googleapis.com"
     non_googleapi = "api.example.com"
 
-    assert LookupServiceClient._get_default_mtls_endpoint(None) == None
+    assert LookupServiceClient._get_default_mtls_endpoint(None) is None
     assert (
         LookupServiceClient._get_default_mtls_endpoint(api_endpoint)
         == api_mtls_endpoint
