@@ -1728,32 +1728,24 @@ def test_registration_service_grpc_transport_channel_mtls_with_adc(
         assert transport.grpc_channel == mock_grpc_channel
 
 
-def test_service_path():
+def test_namespace_path():
     project = "squid"
     location = "clam"
     namespace = "whelk"
-    service = "octopus"
 
-    expected = "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
-        project=project, location=location, namespace=namespace, service=service
+    expected = "projects/{project}/locations/{location}/namespaces/{namespace}".format(
+        project=project, location=location, namespace=namespace
     )
-    actual = RegistrationServiceClient.service_path(
-        project, location, namespace, service
-    )
+    actual = RegistrationServiceClient.namespace_path(project, location, namespace)
     assert expected == actual
 
 
-def test_parse_service_path():
-    expected = {
-        "project": "oyster",
-        "location": "nudibranch",
-        "namespace": "cuttlefish",
-        "service": "mussel",
-    }
-    path = RegistrationServiceClient.service_path(**expected)
+def test_parse_namespace_path():
+    expected = {"project": "octopus", "location": "oyster", "namespace": "nudibranch"}
+    path = RegistrationServiceClient.namespace_path(**expected)
 
     # Check that the path construction is reversible.
-    actual = RegistrationServiceClient.parse_service_path(path)
+    actual = RegistrationServiceClient.parse_namespace_path(path)
     assert expected == actual
 
 
@@ -1792,22 +1784,30 @@ def test_parse_endpoint_path():
     assert expected == actual
 
 
-def test_namespace_path():
+def test_service_path():
     project = "squid"
     location = "clam"
     namespace = "whelk"
+    service = "octopus"
 
-    expected = "projects/{project}/locations/{location}/namespaces/{namespace}".format(
-        project=project, location=location, namespace=namespace
+    expected = "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
+        project=project, location=location, namespace=namespace, service=service
     )
-    actual = RegistrationServiceClient.namespace_path(project, location, namespace)
+    actual = RegistrationServiceClient.service_path(
+        project, location, namespace, service
+    )
     assert expected == actual
 
 
-def test_parse_namespace_path():
-    expected = {"project": "octopus", "location": "oyster", "namespace": "nudibranch"}
-    path = RegistrationServiceClient.namespace_path(**expected)
+def test_parse_service_path():
+    expected = {
+        "project": "oyster",
+        "location": "nudibranch",
+        "namespace": "cuttlefish",
+        "service": "mussel",
+    }
+    path = RegistrationServiceClient.service_path(**expected)
 
     # Check that the path construction is reversible.
-    actual = RegistrationServiceClient.parse_namespace_path(path)
+    actual = RegistrationServiceClient.parse_service_path(path)
     assert expected == actual
