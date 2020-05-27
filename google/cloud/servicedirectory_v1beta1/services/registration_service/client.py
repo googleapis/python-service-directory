@@ -151,6 +151,28 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
     from_service_account_json = from_service_account_file
 
     @staticmethod
+    def endpoint_path(
+        project: str, location: str, namespace: str, service: str, endpoint: str
+    ) -> str:
+        """Return a fully-qualified endpoint string."""
+        return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}/endpoints/{endpoint}".format(
+            project=project,
+            location=location,
+            namespace=namespace,
+            service=service,
+            endpoint=endpoint,
+        )
+
+    @staticmethod
+    def parse_endpoint_path(path: str) -> Dict[str, str]:
+        """Parse a endpoint path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)/services/(?P<service>.+?)/endpoints/(?P<endpoint>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
     def service_path(project: str, location: str, namespace: str, service: str) -> str:
         """Return a fully-qualified service string."""
         return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
@@ -178,28 +200,6 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         """Parse a namespace path into its component segments."""
         m = re.match(
             r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)$",
-            path,
-        )
-        return m.groupdict() if m else {}
-
-    @staticmethod
-    def endpoint_path(
-        project: str, location: str, namespace: str, service: str, endpoint: str
-    ) -> str:
-        """Return a fully-qualified endpoint string."""
-        return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}/endpoints/{endpoint}".format(
-            project=project,
-            location=location,
-            namespace=namespace,
-            service=service,
-            endpoint=endpoint,
-        )
-
-    @staticmethod
-    def parse_endpoint_path(path: str) -> Dict[str, str]:
-        """Parse a endpoint path into its component segments."""
-        m = re.match(
-            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)/services/(?P<service>.+?)/endpoints/(?P<endpoint>.+?)$",
             path,
         )
         return m.groupdict() if m else {}
