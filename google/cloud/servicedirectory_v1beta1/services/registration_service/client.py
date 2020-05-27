@@ -173,22 +173,6 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
-    def namespace_path(project: str, location: str, namespace: str) -> str:
-        """Return a fully-qualified namespace string."""
-        return "projects/{project}/locations/{location}/namespaces/{namespace}".format(
-            project=project, location=location, namespace=namespace
-        )
-
-    @staticmethod
-    def parse_namespace_path(path: str) -> Dict[str, str]:
-        """Parse a namespace path into its component segments."""
-        m = re.match(
-            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)$",
-            path,
-        )
-        return m.groupdict() if m else {}
-
-    @staticmethod
     def service_path(project: str, location: str, namespace: str, service: str) -> str:
         """Return a fully-qualified service string."""
         return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
@@ -200,6 +184,22 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         """Parse a service path into its component segments."""
         m = re.match(
             r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)/services/(?P<service>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def namespace_path(project: str, location: str, namespace: str) -> str:
+        """Return a fully-qualified namespace string."""
+        return "projects/{project}/locations/{location}/namespaces/{namespace}".format(
+            project=project, location=location, namespace=namespace
+        )
+
+    @staticmethod
+    def parse_namespace_path(path: str) -> Dict[str, str]:
+        """Parse a namespace path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)$",
             path,
         )
         return m.groupdict() if m else {}
