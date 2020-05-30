@@ -4,15 +4,22 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/python-service-directory.git",
-        "sha": "6f15919759b7aff0da589b8e4c62bba17a43003e"
+        "sha": "8bbe5b89c0e95ebc179f6e5194b2c61d6634ee89"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "bcc476396e799806d3355e87246c6becf6250a70",
-        "internalRef": "306974763"
+        "sha": "1b101f55aa42665b71684097256d2a64ff07c670",
+        "internalRef": "312682133"
+      }
+    },
+    {
+      "git": {
+        "name": "synthtool",
+        "remote": "https://github.com/googleapis/synthtool.git",
+        "sha": "6980131905b652563280e4d2482384d4acc9eafc"
       }
     },
     {
