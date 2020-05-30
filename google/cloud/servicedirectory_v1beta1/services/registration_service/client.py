@@ -151,22 +151,6 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
     from_service_account_json = from_service_account_file
 
     @staticmethod
-    def service_path(project: str, location: str, namespace: str, service: str) -> str:
-        """Return a fully-qualified service string."""
-        return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
-            project=project, location=location, namespace=namespace, service=service
-        )
-
-    @staticmethod
-    def parse_service_path(path: str) -> Dict[str, str]:
-        """Parse a service path into its component segments."""
-        m = re.match(
-            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)/services/(?P<service>.+?)$",
-            path,
-        )
-        return m.groupdict() if m else {}
-
-    @staticmethod
     def namespace_path(project: str, location: str, namespace: str) -> str:
         """Return a fully-qualified namespace string."""
         return "projects/{project}/locations/{location}/namespaces/{namespace}".format(
@@ -178,6 +162,22 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         """Parse a namespace path into its component segments."""
         m = re.match(
             r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)$",
+            path,
+        )
+        return m.groupdict() if m else {}
+
+    @staticmethod
+    def service_path(project: str, location: str, namespace: str, service: str) -> str:
+        """Return a fully-qualified service string."""
+        return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
+            project=project, location=location, namespace=namespace, service=service
+        )
+
+    @staticmethod
+    def parse_service_path(path: str) -> Dict[str, str]:
+        """Parse a service path into its component segments."""
+        m = re.match(
+            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)/services/(?P<service>.+?)$",
             path,
         )
         return m.groupdict() if m else {}
