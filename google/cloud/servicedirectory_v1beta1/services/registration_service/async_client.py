@@ -71,9 +71,9 @@ class RegistrationServiceAsyncClient:
 
     service_path = staticmethod(RegistrationServiceClient.service_path)
 
-    endpoint_path = staticmethod(RegistrationServiceClient.endpoint_path)
-
     namespace_path = staticmethod(RegistrationServiceClient.namespace_path)
+
+    endpoint_path = staticmethod(RegistrationServiceClient.endpoint_path)
 
     from_service_account_file = RegistrationServiceClient.from_service_account_file
     from_service_account_json = from_service_account_file
