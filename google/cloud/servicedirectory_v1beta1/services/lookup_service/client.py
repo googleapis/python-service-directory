@@ -35,6 +35,7 @@ from google.cloud.servicedirectory_v1beta1.types import service
 
 from .transports.base import LookupServiceTransport
 from .transports.grpc import LookupServiceGrpcTransport
+from .transports.grpc_asyncio import LookupServiceGrpcAsyncIOTransport
 
 
 class LookupServiceClientMeta(type):
@@ -47,6 +48,7 @@ class LookupServiceClientMeta(type):
 
     _transport_registry = OrderedDict()  # type: Dict[str, Type[LookupServiceTransport]]
     _transport_registry["grpc"] = LookupServiceGrpcTransport
+    _transport_registry["grpc_asyncio"] = LookupServiceGrpcAsyncIOTransport
 
     def get_transport_class(cls, label: str = None) -> Type[LookupServiceTransport]:
         """Return an appropriate transport class.
@@ -143,7 +145,7 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
                 transport to use. If set to None, a transport is chosen
                 automatically.
             client_options (ClientOptions): Custom options for the client. It
-                won't take effect unless ``transport`` is None.
+                won't take effect if a ``transport`` instance is provided.
                 (1) The ``api_endpoint`` property can be used to override the
                 default endpoint provided by the client. GOOGLE_API_USE_MTLS
                 environment variable can also be used to override the endpoint:
@@ -165,7 +167,7 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
         if client_options is None:
             client_options = ClientOptions.ClientOptions()
 
-        if transport is None and client_options.api_endpoint is None:
+        if client_options.api_endpoint is None:
             use_mtls_env = os.getenv("GOOGLE_API_USE_MTLS", "never")
             if use_mtls_env == "never":
                 client_options.api_endpoint = self.DEFAULT_ENDPOINT
@@ -183,7 +185,7 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
                 )
             else:
                 raise MutualTLSChannelError(
-                    "Unsupported GOOGLE_API_USE_MTLS value. Accepted values: Never, Auto, Always"
+                    "Unsupported GOOGLE_API_USE_MTLS value. Accepted values: never, auto, always"
                 )
 
         # Save or instantiate the transport.
@@ -197,13 +199,9 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
                     "provide its credentials directly."
                 )
             self._transport = transport
-        elif isinstance(transport, str):
+        else:
             Transport = type(self).get_transport_class(transport)
             self._transport = Transport(
-                credentials=credentials, host=self.DEFAULT_ENDPOINT
-            )
-        else:
-            self._transport = LookupServiceGrpcTransport(
                 credentials=credentials,
                 host=client_options.api_endpoint,
                 api_mtls_endpoint=client_options.api_endpoint,
