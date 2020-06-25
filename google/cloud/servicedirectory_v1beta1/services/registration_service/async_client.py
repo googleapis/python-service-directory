@@ -69,11 +69,11 @@ class RegistrationServiceAsyncClient:
     DEFAULT_ENDPOINT = RegistrationServiceClient.DEFAULT_ENDPOINT
     DEFAULT_MTLS_ENDPOINT = RegistrationServiceClient.DEFAULT_MTLS_ENDPOINT
 
-    endpoint_path = staticmethod(RegistrationServiceClient.endpoint_path)
+    service_path = staticmethod(RegistrationServiceClient.service_path)
 
     namespace_path = staticmethod(RegistrationServiceClient.namespace_path)
 
-    service_path = staticmethod(RegistrationServiceClient.service_path)
+    endpoint_path = staticmethod(RegistrationServiceClient.endpoint_path)
 
     from_service_account_file = RegistrationServiceClient.from_service_account_file
     from_service_account_json = from_service_account_file
