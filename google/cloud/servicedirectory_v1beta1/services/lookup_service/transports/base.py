@@ -24,7 +24,7 @@ from google.auth import credentials  # type: ignore
 from google.cloud.servicedirectory_v1beta1.types import lookup_service
 
 
-class LookupServiceTransport(metaclass=abc.ABCMeta):
+class LookupServiceTransport(abc.ABC):
     """Abstract transport class for LookupService."""
 
     AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
@@ -34,6 +34,7 @@ class LookupServiceTransport(metaclass=abc.ABCMeta):
         *,
         host: str = "servicedirectory.googleapis.com",
         credentials: credentials.Credentials = None,
+        **kwargs,
     ) -> None:
         """Instantiate the transport.
 
@@ -62,9 +63,13 @@ class LookupServiceTransport(metaclass=abc.ABCMeta):
     def resolve_service(
         self
     ) -> typing.Callable[
-        [lookup_service.ResolveServiceRequest], lookup_service.ResolveServiceResponse
+        [lookup_service.ResolveServiceRequest],
+        typing.Union[
+            lookup_service.ResolveServiceResponse,
+            typing.Awaitable[lookup_service.ResolveServiceResponse],
+        ],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
 __all__ = ("LookupServiceTransport",)
