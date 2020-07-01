@@ -181,7 +181,7 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
         # have one.
         if not hasattr(self, "_grpc_channel"):
             self._grpc_channel = self.create_channel(
-                self._host, credentials=self._credentials
+                self._host, credentials=self._credentials,
             )
 
         # Return the channel from cache.
@@ -189,7 +189,7 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
 
     @property
     def resolve_service(
-        self
+        self,
     ) -> Callable[
         [lookup_service.ResolveServiceRequest],
         Awaitable[lookup_service.ResolveServiceResponse],

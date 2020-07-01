@@ -77,7 +77,7 @@ class LookupServiceTransport(abc.ABC):
 
     @property
     def resolve_service(
-        self
+        self,
     ) -> typing.Callable[
         [lookup_service.ResolveServiceRequest],
         typing.Union[

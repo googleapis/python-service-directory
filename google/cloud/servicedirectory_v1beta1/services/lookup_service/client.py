@@ -50,7 +50,7 @@ class LookupServiceClientMeta(type):
     _transport_registry["grpc"] = LookupServiceGrpcTransport
     _transport_registry["grpc_asyncio"] = LookupServiceGrpcAsyncIOTransport
 
-    def get_transport_class(cls, label: str = None) -> Type[LookupServiceTransport]:
+    def get_transport_class(cls, label: str = None,) -> Type[LookupServiceTransport]:
         """Return an appropriate transport class.
 
         Args:
@@ -266,7 +266,7 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -275,8 +275,8 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            "google-cloud-service-directory"
-        ).version
+            "google-cloud-service-directory",
+        ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()

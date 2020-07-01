@@ -71,9 +71,9 @@ class RegistrationServiceAsyncClient:
 
     service_path = staticmethod(RegistrationServiceClient.service_path)
 
-    endpoint_path = staticmethod(RegistrationServiceClient.endpoint_path)
-
     namespace_path = staticmethod(RegistrationServiceClient.namespace_path)
+
+    endpoint_path = staticmethod(RegistrationServiceClient.endpoint_path)
 
     from_service_account_file = RegistrationServiceClient.from_service_account_file
     from_service_account_json = from_service_account_file
@@ -121,7 +121,7 @@ class RegistrationServiceAsyncClient:
         """
 
         self._client = RegistrationServiceClient(
-            credentials=credentials, transport=transport, client_options=client_options
+            credentials=credentials, transport=transport, client_options=client_options,
         )
 
     async def create_namespace(
@@ -218,7 +218,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -293,12 +293,12 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__aiter__` convenience method.
         response = pagers.ListNamespacesAsyncPager(
-            method=rpc, request=request, response=response
+            method=rpc, request=request, response=response,
         )
 
         # Done; return the response.
@@ -373,7 +373,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -457,7 +457,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -523,7 +523,9 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        await rpc(
+            request, retry=retry, timeout=timeout, metadata=metadata,
+        )
 
     async def create_service(
         self,
@@ -617,7 +619,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -692,12 +694,12 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__aiter__` convenience method.
         response = pagers.ListServicesAsyncPager(
-            method=rpc, request=request, response=response
+            method=rpc, request=request, response=response,
         )
 
         # Done; return the response.
@@ -774,7 +776,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -857,7 +859,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -923,7 +925,9 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        await rpc(
+            request, retry=retry, timeout=timeout, metadata=metadata,
+        )
 
     async def create_endpoint(
         self,
@@ -1016,7 +1020,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1091,12 +1095,12 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__aiter__` convenience method.
         response = pagers.ListEndpointsAsyncPager(
-            method=rpc, request=request, response=response
+            method=rpc, request=request, response=response,
         )
 
         # Done; return the response.
@@ -1171,7 +1175,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1253,7 +1257,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1318,7 +1322,9 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        await rpc(
+            request, retry=retry, timeout=timeout, metadata=metadata,
+        )
 
     async def get_iam_policy(
         self,
@@ -1433,7 +1439,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1551,7 +1557,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1604,7 +1610,7 @@ class RegistrationServiceAsyncClient:
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1613,8 +1619,8 @@ class RegistrationServiceAsyncClient:
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            "google-cloud-service-directory"
-        ).version
+            "google-cloud-service-directory",
+        ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()
