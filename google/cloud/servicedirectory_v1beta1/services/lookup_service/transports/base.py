@@ -19,12 +19,13 @@ import abc
 import typing
 
 from google import auth
+from google.api_core import exceptions  # type: ignore
 from google.auth import credentials  # type: ignore
 
 from google.cloud.servicedirectory_v1beta1.types import lookup_service
 
 
-class LookupServiceTransport(metaclass=abc.ABCMeta):
+class LookupServiceTransport(abc.ABC):
     """Abstract transport class for LookupService."""
 
     AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
@@ -34,6 +35,9 @@ class LookupServiceTransport(metaclass=abc.ABCMeta):
         *,
         host: str = "servicedirectory.googleapis.com",
         credentials: credentials.Credentials = None,
+        credentials_file: typing.Optional[str] = None,
+        scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
+        **kwargs,
     ) -> None:
         """Instantiate the transport.
 
@@ -44,6 +48,10 @@ class LookupServiceTransport(metaclass=abc.ABCMeta):
                 credentials identify the application to the service; if none
                 are specified, the client will attempt to ascertain the
                 credentials from the environment.
+            credentials_file (Optional[str]): A file with credentials that can
+                be loaded with :func:`google.auth.load_credentials_from_file`.
+                This argument is mutually exclusive with credentials.
+            scope (Optional[Sequence[str]]): A list of scopes.
         """
         # Save the hostname. Default to port 443 (HTTPS) if none is specified.
         if ":" not in host:
@@ -52,8 +60,17 @@ class LookupServiceTransport(metaclass=abc.ABCMeta):
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
-        if credentials is None:
-            credentials, _ = auth.default(scopes=self.AUTH_SCOPES)
+        if credentials and credentials_file:
+            raise exceptions.DuplicateCredentialArgs(
+                "'credentials_file' and 'credentials' are mutually exclusive"
+            )
+
+        if credentials_file is not None:
+            credentials, _ = auth.load_credentials_from_file(
+                credentials_file, scopes=scopes
+            )
+        elif credentials is None:
+            credentials, _ = auth.default(scopes=scopes)
 
         # Save the credentials.
         self._credentials = credentials
@@ -62,9 +79,13 @@ class LookupServiceTransport(metaclass=abc.ABCMeta):
     def resolve_service(
         self
     ) -> typing.Callable[
-        [lookup_service.ResolveServiceRequest], lookup_service.ResolveServiceResponse
+        [lookup_service.ResolveServiceRequest],
+        typing.Union[
+            lookup_service.ResolveServiceResponse,
+            typing.Awaitable[lookup_service.ResolveServiceResponse],
+        ],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
 __all__ = ("LookupServiceTransport",)

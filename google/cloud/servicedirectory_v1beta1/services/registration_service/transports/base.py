@@ -19,6 +19,7 @@ import abc
 import typing
 
 from google import auth
+from google.api_core import exceptions  # type: ignore
 from google.auth import credentials  # type: ignore
 
 from google.cloud.servicedirectory_v1beta1.types import endpoint
@@ -33,7 +34,7 @@ from google.iam.v1 import policy_pb2 as policy  # type: ignore
 from google.protobuf import empty_pb2 as empty  # type: ignore
 
 
-class RegistrationServiceTransport(metaclass=abc.ABCMeta):
+class RegistrationServiceTransport(abc.ABC):
     """Abstract transport class for RegistrationService."""
 
     AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
@@ -43,6 +44,9 @@ class RegistrationServiceTransport(metaclass=abc.ABCMeta):
         *,
         host: str = "servicedirectory.googleapis.com",
         credentials: credentials.Credentials = None,
+        credentials_file: typing.Optional[str] = None,
+        scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
+        **kwargs,
     ) -> None:
         """Instantiate the transport.
 
@@ -53,6 +57,10 @@ class RegistrationServiceTransport(metaclass=abc.ABCMeta):
                 credentials identify the application to the service; if none
                 are specified, the client will attempt to ascertain the
                 credentials from the environment.
+            credentials_file (Optional[str]): A file with credentials that can
+                be loaded with :func:`google.auth.load_credentials_from_file`.
+                This argument is mutually exclusive with credentials.
+            scope (Optional[Sequence[str]]): A list of scopes.
         """
         # Save the hostname. Default to port 443 (HTTPS) if none is specified.
         if ":" not in host:
@@ -61,8 +69,17 @@ class RegistrationServiceTransport(metaclass=abc.ABCMeta):
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
-        if credentials is None:
-            credentials, _ = auth.default(scopes=self.AUTH_SCOPES)
+        if credentials and credentials_file:
+            raise exceptions.DuplicateCredentialArgs(
+                "'credentials_file' and 'credentials' are mutually exclusive"
+            )
+
+        if credentials_file is not None:
+            credentials, _ = auth.load_credentials_from_file(
+                credentials_file, scopes=scopes
+            )
+        elif credentials is None:
+            credentials, _ = auth.default(scopes=scopes)
 
         # Save the credentials.
         self._credentials = credentials
@@ -71,134 +88,179 @@ class RegistrationServiceTransport(metaclass=abc.ABCMeta):
     def create_namespace(
         self
     ) -> typing.Callable[
-        [registration_service.CreateNamespaceRequest], gcs_namespace.Namespace
+        [registration_service.CreateNamespaceRequest],
+        typing.Union[
+            gcs_namespace.Namespace, typing.Awaitable[gcs_namespace.Namespace]
+        ],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def list_namespaces(
         self
     ) -> typing.Callable[
         [registration_service.ListNamespacesRequest],
-        registration_service.ListNamespacesResponse,
+        typing.Union[
+            registration_service.ListNamespacesResponse,
+            typing.Awaitable[registration_service.ListNamespacesResponse],
+        ],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def get_namespace(
         self
     ) -> typing.Callable[
-        [registration_service.GetNamespaceRequest], namespace.Namespace
+        [registration_service.GetNamespaceRequest],
+        typing.Union[namespace.Namespace, typing.Awaitable[namespace.Namespace]],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def update_namespace(
         self
     ) -> typing.Callable[
-        [registration_service.UpdateNamespaceRequest], gcs_namespace.Namespace
+        [registration_service.UpdateNamespaceRequest],
+        typing.Union[
+            gcs_namespace.Namespace, typing.Awaitable[gcs_namespace.Namespace]
+        ],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def delete_namespace(
         self
-    ) -> typing.Callable[[registration_service.DeleteNamespaceRequest], empty.Empty]:
-        raise NotImplementedError
+    ) -> typing.Callable[
+        [registration_service.DeleteNamespaceRequest],
+        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+    ]:
+        raise NotImplementedError()
 
     @property
     def create_service(
         self
     ) -> typing.Callable[
-        [registration_service.CreateServiceRequest], gcs_service.Service
+        [registration_service.CreateServiceRequest],
+        typing.Union[gcs_service.Service, typing.Awaitable[gcs_service.Service]],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def list_services(
         self
     ) -> typing.Callable[
         [registration_service.ListServicesRequest],
-        registration_service.ListServicesResponse,
+        typing.Union[
+            registration_service.ListServicesResponse,
+            typing.Awaitable[registration_service.ListServicesResponse],
+        ],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def get_service(
         self
-    ) -> typing.Callable[[registration_service.GetServiceRequest], service.Service]:
-        raise NotImplementedError
+    ) -> typing.Callable[
+        [registration_service.GetServiceRequest],
+        typing.Union[service.Service, typing.Awaitable[service.Service]],
+    ]:
+        raise NotImplementedError()
 
     @property
     def update_service(
         self
     ) -> typing.Callable[
-        [registration_service.UpdateServiceRequest], gcs_service.Service
+        [registration_service.UpdateServiceRequest],
+        typing.Union[gcs_service.Service, typing.Awaitable[gcs_service.Service]],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def delete_service(
         self
-    ) -> typing.Callable[[registration_service.DeleteServiceRequest], empty.Empty]:
-        raise NotImplementedError
+    ) -> typing.Callable[
+        [registration_service.DeleteServiceRequest],
+        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+    ]:
+        raise NotImplementedError()
 
     @property
     def create_endpoint(
         self
     ) -> typing.Callable[
-        [registration_service.CreateEndpointRequest], gcs_endpoint.Endpoint
+        [registration_service.CreateEndpointRequest],
+        typing.Union[gcs_endpoint.Endpoint, typing.Awaitable[gcs_endpoint.Endpoint]],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def list_endpoints(
         self
     ) -> typing.Callable[
         [registration_service.ListEndpointsRequest],
-        registration_service.ListEndpointsResponse,
+        typing.Union[
+            registration_service.ListEndpointsResponse,
+            typing.Awaitable[registration_service.ListEndpointsResponse],
+        ],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def get_endpoint(
         self
-    ) -> typing.Callable[[registration_service.GetEndpointRequest], endpoint.Endpoint]:
-        raise NotImplementedError
+    ) -> typing.Callable[
+        [registration_service.GetEndpointRequest],
+        typing.Union[endpoint.Endpoint, typing.Awaitable[endpoint.Endpoint]],
+    ]:
+        raise NotImplementedError()
 
     @property
     def update_endpoint(
         self
     ) -> typing.Callable[
-        [registration_service.UpdateEndpointRequest], gcs_endpoint.Endpoint
+        [registration_service.UpdateEndpointRequest],
+        typing.Union[gcs_endpoint.Endpoint, typing.Awaitable[gcs_endpoint.Endpoint]],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @property
     def delete_endpoint(
         self
-    ) -> typing.Callable[[registration_service.DeleteEndpointRequest], empty.Empty]:
-        raise NotImplementedError
+    ) -> typing.Callable[
+        [registration_service.DeleteEndpointRequest],
+        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+    ]:
+        raise NotImplementedError()
 
     @property
     def get_iam_policy(
         self
-    ) -> typing.Callable[[iam_policy.GetIamPolicyRequest], policy.Policy]:
-        raise NotImplementedError
+    ) -> typing.Callable[
+        [iam_policy.GetIamPolicyRequest],
+        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+    ]:
+        raise NotImplementedError()
 
     @property
     def set_iam_policy(
         self
-    ) -> typing.Callable[[iam_policy.SetIamPolicyRequest], policy.Policy]:
-        raise NotImplementedError
+    ) -> typing.Callable[
+        [iam_policy.SetIamPolicyRequest],
+        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+    ]:
+        raise NotImplementedError()
 
     @property
     def test_iam_permissions(
         self
     ) -> typing.Callable[
-        [iam_policy.TestIamPermissionsRequest], iam_policy.TestIamPermissionsResponse
+        [iam_policy.TestIamPermissionsRequest],
+        typing.Union[
+            iam_policy.TestIamPermissionsResponse,
+            typing.Awaitable[iam_policy.TestIamPermissionsResponse],
+        ],
     ]:
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
 __all__ = ("RegistrationServiceTransport",)

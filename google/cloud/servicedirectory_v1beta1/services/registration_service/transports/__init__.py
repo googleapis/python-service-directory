@@ -20,6 +20,7 @@ from typing import Dict, Type
 
 from .base import RegistrationServiceTransport
 from .grpc import RegistrationServiceGrpcTransport
+from .grpc_asyncio import RegistrationServiceGrpcAsyncIOTransport
 
 
 # Compile a registry of transports.
@@ -27,6 +28,11 @@ _transport_registry = (
     OrderedDict()
 )  # type: Dict[str, Type[RegistrationServiceTransport]]
 _transport_registry["grpc"] = RegistrationServiceGrpcTransport
+_transport_registry["grpc_asyncio"] = RegistrationServiceGrpcAsyncIOTransport
 
 
-__all__ = ("RegistrationServiceTransport", "RegistrationServiceGrpcTransport")
+__all__ = (
+    "RegistrationServiceTransport",
+    "RegistrationServiceGrpcTransport",
+    "RegistrationServiceGrpcAsyncIOTransport",
+)
