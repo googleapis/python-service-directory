@@ -62,7 +62,7 @@ class RegistrationServiceClientMeta(type):
     _transport_registry["grpc_asyncio"] = RegistrationServiceGrpcAsyncIOTransport
 
     def get_transport_class(
-        cls, label: str = None
+        cls, label: str = None,
     ) -> Type[RegistrationServiceTransport]:
         """Return an appropriate transport class.
 
@@ -157,7 +157,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
 
     @staticmethod
     def endpoint_path(
-        project: str, location: str, namespace: str, service: str, endpoint: str
+        project: str, location: str, namespace: str, service: str, endpoint: str,
     ) -> str:
         """Return a fully-qualified endpoint string."""
         return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}/endpoints/{endpoint}".format(
@@ -178,10 +178,10 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
-    def namespace_path(project: str, location: str, namespace: str) -> str:
+    def namespace_path(project: str, location: str, namespace: str,) -> str:
         """Return a fully-qualified namespace string."""
         return "projects/{project}/locations/{location}/namespaces/{namespace}".format(
-            project=project, location=location, namespace=namespace
+            project=project, location=location, namespace=namespace,
         )
 
     @staticmethod
@@ -194,10 +194,10 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
-    def service_path(project: str, location: str, namespace: str, service: str) -> str:
+    def service_path(project: str, location: str, namespace: str, service: str,) -> str:
         """Return a fully-qualified service string."""
         return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
-            project=project, location=location, namespace=namespace, service=service
+            project=project, location=location, namespace=namespace, service=service,
         )
 
     @staticmethod
@@ -276,17 +276,24 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # instance provides an extensibility point for unusual situations.
         if isinstance(transport, RegistrationServiceTransport):
             # transport is a RegistrationServiceTransport instance.
-            if credentials:
+            if credentials or client_options.credentials_file:
                 raise ValueError(
                     "When providing a transport instance, "
                     "provide its credentials directly."
+                )
+            if client_options.scopes:
+                raise ValueError(
+                    "When providing a transport instance, "
+                    "provide its scopes directly."
                 )
             self._transport = transport
         else:
             Transport = type(self).get_transport_class(transport)
             self._transport = Transport(
                 credentials=credentials,
+                credentials_file=client_options.credentials_file,
                 host=client_options.api_endpoint,
+                scopes=client_options.scopes,
                 api_mtls_endpoint=client_options.api_endpoint,
                 client_cert_source=client_options.client_cert_source,
             )
@@ -385,7 +392,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -460,12 +467,12 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__iter__` convenience method.
         response = pagers.ListNamespacesPager(
-            method=rpc, request=request, response=response
+            method=rpc, request=request, response=response,
         )
 
         # Done; return the response.
@@ -540,7 +547,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -624,7 +631,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -690,7 +697,9 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        rpc(
+            request, retry=retry, timeout=timeout, metadata=metadata,
+        )
 
     def create_service(
         self,
@@ -784,7 +793,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -859,12 +868,12 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__iter__` convenience method.
         response = pagers.ListServicesPager(
-            method=rpc, request=request, response=response
+            method=rpc, request=request, response=response,
         )
 
         # Done; return the response.
@@ -929,7 +938,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
         rpc = gapic_v1.method.wrap_method(
-            self._transport.get_service, default_timeout=None, client_info=_client_info
+            self._transport.get_service, default_timeout=None, client_info=_client_info,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -939,7 +948,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1022,7 +1031,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1088,7 +1097,9 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        rpc(
+            request, retry=retry, timeout=timeout, metadata=metadata,
+        )
 
     def create_endpoint(
         self,
@@ -1181,7 +1192,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1256,12 +1267,12 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__iter__` convenience method.
         response = pagers.ListEndpointsPager(
-            method=rpc, request=request, response=response
+            method=rpc, request=request, response=response,
         )
 
         # Done; return the response.
@@ -1324,7 +1335,9 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
         rpc = gapic_v1.method.wrap_method(
-            self._transport.get_endpoint, default_timeout=None, client_info=_client_info
+            self._transport.get_endpoint,
+            default_timeout=None,
+            client_info=_client_info,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1334,7 +1347,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1416,7 +1429,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1481,7 +1494,9 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        rpc(
+            request, retry=retry, timeout=timeout, metadata=metadata,
+        )
 
     def get_iam_policy(
         self,
@@ -1596,7 +1611,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1714,7 +1729,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1767,7 +1782,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1776,8 +1791,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            "google-cloud-service-directory"
-        ).version
+            "google-cloud-service-directory",
+        ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()

@@ -18,4 +18,7 @@
 from .client import LookupServiceClient
 from .async_client import LookupServiceAsyncClient
 
-__all__ = ("LookupServiceClient", "LookupServiceAsyncClient")
+__all__ = (
+    "LookupServiceClient",
+    "LookupServiceAsyncClient",
+)

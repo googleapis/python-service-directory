@@ -17,7 +17,10 @@
 
 from .endpoint import Endpoint
 from .service import Service
-from .lookup_service import ResolveServiceRequest, ResolveServiceResponse
+from .lookup_service import (
+    ResolveServiceRequest,
+    ResolveServiceResponse,
+)
 from .namespace import Namespace
 from .registration_service import (
     CreateNamespaceRequest,

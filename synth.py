@@ -43,8 +43,7 @@ s.replace("google/**/*.py", '''["'](projects/\*/.*)["']\.''', "``\g<1>``" )
 templated_files = common.py_library(
     cov_level=100,
     samples=False,
-    unit_test_python_versions=["3.6", "3.7", "3.8"],
-    system_test_python_versions=["3.7"],
+    microgenerator=True,
 )
 
 s.move(templated_files, excludes=[".coveragerc"])  # the microgenerator has a good coveragerc file

@@ -51,6 +51,7 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
         cls,
         host: str = "servicedirectory.googleapis.com",
         credentials: credentials.Credentials = None,
+        credentials_file: Optional[str] = None,
         scopes: Optional[Sequence[str]] = None,
         **kwargs
     ) -> aio.Channel:
@@ -62,6 +63,9 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
                 credentials identify this application to the service. If
                 none are specified, the client will attempt to ascertain
                 the credentials from the environment.
+            credentials_file (Optional[str]): A file with credentials that can
+                be loaded with :func:`google.auth.load_credentials_from_file`.
+                This argument is ignored if ``channel`` is provided.
             scopes (Optional[Sequence[str]]): A optional list of scopes needed for this
                 service. These are only used when credentials are not specified and
                 are passed to :func:`google.auth.default`.
@@ -72,7 +76,11 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
         """
         scopes = scopes or cls.AUTH_SCOPES
         return grpc_helpers_async.create_channel(
-            host, credentials=credentials, scopes=scopes, **kwargs
+            host,
+            credentials=credentials,
+            credentials_file=credentials_file,
+            scopes=scopes,
+            **kwargs
         )
 
     def __init__(
@@ -80,6 +88,8 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
         *,
         host: str = "servicedirectory.googleapis.com",
         credentials: credentials.Credentials = None,
+        credentials_file: Optional[str] = None,
+        scopes: Optional[Sequence[str]] = None,
         channel: aio.Channel = None,
         api_mtls_endpoint: str = None,
         client_cert_source: Callable[[], Tuple[bytes, bytes]] = None
@@ -94,6 +104,12 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
                 are specified, the client will attempt to ascertain the
                 credentials from the environment.
                 This argument is ignored if ``channel`` is provided.
+            credentials_file (Optional[str]): A file with credentials that can
+                be loaded with :func:`google.auth.load_credentials_from_file`.
+                This argument is ignored if ``channel`` is provided.
+            scopes (Optional[Sequence[str]]): A optional list of scopes needed for this
+                service. These are only used when credentials are not specified and
+                are passed to :func:`google.auth.default`.
             channel (Optional[aio.Channel]): A ``Channel`` instance through
                 which to make calls.
             api_mtls_endpoint (Optional[str]): The mutual TLS endpoint. If
@@ -106,8 +122,10 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
                 is None.
 
         Raises:
-          google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
+            google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
               creation failed for any reason.
+          google.api_core.exceptions.DuplicateCredentialArgs: If both ``credentials``
+              and ``credentials_file`` are passed.
         """
         if channel:
             # Sanity check: Ensure that channel and credentials are not both
@@ -137,12 +155,19 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
             self._grpc_channel = type(self).create_channel(
                 host,
                 credentials=credentials,
+                credentials_file=credentials_file,
                 ssl_credentials=ssl_credentials,
-                scopes=self.AUTH_SCOPES,
+                scopes=scopes or self.AUTH_SCOPES,
             )
 
         # Run the base constructor.
-        super().__init__(host=host, credentials=credentials)
+        super().__init__(
+            host=host,
+            credentials=credentials,
+            credentials_file=credentials_file,
+            scopes=scopes or self.AUTH_SCOPES,
+        )
+
         self._stubs = {}
 
     @property
@@ -156,7 +181,7 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
         # have one.
         if not hasattr(self, "_grpc_channel"):
             self._grpc_channel = self.create_channel(
-                self._host, credentials=self._credentials
+                self._host, credentials=self._credentials,
             )
 
         # Return the channel from cache.
@@ -164,7 +189,7 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
 
     @property
     def resolve_service(
-        self
+        self,
     ) -> Callable[
         [lookup_service.ResolveServiceRequest],
         Awaitable[lookup_service.ResolveServiceResponse],

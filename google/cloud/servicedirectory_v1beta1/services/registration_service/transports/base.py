@@ -19,6 +19,7 @@ import abc
 import typing
 
 from google import auth
+from google.api_core import exceptions  # type: ignore
 from google.auth import credentials  # type: ignore
 
 from google.cloud.servicedirectory_v1beta1.types import endpoint
@@ -43,6 +44,8 @@ class RegistrationServiceTransport(abc.ABC):
         *,
         host: str = "servicedirectory.googleapis.com",
         credentials: credentials.Credentials = None,
+        credentials_file: typing.Optional[str] = None,
+        scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
@@ -54,6 +57,10 @@ class RegistrationServiceTransport(abc.ABC):
                 credentials identify the application to the service; if none
                 are specified, the client will attempt to ascertain the
                 credentials from the environment.
+            credentials_file (Optional[str]): A file with credentials that can
+                be loaded with :func:`google.auth.load_credentials_from_file`.
+                This argument is mutually exclusive with credentials.
+            scope (Optional[Sequence[str]]): A list of scopes.
         """
         # Save the hostname. Default to port 443 (HTTPS) if none is specified.
         if ":" not in host:
@@ -62,15 +69,24 @@ class RegistrationServiceTransport(abc.ABC):
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
-        if credentials is None:
-            credentials, _ = auth.default(scopes=self.AUTH_SCOPES)
+        if credentials and credentials_file:
+            raise exceptions.DuplicateCredentialArgs(
+                "'credentials_file' and 'credentials' are mutually exclusive"
+            )
+
+        if credentials_file is not None:
+            credentials, _ = auth.load_credentials_from_file(
+                credentials_file, scopes=scopes
+            )
+        elif credentials is None:
+            credentials, _ = auth.default(scopes=scopes)
 
         # Save the credentials.
         self._credentials = credentials
 
     @property
     def create_namespace(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.CreateNamespaceRequest],
         typing.Union[
@@ -81,7 +97,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def list_namespaces(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.ListNamespacesRequest],
         typing.Union[
@@ -93,7 +109,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def get_namespace(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.GetNamespaceRequest],
         typing.Union[namespace.Namespace, typing.Awaitable[namespace.Namespace]],
@@ -102,7 +118,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def update_namespace(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.UpdateNamespaceRequest],
         typing.Union[
@@ -113,7 +129,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def delete_namespace(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.DeleteNamespaceRequest],
         typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
@@ -122,7 +138,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def create_service(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.CreateServiceRequest],
         typing.Union[gcs_service.Service, typing.Awaitable[gcs_service.Service]],
@@ -131,7 +147,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def list_services(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.ListServicesRequest],
         typing.Union[
@@ -143,7 +159,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def get_service(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.GetServiceRequest],
         typing.Union[service.Service, typing.Awaitable[service.Service]],
@@ -152,7 +168,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def update_service(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.UpdateServiceRequest],
         typing.Union[gcs_service.Service, typing.Awaitable[gcs_service.Service]],
@@ -161,7 +177,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def delete_service(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.DeleteServiceRequest],
         typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
@@ -170,7 +186,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def create_endpoint(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.CreateEndpointRequest],
         typing.Union[gcs_endpoint.Endpoint, typing.Awaitable[gcs_endpoint.Endpoint]],
@@ -179,7 +195,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def list_endpoints(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.ListEndpointsRequest],
         typing.Union[
@@ -191,7 +207,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def get_endpoint(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.GetEndpointRequest],
         typing.Union[endpoint.Endpoint, typing.Awaitable[endpoint.Endpoint]],
@@ -200,7 +216,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def update_endpoint(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.UpdateEndpointRequest],
         typing.Union[gcs_endpoint.Endpoint, typing.Awaitable[gcs_endpoint.Endpoint]],
@@ -209,7 +225,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def delete_endpoint(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.DeleteEndpointRequest],
         typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
@@ -218,7 +234,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def get_iam_policy(
-        self
+        self,
     ) -> typing.Callable[
         [iam_policy.GetIamPolicyRequest],
         typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
@@ -227,7 +243,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def set_iam_policy(
-        self
+        self,
     ) -> typing.Callable[
         [iam_policy.SetIamPolicyRequest],
         typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
@@ -236,7 +252,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def test_iam_permissions(
-        self
+        self,
     ) -> typing.Callable[
         [iam_policy.TestIamPermissionsRequest],
         typing.Union[

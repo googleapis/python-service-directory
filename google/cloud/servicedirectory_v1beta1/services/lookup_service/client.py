@@ -50,7 +50,7 @@ class LookupServiceClientMeta(type):
     _transport_registry["grpc"] = LookupServiceGrpcTransport
     _transport_registry["grpc_asyncio"] = LookupServiceGrpcAsyncIOTransport
 
-    def get_transport_class(cls, label: str = None) -> Type[LookupServiceTransport]:
+    def get_transport_class(cls, label: str = None,) -> Type[LookupServiceTransport]:
         """Return an appropriate transport class.
 
         Args:
@@ -193,17 +193,24 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
         # instance provides an extensibility point for unusual situations.
         if isinstance(transport, LookupServiceTransport):
             # transport is a LookupServiceTransport instance.
-            if credentials:
+            if credentials or client_options.credentials_file:
                 raise ValueError(
                     "When providing a transport instance, "
                     "provide its credentials directly."
+                )
+            if client_options.scopes:
+                raise ValueError(
+                    "When providing a transport instance, "
+                    "provide its scopes directly."
                 )
             self._transport = transport
         else:
             Transport = type(self).get_transport_class(transport)
             self._transport = Transport(
                 credentials=credentials,
+                credentials_file=client_options.credentials_file,
                 host=client_options.api_endpoint,
+                scopes=client_options.scopes,
                 api_mtls_endpoint=client_options.api_endpoint,
                 client_cert_source=client_options.client_cert_source,
             )
@@ -259,7 +266,7 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata)
+        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -268,8 +275,8 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            "google-cloud-service-directory"
-        ).version
+            "google-cloud-service-directory",
+        ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()
