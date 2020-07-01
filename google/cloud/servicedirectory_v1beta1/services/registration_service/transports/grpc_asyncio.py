@@ -15,15 +15,14 @@
 # limitations under the License.
 #
 
-from typing import Callable, Dict, Optional, Sequence, Tuple
+from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple
 
-from google.api_core import grpc_helpers  # type: ignore
-from google import auth  # type: ignore
+from google.api_core import grpc_helpers_async  # type: ignore
 from google.auth import credentials  # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 
-
 import grpc  # type: ignore
+from grpc.experimental import aio  # type: ignore
 
 from google.cloud.servicedirectory_v1beta1.types import endpoint
 from google.cloud.servicedirectory_v1beta1.types import endpoint as gcs_endpoint
@@ -37,10 +36,11 @@ from google.iam.v1 import policy_pb2 as policy  # type: ignore
 from google.protobuf import empty_pb2 as empty  # type: ignore
 
 from .base import RegistrationServiceTransport
+from .grpc import RegistrationServiceGrpcTransport
 
 
-class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
-    """gRPC backend transport for RegistrationService.
+class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
+    """gRPC AsyncIO backend transport for RegistrationService.
 
     Service Directory API for registering services. It defines the
     following resource model:
@@ -67,16 +67,54 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     top of HTTP/2); the ``grpcio`` package must be installed.
     """
 
-    _stubs: Dict[str, Callable]
+    _grpc_channel: aio.Channel
+    _stubs: Dict[str, Callable] = {}
+
+    @classmethod
+    def create_channel(
+        cls,
+        host: str = "servicedirectory.googleapis.com",
+        credentials: credentials.Credentials = None,
+        credentials_file: Optional[str] = None,
+        scopes: Optional[Sequence[str]] = None,
+        **kwargs
+    ) -> aio.Channel:
+        """Create and return a gRPC AsyncIO channel object.
+        Args:
+            address (Optional[str]): The host for the channel to use.
+            credentials (Optional[~.Credentials]): The
+                authorization credentials to attach to requests. These
+                credentials identify this application to the service. If
+                none are specified, the client will attempt to ascertain
+                the credentials from the environment.
+            credentials_file (Optional[str]): A file with credentials that can
+                be loaded with :func:`google.auth.load_credentials_from_file`.
+                This argument is ignored if ``channel`` is provided.
+            scopes (Optional[Sequence[str]]): A optional list of scopes needed for this
+                service. These are only used when credentials are not specified and
+                are passed to :func:`google.auth.default`.
+            kwargs (Optional[dict]): Keyword arguments, which are passed to the
+                channel creation.
+        Returns:
+            aio.Channel: A gRPC AsyncIO channel object.
+        """
+        scopes = scopes or cls.AUTH_SCOPES
+        return grpc_helpers_async.create_channel(
+            host,
+            credentials=credentials,
+            credentials_file=credentials_file,
+            scopes=scopes,
+            **kwargs
+        )
 
     def __init__(
         self,
         *,
         host: str = "servicedirectory.googleapis.com",
         credentials: credentials.Credentials = None,
-        credentials_file: str = None,
-        scopes: Sequence[str] = None,
-        channel: grpc.Channel = None,
+        credentials_file: Optional[str] = None,
+        scopes: Optional[Sequence[str]] = None,
+        channel: aio.Channel = None,
         api_mtls_endpoint: str = None,
         client_cert_source: Callable[[], Tuple[bytes, bytes]] = None
     ) -> None:
@@ -93,9 +131,10 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
             credentials_file (Optional[str]): A file with credentials that can
                 be loaded with :func:`google.auth.load_credentials_from_file`.
                 This argument is ignored if ``channel`` is provided.
-            scopes (Optional(Sequence[str])): A list of scopes. This argument is
-                ignored if ``channel`` is provided.
-            channel (Optional[grpc.Channel]): A ``Channel`` instance through
+            scopes (Optional[Sequence[str]]): A optional list of scopes needed for this
+                service. These are only used when credentials are not specified and
+                are passed to :func:`google.auth.default`.
+            channel (Optional[aio.Channel]): A ``Channel`` instance through
                 which to make calls.
             api_mtls_endpoint (Optional[str]): The mutual TLS endpoint. If
                 provided, it overrides the ``host`` argument and tries to create
@@ -107,7 +146,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
                 is None.
 
         Raises:
-          google.auth.exceptions.MutualTLSChannelError: If mutual TLS transport
+            google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
               creation failed for any reason.
           google.api_core.exceptions.DuplicateCredentialArgs: If both ``credentials``
               and ``credentials_file`` are passed.
@@ -125,9 +164,6 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
                 if ":" in api_mtls_endpoint
                 else api_mtls_endpoint + ":443"
             )
-
-            if credentials is None:
-                credentials, _ = auth.default(scopes=self.AUTH_SCOPES)
 
             # Create SSL credentials with client_cert_source or application
             # default SSL credentials.
@@ -156,51 +192,10 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
             scopes=scopes or self.AUTH_SCOPES,
         )
 
-        self._stubs = {}  # type: Dict[str, Callable]
-
-    @classmethod
-    def create_channel(
-        cls,
-        host: str = "servicedirectory.googleapis.com",
-        credentials: credentials.Credentials = None,
-        credentials_file: str = None,
-        scopes: Optional[Sequence[str]] = None,
-        **kwargs
-    ) -> grpc.Channel:
-        """Create and return a gRPC channel object.
-        Args:
-            address (Optionsl[str]): The host for the channel to use.
-            credentials (Optional[~.Credentials]): The
-                authorization credentials to attach to requests. These
-                credentials identify this application to the service. If
-                none are specified, the client will attempt to ascertain
-                the credentials from the environment.
-            credentials_file (Optional[str]): A file with credentials that can
-                be loaded with :func:`google.auth.load_credentials_from_file`.
-                This argument is mutually exclusive with credentials.
-            scopes (Optional[Sequence[str]]): A optional list of scopes needed for this
-                service. These are only used when credentials are not specified and
-                are passed to :func:`google.auth.default`.
-            kwargs (Optional[dict]): Keyword arguments, which are passed to the
-                channel creation.
-        Returns:
-            grpc.Channel: A gRPC channel object.
-
-        Raises:
-            google.api_core.exceptions.DuplicateCredentialArgs: If both ``credentials``
-              and ``credentials_file`` are passed.
-        """
-        scopes = scopes or cls.AUTH_SCOPES
-        return grpc_helpers.create_channel(
-            host,
-            credentials=credentials,
-            credentials_file=credentials_file,
-            scopes=scopes,
-            **kwargs
-        )
+        self._stubs = {}
 
     @property
-    def grpc_channel(self) -> grpc.Channel:
+    def grpc_channel(self) -> aio.Channel:
         """Create the channel designed to connect to this service.
 
         This property caches on the instance; repeated calls return
@@ -220,7 +215,8 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     def create_namespace(
         self
     ) -> Callable[
-        [registration_service.CreateNamespaceRequest], gcs_namespace.Namespace
+        [registration_service.CreateNamespaceRequest],
+        Awaitable[gcs_namespace.Namespace],
     ]:
         r"""Return a callable for the create namespace method over gRPC.
 
@@ -228,7 +224,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.CreateNamespaceRequest],
-                    ~.Namespace]:
+                    Awaitable[~.Namespace]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -249,7 +245,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         self
     ) -> Callable[
         [registration_service.ListNamespacesRequest],
-        registration_service.ListNamespacesResponse,
+        Awaitable[registration_service.ListNamespacesResponse],
     ]:
         r"""Return a callable for the list namespaces method over gRPC.
 
@@ -257,7 +253,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.ListNamespacesRequest],
-                    ~.ListNamespacesResponse]:
+                    Awaitable[~.ListNamespacesResponse]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -276,14 +272,16 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def get_namespace(
         self
-    ) -> Callable[[registration_service.GetNamespaceRequest], namespace.Namespace]:
+    ) -> Callable[
+        [registration_service.GetNamespaceRequest], Awaitable[namespace.Namespace]
+    ]:
         r"""Return a callable for the get namespace method over gRPC.
 
         Gets a namespace.
 
         Returns:
             Callable[[~.GetNamespaceRequest],
-                    ~.Namespace]:
+                    Awaitable[~.Namespace]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -303,7 +301,8 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     def update_namespace(
         self
     ) -> Callable[
-        [registration_service.UpdateNamespaceRequest], gcs_namespace.Namespace
+        [registration_service.UpdateNamespaceRequest],
+        Awaitable[gcs_namespace.Namespace],
     ]:
         r"""Return a callable for the update namespace method over gRPC.
 
@@ -311,7 +310,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.UpdateNamespaceRequest],
-                    ~.Namespace]:
+                    Awaitable[~.Namespace]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -330,7 +329,9 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def delete_namespace(
         self
-    ) -> Callable[[registration_service.DeleteNamespaceRequest], empty.Empty]:
+    ) -> Callable[
+        [registration_service.DeleteNamespaceRequest], Awaitable[empty.Empty]
+    ]:
         r"""Return a callable for the delete namespace method over gRPC.
 
         Deletes a namespace. This also deletes all services
@@ -338,7 +339,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.DeleteNamespaceRequest],
-                    ~.Empty]:
+                    Awaitable[~.Empty]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -357,14 +358,16 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def create_service(
         self
-    ) -> Callable[[registration_service.CreateServiceRequest], gcs_service.Service]:
+    ) -> Callable[
+        [registration_service.CreateServiceRequest], Awaitable[gcs_service.Service]
+    ]:
         r"""Return a callable for the create service method over gRPC.
 
         Creates a service, and returns the new Service.
 
         Returns:
             Callable[[~.CreateServiceRequest],
-                    ~.Service]:
+                    Awaitable[~.Service]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -385,7 +388,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         self
     ) -> Callable[
         [registration_service.ListServicesRequest],
-        registration_service.ListServicesResponse,
+        Awaitable[registration_service.ListServicesResponse],
     ]:
         r"""Return a callable for the list services method over gRPC.
 
@@ -393,7 +396,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.ListServicesRequest],
-                    ~.ListServicesResponse]:
+                    Awaitable[~.ListServicesResponse]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -412,14 +415,14 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def get_service(
         self
-    ) -> Callable[[registration_service.GetServiceRequest], service.Service]:
+    ) -> Callable[[registration_service.GetServiceRequest], Awaitable[service.Service]]:
         r"""Return a callable for the get service method over gRPC.
 
         Gets a service.
 
         Returns:
             Callable[[~.GetServiceRequest],
-                    ~.Service]:
+                    Awaitable[~.Service]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -438,14 +441,16 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def update_service(
         self
-    ) -> Callable[[registration_service.UpdateServiceRequest], gcs_service.Service]:
+    ) -> Callable[
+        [registration_service.UpdateServiceRequest], Awaitable[gcs_service.Service]
+    ]:
         r"""Return a callable for the update service method over gRPC.
 
         Updates a service.
 
         Returns:
             Callable[[~.UpdateServiceRequest],
-                    ~.Service]:
+                    Awaitable[~.Service]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -464,7 +469,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def delete_service(
         self
-    ) -> Callable[[registration_service.DeleteServiceRequest], empty.Empty]:
+    ) -> Callable[[registration_service.DeleteServiceRequest], Awaitable[empty.Empty]]:
         r"""Return a callable for the delete service method over gRPC.
 
         Deletes a service. This also deletes all endpoints
@@ -472,7 +477,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.DeleteServiceRequest],
-                    ~.Empty]:
+                    Awaitable[~.Empty]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -491,14 +496,16 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def create_endpoint(
         self
-    ) -> Callable[[registration_service.CreateEndpointRequest], gcs_endpoint.Endpoint]:
+    ) -> Callable[
+        [registration_service.CreateEndpointRequest], Awaitable[gcs_endpoint.Endpoint]
+    ]:
         r"""Return a callable for the create endpoint method over gRPC.
 
         Creates a endpoint, and returns the new Endpoint.
 
         Returns:
             Callable[[~.CreateEndpointRequest],
-                    ~.Endpoint]:
+                    Awaitable[~.Endpoint]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -519,7 +526,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         self
     ) -> Callable[
         [registration_service.ListEndpointsRequest],
-        registration_service.ListEndpointsResponse,
+        Awaitable[registration_service.ListEndpointsResponse],
     ]:
         r"""Return a callable for the list endpoints method over gRPC.
 
@@ -527,7 +534,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.ListEndpointsRequest],
-                    ~.ListEndpointsResponse]:
+                    Awaitable[~.ListEndpointsResponse]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -546,14 +553,16 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def get_endpoint(
         self
-    ) -> Callable[[registration_service.GetEndpointRequest], endpoint.Endpoint]:
+    ) -> Callable[
+        [registration_service.GetEndpointRequest], Awaitable[endpoint.Endpoint]
+    ]:
         r"""Return a callable for the get endpoint method over gRPC.
 
         Gets a endpoint.
 
         Returns:
             Callable[[~.GetEndpointRequest],
-                    ~.Endpoint]:
+                    Awaitable[~.Endpoint]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -572,14 +581,16 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def update_endpoint(
         self
-    ) -> Callable[[registration_service.UpdateEndpointRequest], gcs_endpoint.Endpoint]:
+    ) -> Callable[
+        [registration_service.UpdateEndpointRequest], Awaitable[gcs_endpoint.Endpoint]
+    ]:
         r"""Return a callable for the update endpoint method over gRPC.
 
         Updates a endpoint.
 
         Returns:
             Callable[[~.UpdateEndpointRequest],
-                    ~.Endpoint]:
+                    Awaitable[~.Endpoint]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -598,14 +609,14 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def delete_endpoint(
         self
-    ) -> Callable[[registration_service.DeleteEndpointRequest], empty.Empty]:
+    ) -> Callable[[registration_service.DeleteEndpointRequest], Awaitable[empty.Empty]]:
         r"""Return a callable for the delete endpoint method over gRPC.
 
         Deletes a endpoint.
 
         Returns:
             Callable[[~.DeleteEndpointRequest],
-                    ~.Empty]:
+                    Awaitable[~.Empty]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -624,7 +635,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def get_iam_policy(
         self
-    ) -> Callable[[iam_policy.GetIamPolicyRequest], policy.Policy]:
+    ) -> Callable[[iam_policy.GetIamPolicyRequest], Awaitable[policy.Policy]]:
         r"""Return a callable for the get iam policy method over gRPC.
 
         Gets the IAM Policy for a resource (namespace or
@@ -632,7 +643,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.GetIamPolicyRequest],
-                    ~.Policy]:
+                    Awaitable[~.Policy]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -651,7 +662,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     @property
     def set_iam_policy(
         self
-    ) -> Callable[[iam_policy.SetIamPolicyRequest], policy.Policy]:
+    ) -> Callable[[iam_policy.SetIamPolicyRequest], Awaitable[policy.Policy]]:
         r"""Return a callable for the set iam policy method over gRPC.
 
         Sets the IAM Policy for a resource (namespace or
@@ -659,7 +670,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.SetIamPolicyRequest],
-                    ~.Policy]:
+                    Awaitable[~.Policy]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -679,7 +690,8 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     def test_iam_permissions(
         self
     ) -> Callable[
-        [iam_policy.TestIamPermissionsRequest], iam_policy.TestIamPermissionsResponse
+        [iam_policy.TestIamPermissionsRequest],
+        Awaitable[iam_policy.TestIamPermissionsResponse],
     ]:
         r"""Return a callable for the test iam permissions method over gRPC.
 
@@ -688,7 +700,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
 
         Returns:
             Callable[[~.TestIamPermissionsRequest],
-                    ~.TestIamPermissionsResponse]:
+                    Awaitable[~.TestIamPermissionsResponse]]:
                 A function that, when called, will call the underlying RPC
                 on the server.
         """
@@ -705,4 +717,4 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         return self._stubs["test_iam_permissions"]
 
 
-__all__ = ("RegistrationServiceGrpcTransport",)
+__all__ = ("RegistrationServiceGrpcAsyncIOTransport",)
