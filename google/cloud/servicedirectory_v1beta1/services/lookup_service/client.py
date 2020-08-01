@@ -35,6 +35,7 @@ from google.cloud.servicedirectory_v1beta1.types import service
 
 from .transports.base import LookupServiceTransport
 from .transports.grpc import LookupServiceGrpcTransport
+from .transports.grpc_asyncio import LookupServiceGrpcAsyncIOTransport
 
 
 class LookupServiceClientMeta(type):
@@ -47,6 +48,7 @@ class LookupServiceClientMeta(type):
 
     _transport_registry = OrderedDict()  # type: Dict[str, Type[LookupServiceTransport]]
     _transport_registry["grpc"] = LookupServiceGrpcTransport
+    _transport_registry["grpc_asyncio"] = LookupServiceGrpcAsyncIOTransport
 
     def get_transport_class(cls, label: str = None) -> Type[LookupServiceTransport]:
         """Return an appropriate transport class.
@@ -143,7 +145,7 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
                 transport to use. If set to None, a transport is chosen
                 automatically.
             client_options (ClientOptions): Custom options for the client. It
-                won't take effect unless ``transport`` is None.
+                won't take effect if a ``transport`` instance is provided.
                 (1) The ``api_endpoint`` property can be used to override the
                 default endpoint provided by the client. GOOGLE_API_USE_MTLS
                 environment variable can also be used to override the endpoint:
@@ -165,7 +167,7 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
         if client_options is None:
             client_options = ClientOptions.ClientOptions()
 
-        if transport is None and client_options.api_endpoint is None:
+        if client_options.api_endpoint is None:
             use_mtls_env = os.getenv("GOOGLE_API_USE_MTLS", "never")
             if use_mtls_env == "never":
                 client_options.api_endpoint = self.DEFAULT_ENDPOINT
@@ -183,7 +185,7 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
                 )
             else:
                 raise MutualTLSChannelError(
-                    "Unsupported GOOGLE_API_USE_MTLS value. Accepted values: Never, Auto, Always"
+                    "Unsupported GOOGLE_API_USE_MTLS value. Accepted values: never, auto, always"
                 )
 
         # Save or instantiate the transport.
@@ -191,23 +193,27 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
         # instance provides an extensibility point for unusual situations.
         if isinstance(transport, LookupServiceTransport):
             # transport is a LookupServiceTransport instance.
-            if credentials:
+            if credentials or client_options.credentials_file:
                 raise ValueError(
                     "When providing a transport instance, "
                     "provide its credentials directly."
                 )
+            if client_options.scopes:
+                raise ValueError(
+                    "When providing a transport instance, "
+                    "provide its scopes directly."
+                )
             self._transport = transport
-        elif isinstance(transport, str):
+        else:
             Transport = type(self).get_transport_class(transport)
             self._transport = Transport(
-                credentials=credentials, host=self.DEFAULT_ENDPOINT
-            )
-        else:
-            self._transport = LookupServiceGrpcTransport(
                 credentials=credentials,
+                credentials_file=client_options.credentials_file,
                 host=client_options.api_endpoint,
+                scopes=client_options.scopes,
                 api_mtls_endpoint=client_options.api_endpoint,
                 client_cert_source=client_options.client_cert_source,
+                quota_project_id=client_options.quota_project_id,
             )
 
     def resolve_service(
@@ -244,15 +250,16 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
         """
         # Create or coerce a protobuf request object.
 
-        request = lookup_service.ResolveServiceRequest(request)
+        # Minor optimization to avoid making a copy if the user passes
+        # in a lookup_service.ResolveServiceRequest.
+        # There's no risk of modifying the input as we've already verified
+        # there are no flattened fields.
+        if not isinstance(request, lookup_service.ResolveServiceRequest):
+            request = lookup_service.ResolveServiceRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.resolve_service,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.resolve_service]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
