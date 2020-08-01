@@ -21,12 +21,12 @@ import re
 from typing import Dict, Sequence, Tuple, Type, Union
 import pkg_resources
 
-import google.api_core.client_options as ClientOptions # type: ignore
-from google.api_core import exceptions                 # type: ignore
-from google.api_core import gapic_v1                   # type: ignore
-from google.api_core import retry as retries           # type: ignore
-from google.auth import credentials                    # type: ignore
-from google.oauth2 import service_account              # type: ignore
+import google.api_core.client_options as ClientOptions  # type: ignore
+from google.api_core import exceptions  # type: ignore
+from google.api_core import gapic_v1  # type: ignore
+from google.api_core import retry as retries  # type: ignore
+from google.auth import credentials  # type: ignore
+from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.servicedirectory_v1beta1.types import lookup_service
 from google.cloud.servicedirectory_v1beta1.types import service
@@ -47,13 +47,17 @@ class LookupServiceAsyncClient:
     from_service_account_file = LookupServiceClient.from_service_account_file
     from_service_account_json = from_service_account_file
 
-    get_transport_class = functools.partial(type(LookupServiceClient).get_transport_class, type(LookupServiceClient))
+    get_transport_class = functools.partial(
+        type(LookupServiceClient).get_transport_class, type(LookupServiceClient)
+    )
 
-    def __init__(self, *,
-            credentials: credentials.Credentials = None,
-            transport: Union[str, LookupServiceTransport] = 'grpc_asyncio',
-            client_options: ClientOptions = None,
-            ) -> None:
+    def __init__(
+        self,
+        *,
+        credentials: credentials.Credentials = None,
+        transport: Union[str, LookupServiceTransport] = "grpc_asyncio",
+        client_options: ClientOptions = None,
+    ) -> None:
         """Instantiate the lookup service client.
 
         Args:
@@ -85,18 +89,17 @@ class LookupServiceAsyncClient:
         """
 
         self._client = LookupServiceClient(
-            credentials=credentials,
-            transport=transport,
-            client_options=client_options,
+            credentials=credentials, transport=transport, client_options=client_options,
         )
 
-    async def resolve_service(self,
-            request: lookup_service.ResolveServiceRequest = None,
-            *,
-            retry: retries.Retry = gapic_v1.method.DEFAULT,
-            timeout: float = None,
-            metadata: Sequence[Tuple[str, str]] = (),
-            ) -> lookup_service.ResolveServiceResponse:
+    async def resolve_service(
+        self,
+        request: lookup_service.ResolveServiceRequest = None,
+        *,
+        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        timeout: float = None,
+        metadata: Sequence[Tuple[str, str]] = (),
+    ) -> lookup_service.ResolveServiceResponse:
         r"""Returns a
         [service][google.cloud.servicedirectory.v1beta1.Service] and its
         associated endpoints. Resolving a service is not considered an
@@ -136,38 +139,24 @@ class LookupServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((
-                ('name', request.name),
-            )),
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
         )
 
         # Send the request.
-        response = await rpc(
-            request,
-            retry=retry,
-            timeout=timeout,
-            metadata=metadata,
-        )
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
 
 
-
-
-
-
-
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            'google-cloud-service-directory',
+            "google-cloud-service-directory",
         ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()
 
 
-__all__ = (
-    'LookupServiceAsyncClient',
-)
+__all__ = ("LookupServiceAsyncClient",)

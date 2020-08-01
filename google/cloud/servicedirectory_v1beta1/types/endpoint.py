@@ -19,10 +19,7 @@ import proto  # type: ignore
 
 
 __protobuf__ = proto.module(
-    package='google.cloud.servicedirectory.v1beta1',
-    manifest={
-        'Endpoint',
-    },
+    package="google.cloud.servicedirectory.v1beta1", manifest={"Endpoint",},
 )
 
 

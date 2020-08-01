@@ -21,7 +21,7 @@ import pkg_resources
 
 from google import auth
 from google.api_core import exceptions  # type: ignore
-from google.api_core import gapic_v1    # type: ignore
+from google.api_core import gapic_v1  # type: ignore
 from google.api_core import retry as retries  # type: ignore
 from google.auth import credentials  # type: ignore
 
@@ -31,28 +31,28 @@ from google.cloud.servicedirectory_v1beta1.types import lookup_service
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            'google-cloud-service-directory',
+            "google-cloud-service-directory",
         ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()
 
+
 class LookupServiceTransport(abc.ABC):
     """Abstract transport class for LookupService."""
 
-    AUTH_SCOPES = (
-        'https://www.googleapis.com/auth/cloud-platform',
-    )
+    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
 
     def __init__(
-            self, *,
-            host: str = 'servicedirectory.googleapis.com',
-            credentials: credentials.Credentials = None,
-            credentials_file: typing.Optional[str] = None,
-            scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
-            quota_project_id: typing.Optional[str] = None,
-            **kwargs,
-            ) -> None:
+        self,
+        *,
+        host: str = "servicedirectory.googleapis.com",
+        credentials: credentials.Credentials = None,
+        credentials_file: typing.Optional[str] = None,
+        scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
+        quota_project_id: typing.Optional[str] = None,
+        **kwargs,
+    ) -> None:
         """Instantiate the transport.
 
         Args:
@@ -70,24 +70,26 @@ class LookupServiceTransport(abc.ABC):
                 and quota.
         """
         # Save the hostname. Default to port 443 (HTTPS) if none is specified.
-        if ':' not in host:
-            host += ':443'
+        if ":" not in host:
+            host += ":443"
         self._host = host
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
         if credentials and credentials_file:
-            raise exceptions.DuplicateCredentialArgs("'credentials_file' and 'credentials' are mutually exclusive")
+            raise exceptions.DuplicateCredentialArgs(
+                "'credentials_file' and 'credentials' are mutually exclusive"
+            )
 
         if credentials_file is not None:
             credentials, _ = auth.load_credentials_from_file(
-                                credentials_file,
-                                scopes=scopes,
-                                quota_project_id=quota_project_id
-                            )
+                credentials_file, scopes=scopes, quota_project_id=quota_project_id
+            )
 
         elif credentials is None:
-            credentials, _ = auth.default(scopes=scopes, quota_project_id=quota_project_id)
+            credentials, _ = auth.default(
+                scopes=scopes, quota_project_id=quota_project_id
+            )
 
         # Save the credentials.
         self._credentials = credentials
@@ -99,23 +101,21 @@ class LookupServiceTransport(abc.ABC):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
             self.resolve_service: gapic_v1.method.wrap_method(
-                self.resolve_service,
-                default_timeout=None,
-                client_info=_client_info,
+                self.resolve_service, default_timeout=None, client_info=_client_info,
             ),
-
         }
 
     @property
-    def resolve_service(self) -> typing.Callable[
-            [lookup_service.ResolveServiceRequest],
-            typing.Union[
-                lookup_service.ResolveServiceResponse,
-                typing.Awaitable[lookup_service.ResolveServiceResponse]
-            ]]:
+    def resolve_service(
+        self,
+    ) -> typing.Callable[
+        [lookup_service.ResolveServiceRequest],
+        typing.Union[
+            lookup_service.ResolveServiceResponse,
+            typing.Awaitable[lookup_service.ResolveServiceResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
 
-__all__ = (
-    'LookupServiceTransport',
-)
+__all__ = ("LookupServiceTransport",)

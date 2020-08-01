@@ -21,7 +21,7 @@ import pkg_resources
 
 from google import auth
 from google.api_core import exceptions  # type: ignore
-from google.api_core import gapic_v1    # type: ignore
+from google.api_core import gapic_v1  # type: ignore
 from google.api_core import retry as retries  # type: ignore
 from google.auth import credentials  # type: ignore
 
@@ -40,28 +40,28 @@ from google.protobuf import empty_pb2 as empty  # type: ignore
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            'google-cloud-service-directory',
+            "google-cloud-service-directory",
         ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()
 
+
 class RegistrationServiceTransport(abc.ABC):
     """Abstract transport class for RegistrationService."""
 
-    AUTH_SCOPES = (
-        'https://www.googleapis.com/auth/cloud-platform',
-    )
+    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
 
     def __init__(
-            self, *,
-            host: str = 'servicedirectory.googleapis.com',
-            credentials: credentials.Credentials = None,
-            credentials_file: typing.Optional[str] = None,
-            scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
-            quota_project_id: typing.Optional[str] = None,
-            **kwargs,
-            ) -> None:
+        self,
+        *,
+        host: str = "servicedirectory.googleapis.com",
+        credentials: credentials.Credentials = None,
+        credentials_file: typing.Optional[str] = None,
+        scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
+        quota_project_id: typing.Optional[str] = None,
+        **kwargs,
+    ) -> None:
         """Instantiate the transport.
 
         Args:
@@ -79,24 +79,26 @@ class RegistrationServiceTransport(abc.ABC):
                 and quota.
         """
         # Save the hostname. Default to port 443 (HTTPS) if none is specified.
-        if ':' not in host:
-            host += ':443'
+        if ":" not in host:
+            host += ":443"
         self._host = host
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
         if credentials and credentials_file:
-            raise exceptions.DuplicateCredentialArgs("'credentials_file' and 'credentials' are mutually exclusive")
+            raise exceptions.DuplicateCredentialArgs(
+                "'credentials_file' and 'credentials' are mutually exclusive"
+            )
 
         if credentials_file is not None:
             credentials, _ = auth.load_credentials_from_file(
-                                credentials_file,
-                                scopes=scopes,
-                                quota_project_id=quota_project_id
-                            )
+                credentials_file, scopes=scopes, quota_project_id=quota_project_id
+            )
 
         elif credentials is None:
-            credentials, _ = auth.default(scopes=scopes, quota_project_id=quota_project_id)
+            credentials, _ = auth.default(
+                scopes=scopes, quota_project_id=quota_project_id
+            )
 
         # Save the credentials.
         self._credentials = credentials
@@ -108,261 +110,240 @@ class RegistrationServiceTransport(abc.ABC):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
             self.create_namespace: gapic_v1.method.wrap_method(
-                self.create_namespace,
-                default_timeout=None,
-                client_info=_client_info,
+                self.create_namespace, default_timeout=None, client_info=_client_info,
             ),
             self.list_namespaces: gapic_v1.method.wrap_method(
-                self.list_namespaces,
-                default_timeout=None,
-                client_info=_client_info,
+                self.list_namespaces, default_timeout=None, client_info=_client_info,
             ),
             self.get_namespace: gapic_v1.method.wrap_method(
-                self.get_namespace,
-                default_timeout=None,
-                client_info=_client_info,
+                self.get_namespace, default_timeout=None, client_info=_client_info,
             ),
             self.update_namespace: gapic_v1.method.wrap_method(
-                self.update_namespace,
-                default_timeout=None,
-                client_info=_client_info,
+                self.update_namespace, default_timeout=None, client_info=_client_info,
             ),
             self.delete_namespace: gapic_v1.method.wrap_method(
-                self.delete_namespace,
-                default_timeout=None,
-                client_info=_client_info,
+                self.delete_namespace, default_timeout=None, client_info=_client_info,
             ),
             self.create_service: gapic_v1.method.wrap_method(
-                self.create_service,
-                default_timeout=None,
-                client_info=_client_info,
+                self.create_service, default_timeout=None, client_info=_client_info,
             ),
             self.list_services: gapic_v1.method.wrap_method(
-                self.list_services,
-                default_timeout=None,
-                client_info=_client_info,
+                self.list_services, default_timeout=None, client_info=_client_info,
             ),
             self.get_service: gapic_v1.method.wrap_method(
-                self.get_service,
-                default_timeout=None,
-                client_info=_client_info,
+                self.get_service, default_timeout=None, client_info=_client_info,
             ),
             self.update_service: gapic_v1.method.wrap_method(
-                self.update_service,
-                default_timeout=None,
-                client_info=_client_info,
+                self.update_service, default_timeout=None, client_info=_client_info,
             ),
             self.delete_service: gapic_v1.method.wrap_method(
-                self.delete_service,
-                default_timeout=None,
-                client_info=_client_info,
+                self.delete_service, default_timeout=None, client_info=_client_info,
             ),
             self.create_endpoint: gapic_v1.method.wrap_method(
-                self.create_endpoint,
-                default_timeout=None,
-                client_info=_client_info,
+                self.create_endpoint, default_timeout=None, client_info=_client_info,
             ),
             self.list_endpoints: gapic_v1.method.wrap_method(
-                self.list_endpoints,
-                default_timeout=None,
-                client_info=_client_info,
+                self.list_endpoints, default_timeout=None, client_info=_client_info,
             ),
             self.get_endpoint: gapic_v1.method.wrap_method(
-                self.get_endpoint,
-                default_timeout=None,
-                client_info=_client_info,
+                self.get_endpoint, default_timeout=None, client_info=_client_info,
             ),
             self.update_endpoint: gapic_v1.method.wrap_method(
-                self.update_endpoint,
-                default_timeout=None,
-                client_info=_client_info,
+                self.update_endpoint, default_timeout=None, client_info=_client_info,
             ),
             self.delete_endpoint: gapic_v1.method.wrap_method(
-                self.delete_endpoint,
-                default_timeout=None,
-                client_info=_client_info,
+                self.delete_endpoint, default_timeout=None, client_info=_client_info,
             ),
             self.get_iam_policy: gapic_v1.method.wrap_method(
-                self.get_iam_policy,
-                default_timeout=None,
-                client_info=_client_info,
+                self.get_iam_policy, default_timeout=None, client_info=_client_info,
             ),
             self.set_iam_policy: gapic_v1.method.wrap_method(
-                self.set_iam_policy,
-                default_timeout=None,
-                client_info=_client_info,
+                self.set_iam_policy, default_timeout=None, client_info=_client_info,
             ),
             self.test_iam_permissions: gapic_v1.method.wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=_client_info,
             ),
-
         }
 
     @property
-    def create_namespace(self) -> typing.Callable[
-            [registration_service.CreateNamespaceRequest],
-            typing.Union[
-                gcs_namespace.Namespace,
-                typing.Awaitable[gcs_namespace.Namespace]
-            ]]:
+    def create_namespace(
+        self,
+    ) -> typing.Callable[
+        [registration_service.CreateNamespaceRequest],
+        typing.Union[
+            gcs_namespace.Namespace, typing.Awaitable[gcs_namespace.Namespace]
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def list_namespaces(self) -> typing.Callable[
-            [registration_service.ListNamespacesRequest],
-            typing.Union[
-                registration_service.ListNamespacesResponse,
-                typing.Awaitable[registration_service.ListNamespacesResponse]
-            ]]:
+    def list_namespaces(
+        self,
+    ) -> typing.Callable[
+        [registration_service.ListNamespacesRequest],
+        typing.Union[
+            registration_service.ListNamespacesResponse,
+            typing.Awaitable[registration_service.ListNamespacesResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def get_namespace(self) -> typing.Callable[
-            [registration_service.GetNamespaceRequest],
-            typing.Union[
-                namespace.Namespace,
-                typing.Awaitable[namespace.Namespace]
-            ]]:
+    def get_namespace(
+        self,
+    ) -> typing.Callable[
+        [registration_service.GetNamespaceRequest],
+        typing.Union[namespace.Namespace, typing.Awaitable[namespace.Namespace]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def update_namespace(self) -> typing.Callable[
-            [registration_service.UpdateNamespaceRequest],
-            typing.Union[
-                gcs_namespace.Namespace,
-                typing.Awaitable[gcs_namespace.Namespace]
-            ]]:
+    def update_namespace(
+        self,
+    ) -> typing.Callable[
+        [registration_service.UpdateNamespaceRequest],
+        typing.Union[
+            gcs_namespace.Namespace, typing.Awaitable[gcs_namespace.Namespace]
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def delete_namespace(self) -> typing.Callable[
-            [registration_service.DeleteNamespaceRequest],
-            typing.Union[
-                empty.Empty,
-                typing.Awaitable[empty.Empty]
-            ]]:
+    def delete_namespace(
+        self,
+    ) -> typing.Callable[
+        [registration_service.DeleteNamespaceRequest],
+        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def create_service(self) -> typing.Callable[
-            [registration_service.CreateServiceRequest],
-            typing.Union[
-                gcs_service.Service,
-                typing.Awaitable[gcs_service.Service]
-            ]]:
+    def create_service(
+        self,
+    ) -> typing.Callable[
+        [registration_service.CreateServiceRequest],
+        typing.Union[gcs_service.Service, typing.Awaitable[gcs_service.Service]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def list_services(self) -> typing.Callable[
-            [registration_service.ListServicesRequest],
-            typing.Union[
-                registration_service.ListServicesResponse,
-                typing.Awaitable[registration_service.ListServicesResponse]
-            ]]:
+    def list_services(
+        self,
+    ) -> typing.Callable[
+        [registration_service.ListServicesRequest],
+        typing.Union[
+            registration_service.ListServicesResponse,
+            typing.Awaitable[registration_service.ListServicesResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def get_service(self) -> typing.Callable[
-            [registration_service.GetServiceRequest],
-            typing.Union[
-                service.Service,
-                typing.Awaitable[service.Service]
-            ]]:
+    def get_service(
+        self,
+    ) -> typing.Callable[
+        [registration_service.GetServiceRequest],
+        typing.Union[service.Service, typing.Awaitable[service.Service]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def update_service(self) -> typing.Callable[
-            [registration_service.UpdateServiceRequest],
-            typing.Union[
-                gcs_service.Service,
-                typing.Awaitable[gcs_service.Service]
-            ]]:
+    def update_service(
+        self,
+    ) -> typing.Callable[
+        [registration_service.UpdateServiceRequest],
+        typing.Union[gcs_service.Service, typing.Awaitable[gcs_service.Service]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def delete_service(self) -> typing.Callable[
-            [registration_service.DeleteServiceRequest],
-            typing.Union[
-                empty.Empty,
-                typing.Awaitable[empty.Empty]
-            ]]:
+    def delete_service(
+        self,
+    ) -> typing.Callable[
+        [registration_service.DeleteServiceRequest],
+        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def create_endpoint(self) -> typing.Callable[
-            [registration_service.CreateEndpointRequest],
-            typing.Union[
-                gcs_endpoint.Endpoint,
-                typing.Awaitable[gcs_endpoint.Endpoint]
-            ]]:
+    def create_endpoint(
+        self,
+    ) -> typing.Callable[
+        [registration_service.CreateEndpointRequest],
+        typing.Union[gcs_endpoint.Endpoint, typing.Awaitable[gcs_endpoint.Endpoint]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def list_endpoints(self) -> typing.Callable[
-            [registration_service.ListEndpointsRequest],
-            typing.Union[
-                registration_service.ListEndpointsResponse,
-                typing.Awaitable[registration_service.ListEndpointsResponse]
-            ]]:
+    def list_endpoints(
+        self,
+    ) -> typing.Callable[
+        [registration_service.ListEndpointsRequest],
+        typing.Union[
+            registration_service.ListEndpointsResponse,
+            typing.Awaitable[registration_service.ListEndpointsResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def get_endpoint(self) -> typing.Callable[
-            [registration_service.GetEndpointRequest],
-            typing.Union[
-                endpoint.Endpoint,
-                typing.Awaitable[endpoint.Endpoint]
-            ]]:
+    def get_endpoint(
+        self,
+    ) -> typing.Callable[
+        [registration_service.GetEndpointRequest],
+        typing.Union[endpoint.Endpoint, typing.Awaitable[endpoint.Endpoint]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def update_endpoint(self) -> typing.Callable[
-            [registration_service.UpdateEndpointRequest],
-            typing.Union[
-                gcs_endpoint.Endpoint,
-                typing.Awaitable[gcs_endpoint.Endpoint]
-            ]]:
+    def update_endpoint(
+        self,
+    ) -> typing.Callable[
+        [registration_service.UpdateEndpointRequest],
+        typing.Union[gcs_endpoint.Endpoint, typing.Awaitable[gcs_endpoint.Endpoint]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def delete_endpoint(self) -> typing.Callable[
-            [registration_service.DeleteEndpointRequest],
-            typing.Union[
-                empty.Empty,
-                typing.Awaitable[empty.Empty]
-            ]]:
+    def delete_endpoint(
+        self,
+    ) -> typing.Callable[
+        [registration_service.DeleteEndpointRequest],
+        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def get_iam_policy(self) -> typing.Callable[
-            [iam_policy.GetIamPolicyRequest],
-            typing.Union[
-                policy.Policy,
-                typing.Awaitable[policy.Policy]
-            ]]:
+    def get_iam_policy(
+        self,
+    ) -> typing.Callable[
+        [iam_policy.GetIamPolicyRequest],
+        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def set_iam_policy(self) -> typing.Callable[
-            [iam_policy.SetIamPolicyRequest],
-            typing.Union[
-                policy.Policy,
-                typing.Awaitable[policy.Policy]
-            ]]:
+    def set_iam_policy(
+        self,
+    ) -> typing.Callable[
+        [iam_policy.SetIamPolicyRequest],
+        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def test_iam_permissions(self) -> typing.Callable[
-            [iam_policy.TestIamPermissionsRequest],
-            typing.Union[
-                iam_policy.TestIamPermissionsResponse,
-                typing.Awaitable[iam_policy.TestIamPermissionsResponse]
-            ]]:
+    def test_iam_permissions(
+        self,
+    ) -> typing.Callable[
+        [iam_policy.TestIamPermissionsRequest],
+        typing.Union[
+            iam_policy.TestIamPermissionsResponse,
+            typing.Awaitable[iam_policy.TestIamPermissionsResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
 
-__all__ = (
-    'RegistrationServiceTransport',
-)
+__all__ = ("RegistrationServiceTransport",)
