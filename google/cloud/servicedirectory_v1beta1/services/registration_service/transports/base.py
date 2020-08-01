@@ -40,8 +40,8 @@ from google.protobuf import empty_pb2 as empty  # type: ignore
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            "google-cloud-service-directory"
-        ).version
+            "google-cloud-service-directory",
+        ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()
@@ -110,55 +110,55 @@ class RegistrationServiceTransport(abc.ABC):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
             self.create_namespace: gapic_v1.method.wrap_method(
-                self.create_namespace, default_timeout=None, client_info=_client_info
+                self.create_namespace, default_timeout=None, client_info=_client_info,
             ),
             self.list_namespaces: gapic_v1.method.wrap_method(
-                self.list_namespaces, default_timeout=None, client_info=_client_info
+                self.list_namespaces, default_timeout=None, client_info=_client_info,
             ),
             self.get_namespace: gapic_v1.method.wrap_method(
-                self.get_namespace, default_timeout=None, client_info=_client_info
+                self.get_namespace, default_timeout=None, client_info=_client_info,
             ),
             self.update_namespace: gapic_v1.method.wrap_method(
-                self.update_namespace, default_timeout=None, client_info=_client_info
+                self.update_namespace, default_timeout=None, client_info=_client_info,
             ),
             self.delete_namespace: gapic_v1.method.wrap_method(
-                self.delete_namespace, default_timeout=None, client_info=_client_info
+                self.delete_namespace, default_timeout=None, client_info=_client_info,
             ),
             self.create_service: gapic_v1.method.wrap_method(
-                self.create_service, default_timeout=None, client_info=_client_info
+                self.create_service, default_timeout=None, client_info=_client_info,
             ),
             self.list_services: gapic_v1.method.wrap_method(
-                self.list_services, default_timeout=None, client_info=_client_info
+                self.list_services, default_timeout=None, client_info=_client_info,
             ),
             self.get_service: gapic_v1.method.wrap_method(
-                self.get_service, default_timeout=None, client_info=_client_info
+                self.get_service, default_timeout=None, client_info=_client_info,
             ),
             self.update_service: gapic_v1.method.wrap_method(
-                self.update_service, default_timeout=None, client_info=_client_info
+                self.update_service, default_timeout=None, client_info=_client_info,
             ),
             self.delete_service: gapic_v1.method.wrap_method(
-                self.delete_service, default_timeout=None, client_info=_client_info
+                self.delete_service, default_timeout=None, client_info=_client_info,
             ),
             self.create_endpoint: gapic_v1.method.wrap_method(
-                self.create_endpoint, default_timeout=None, client_info=_client_info
+                self.create_endpoint, default_timeout=None, client_info=_client_info,
             ),
             self.list_endpoints: gapic_v1.method.wrap_method(
-                self.list_endpoints, default_timeout=None, client_info=_client_info
+                self.list_endpoints, default_timeout=None, client_info=_client_info,
             ),
             self.get_endpoint: gapic_v1.method.wrap_method(
-                self.get_endpoint, default_timeout=None, client_info=_client_info
+                self.get_endpoint, default_timeout=None, client_info=_client_info,
             ),
             self.update_endpoint: gapic_v1.method.wrap_method(
-                self.update_endpoint, default_timeout=None, client_info=_client_info
+                self.update_endpoint, default_timeout=None, client_info=_client_info,
             ),
             self.delete_endpoint: gapic_v1.method.wrap_method(
-                self.delete_endpoint, default_timeout=None, client_info=_client_info
+                self.delete_endpoint, default_timeout=None, client_info=_client_info,
             ),
             self.get_iam_policy: gapic_v1.method.wrap_method(
-                self.get_iam_policy, default_timeout=None, client_info=_client_info
+                self.get_iam_policy, default_timeout=None, client_info=_client_info,
             ),
             self.set_iam_policy: gapic_v1.method.wrap_method(
-                self.set_iam_policy, default_timeout=None, client_info=_client_info
+                self.set_iam_policy, default_timeout=None, client_info=_client_info,
             ),
             self.test_iam_permissions: gapic_v1.method.wrap_method(
                 self.test_iam_permissions,
@@ -169,7 +169,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def create_namespace(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.CreateNamespaceRequest],
         typing.Union[
@@ -180,7 +180,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def list_namespaces(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.ListNamespacesRequest],
         typing.Union[
@@ -192,7 +192,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def get_namespace(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.GetNamespaceRequest],
         typing.Union[namespace.Namespace, typing.Awaitable[namespace.Namespace]],
@@ -201,7 +201,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def update_namespace(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.UpdateNamespaceRequest],
         typing.Union[
@@ -212,7 +212,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def delete_namespace(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.DeleteNamespaceRequest],
         typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
@@ -221,7 +221,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def create_service(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.CreateServiceRequest],
         typing.Union[gcs_service.Service, typing.Awaitable[gcs_service.Service]],
@@ -230,7 +230,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def list_services(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.ListServicesRequest],
         typing.Union[
@@ -242,7 +242,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def get_service(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.GetServiceRequest],
         typing.Union[service.Service, typing.Awaitable[service.Service]],
@@ -251,7 +251,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def update_service(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.UpdateServiceRequest],
         typing.Union[gcs_service.Service, typing.Awaitable[gcs_service.Service]],
@@ -260,7 +260,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def delete_service(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.DeleteServiceRequest],
         typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
@@ -269,7 +269,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def create_endpoint(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.CreateEndpointRequest],
         typing.Union[gcs_endpoint.Endpoint, typing.Awaitable[gcs_endpoint.Endpoint]],
@@ -278,7 +278,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def list_endpoints(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.ListEndpointsRequest],
         typing.Union[
@@ -290,7 +290,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def get_endpoint(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.GetEndpointRequest],
         typing.Union[endpoint.Endpoint, typing.Awaitable[endpoint.Endpoint]],
@@ -299,7 +299,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def update_endpoint(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.UpdateEndpointRequest],
         typing.Union[gcs_endpoint.Endpoint, typing.Awaitable[gcs_endpoint.Endpoint]],
@@ -308,7 +308,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def delete_endpoint(
-        self
+        self,
     ) -> typing.Callable[
         [registration_service.DeleteEndpointRequest],
         typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
@@ -317,7 +317,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def get_iam_policy(
-        self
+        self,
     ) -> typing.Callable[
         [iam_policy.GetIamPolicyRequest],
         typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
@@ -326,7 +326,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def set_iam_policy(
-        self
+        self,
     ) -> typing.Callable[
         [iam_policy.SetIamPolicyRequest],
         typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
@@ -335,7 +335,7 @@ class RegistrationServiceTransport(abc.ABC):
 
     @property
     def test_iam_permissions(
-        self
+        self,
     ) -> typing.Callable[
         [iam_policy.TestIamPermissionsRequest],
         typing.Union[

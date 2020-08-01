@@ -22,7 +22,7 @@ from google.cloud.servicedirectory_v1beta1.types import endpoint
 
 
 __protobuf__ = proto.module(
-    package="google.cloud.servicedirectory.v1beta1", manifest={"Service"}
+    package="google.cloud.servicedirectory.v1beta1", manifest={"Service",},
 )
 
 
@@ -54,7 +54,7 @@ class Service(proto.Message):
 
     metadata = proto.MapField(proto.STRING, proto.STRING, number=2)
 
-    endpoints = proto.RepeatedField(proto.MESSAGE, number=3, message=endpoint.Endpoint)
+    endpoints = proto.RepeatedField(proto.MESSAGE, number=3, message=endpoint.Endpoint,)
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))
