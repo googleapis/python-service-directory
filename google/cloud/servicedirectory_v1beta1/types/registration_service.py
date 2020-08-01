@@ -25,26 +25,26 @@ from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
 
 
 __protobuf__ = proto.module(
-    package="google.cloud.servicedirectory.v1beta1",
+    package='google.cloud.servicedirectory.v1beta1',
     manifest={
-        "CreateNamespaceRequest",
-        "ListNamespacesRequest",
-        "ListNamespacesResponse",
-        "GetNamespaceRequest",
-        "UpdateNamespaceRequest",
-        "DeleteNamespaceRequest",
-        "CreateServiceRequest",
-        "ListServicesRequest",
-        "ListServicesResponse",
-        "GetServiceRequest",
-        "UpdateServiceRequest",
-        "DeleteServiceRequest",
-        "CreateEndpointRequest",
-        "ListEndpointsRequest",
-        "ListEndpointsResponse",
-        "GetEndpointRequest",
-        "UpdateEndpointRequest",
-        "DeleteEndpointRequest",
+        'CreateNamespaceRequest',
+        'ListNamespacesRequest',
+        'ListNamespacesResponse',
+        'GetNamespaceRequest',
+        'UpdateNamespaceRequest',
+        'DeleteNamespaceRequest',
+        'CreateServiceRequest',
+        'ListServicesRequest',
+        'ListServicesResponse',
+        'GetServiceRequest',
+        'UpdateServiceRequest',
+        'DeleteServiceRequest',
+        'CreateEndpointRequest',
+        'ListEndpointsRequest',
+        'ListEndpointsResponse',
+        'GetEndpointRequest',
+        'UpdateEndpointRequest',
+        'DeleteEndpointRequest',
     },
 )
 
@@ -74,7 +74,9 @@ class CreateNamespaceRequest(proto.Message):
 
     namespace_id = proto.Field(proto.STRING, number=2)
 
-    namespace = proto.Field(proto.MESSAGE, number=3, message=gcs_namespace.Namespace,)
+    namespace = proto.Field(proto.MESSAGE, number=3,
+        message=gcs_namespace.Namespace,
+    )
 
 
 class ListNamespacesRequest(proto.Message):
@@ -154,8 +156,8 @@ class ListNamespacesResponse(proto.Message):
     def raw_page(self):
         return self
 
-    namespaces = proto.RepeatedField(
-        proto.MESSAGE, number=1, message=gcs_namespace.Namespace,
+    namespaces = proto.RepeatedField(proto.MESSAGE, number=1,
+        message=gcs_namespace.Namespace,
     )
 
     next_page_token = proto.Field(proto.STRING, number=2)
@@ -186,9 +188,13 @@ class UpdateNamespaceRequest(proto.Message):
             this request.
     """
 
-    namespace = proto.Field(proto.MESSAGE, number=1, message=gcs_namespace.Namespace,)
+    namespace = proto.Field(proto.MESSAGE, number=1,
+        message=gcs_namespace.Namespace,
+    )
 
-    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    update_mask = proto.Field(proto.MESSAGE, number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class DeleteNamespaceRequest(proto.Message):
@@ -228,7 +234,9 @@ class CreateServiceRequest(proto.Message):
 
     service_id = proto.Field(proto.STRING, number=2)
 
-    service = proto.Field(proto.MESSAGE, number=3, message=gcs_service.Service,)
+    service = proto.Field(proto.MESSAGE, number=3,
+        message=gcs_service.Service,
+    )
 
 
 class ListServicesRequest(proto.Message):
@@ -302,8 +310,8 @@ class ListServicesResponse(proto.Message):
     def raw_page(self):
         return self
 
-    services = proto.RepeatedField(
-        proto.MESSAGE, number=1, message=gcs_service.Service,
+    services = proto.RepeatedField(proto.MESSAGE, number=1,
+        message=gcs_service.Service,
     )
 
     next_page_token = proto.Field(proto.STRING, number=2)
@@ -336,9 +344,13 @@ class UpdateServiceRequest(proto.Message):
             this request.
     """
 
-    service = proto.Field(proto.MESSAGE, number=1, message=gcs_service.Service,)
+    service = proto.Field(proto.MESSAGE, number=1,
+        message=gcs_service.Service,
+    )
 
-    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    update_mask = proto.Field(proto.MESSAGE, number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class DeleteServiceRequest(proto.Message):
@@ -377,7 +389,9 @@ class CreateEndpointRequest(proto.Message):
 
     endpoint_id = proto.Field(proto.STRING, number=2)
 
-    endpoint = proto.Field(proto.MESSAGE, number=3, message=gcs_endpoint.Endpoint,)
+    endpoint = proto.Field(proto.MESSAGE, number=3,
+        message=gcs_endpoint.Endpoint,
+    )
 
 
 class ListEndpointsRequest(proto.Message):
@@ -456,8 +470,8 @@ class ListEndpointsResponse(proto.Message):
     def raw_page(self):
         return self
 
-    endpoints = proto.RepeatedField(
-        proto.MESSAGE, number=1, message=gcs_endpoint.Endpoint,
+    endpoints = proto.RepeatedField(proto.MESSAGE, number=1,
+        message=gcs_endpoint.Endpoint,
     )
 
     next_page_token = proto.Field(proto.STRING, number=2)
@@ -489,9 +503,13 @@ class UpdateEndpointRequest(proto.Message):
             this request.
     """
 
-    endpoint = proto.Field(proto.MESSAGE, number=1, message=gcs_endpoint.Endpoint,)
+    endpoint = proto.Field(proto.MESSAGE, number=1,
+        message=gcs_endpoint.Endpoint,
+    )
 
-    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    update_mask = proto.Field(proto.MESSAGE, number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class DeleteEndpointRequest(proto.Message):

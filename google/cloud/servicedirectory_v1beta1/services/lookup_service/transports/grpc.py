@@ -17,9 +17,9 @@
 
 from typing import Callable, Dict, Optional, Sequence, Tuple
 
-from google.api_core import grpc_helpers  # type: ignore
-from google import auth  # type: ignore
-from google.auth import credentials  # type: ignore
+from google.api_core import grpc_helpers   # type: ignore
+from google import auth                    # type: ignore
+from google.auth import credentials        # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 
 
@@ -42,21 +42,17 @@ class LookupServiceGrpcTransport(LookupServiceTransport):
     It sends protocol buffers over the wire using gRPC (which is built on
     top of HTTP/2); the ``grpcio`` package must be installed.
     """
-
     _stubs: Dict[str, Callable]
 
-    def __init__(
-        self,
-        *,
-        host: str = "servicedirectory.googleapis.com",
-        credentials: credentials.Credentials = None,
-        credentials_file: str = None,
-        scopes: Sequence[str] = None,
-        channel: grpc.Channel = None,
-        api_mtls_endpoint: str = None,
-        client_cert_source: Callable[[], Tuple[bytes, bytes]] = None,
-        quota_project_id: Optional[str] = None
-    ) -> None:
+    def __init__(self, *,
+            host: str = 'servicedirectory.googleapis.com',
+            credentials: credentials.Credentials = None,
+            credentials_file: str = None,
+            scopes: Sequence[str] = None,
+            channel: grpc.Channel = None,
+            api_mtls_endpoint: str = None,
+            client_cert_source: Callable[[], Tuple[bytes, bytes]] = None,
+            quota_project_id: Optional[str] = None) -> None:
         """Instantiate the transport.
 
         Args:
@@ -99,16 +95,10 @@ class LookupServiceGrpcTransport(LookupServiceTransport):
             # If a channel was explicitly provided, set it.
             self._grpc_channel = channel
         elif api_mtls_endpoint:
-            host = (
-                api_mtls_endpoint
-                if ":" in api_mtls_endpoint
-                else api_mtls_endpoint + ":443"
-            )
+            host = api_mtls_endpoint if ":" in api_mtls_endpoint else api_mtls_endpoint + ":443"
 
             if credentials is None:
-                credentials, _ = auth.default(
-                    scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id
-                )
+                credentials, _ = auth.default(scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id)
 
             # Create SSL credentials with client_cert_source or application
             # default SSL credentials.
@@ -142,15 +132,13 @@ class LookupServiceGrpcTransport(LookupServiceTransport):
         )
 
     @classmethod
-    def create_channel(
-        cls,
-        host: str = "servicedirectory.googleapis.com",
-        credentials: credentials.Credentials = None,
-        credentials_file: str = None,
-        scopes: Optional[Sequence[str]] = None,
-        quota_project_id: Optional[str] = None,
-        **kwargs
-    ) -> grpc.Channel:
+    def create_channel(cls,
+                       host: str = 'servicedirectory.googleapis.com',
+                       credentials: credentials.Credentials = None,
+                       credentials_file: str = None,
+                       scopes: Optional[Sequence[str]] = None,
+                       quota_project_id: Optional[str] = None,
+                       **kwargs) -> grpc.Channel:
         """Create and return a gRPC channel object.
         Args:
             address (Optionsl[str]): The host for the channel to use.
@@ -195,20 +183,19 @@ class LookupServiceGrpcTransport(LookupServiceTransport):
         """
         # Sanity check: Only create a new channel if we do not already
         # have one.
-        if not hasattr(self, "_grpc_channel"):
+        if not hasattr(self, '_grpc_channel'):
             self._grpc_channel = self.create_channel(
-                self._host, credentials=self._credentials,
+                self._host,
+                credentials=self._credentials,
             )
 
         # Return the channel from cache.
         return self._grpc_channel
 
     @property
-    def resolve_service(
-        self,
-    ) -> Callable[
-        [lookup_service.ResolveServiceRequest], lookup_service.ResolveServiceResponse
-    ]:
+    def resolve_service(self) -> Callable[
+            [lookup_service.ResolveServiceRequest],
+            lookup_service.ResolveServiceResponse]:
         r"""Return a callable for the resolve service method over gRPC.
 
         Returns a
@@ -226,13 +213,15 @@ class LookupServiceGrpcTransport(LookupServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "resolve_service" not in self._stubs:
-            self._stubs["resolve_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.LookupService/ResolveService",
+        if 'resolve_service' not in self._stubs:
+            self._stubs['resolve_service'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.LookupService/ResolveService',
                 request_serializer=lookup_service.ResolveServiceRequest.serialize,
                 response_deserializer=lookup_service.ResolveServiceResponse.deserialize,
             )
-        return self._stubs["resolve_service"]
+        return self._stubs['resolve_service']
 
 
-__all__ = ("LookupServiceGrpcTransport",)
+__all__ = (
+    'LookupServiceGrpcTransport',
+)

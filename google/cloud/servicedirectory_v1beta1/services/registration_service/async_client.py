@@ -21,12 +21,12 @@ import re
 from typing import Dict, Sequence, Tuple, Type, Union
 import pkg_resources
 
-import google.api_core.client_options as ClientOptions  # type: ignore
-from google.api_core import exceptions  # type: ignore
-from google.api_core import gapic_v1  # type: ignore
-from google.api_core import retry as retries  # type: ignore
-from google.auth import credentials  # type: ignore
-from google.oauth2 import service_account  # type: ignore
+import google.api_core.client_options as ClientOptions # type: ignore
+from google.api_core import exceptions                 # type: ignore
+from google.api_core import gapic_v1                   # type: ignore
+from google.api_core import retry as retries           # type: ignore
+from google.auth import credentials                    # type: ignore
+from google.oauth2 import service_account              # type: ignore
 
 from google.cloud.servicedirectory_v1beta1.services.registration_service import pagers
 from google.cloud.servicedirectory_v1beta1.types import endpoint
@@ -71,25 +71,20 @@ class RegistrationServiceAsyncClient:
 
     endpoint_path = staticmethod(RegistrationServiceClient.endpoint_path)
 
-    namespace_path = staticmethod(RegistrationServiceClient.namespace_path)
-
     service_path = staticmethod(RegistrationServiceClient.service_path)
+
+    namespace_path = staticmethod(RegistrationServiceClient.namespace_path)
 
     from_service_account_file = RegistrationServiceClient.from_service_account_file
     from_service_account_json = from_service_account_file
 
-    get_transport_class = functools.partial(
-        type(RegistrationServiceClient).get_transport_class,
-        type(RegistrationServiceClient),
-    )
+    get_transport_class = functools.partial(type(RegistrationServiceClient).get_transport_class, type(RegistrationServiceClient))
 
-    def __init__(
-        self,
-        *,
-        credentials: credentials.Credentials = None,
-        transport: Union[str, RegistrationServiceTransport] = "grpc_asyncio",
-        client_options: ClientOptions = None,
-    ) -> None:
+    def __init__(self, *,
+            credentials: credentials.Credentials = None,
+            transport: Union[str, RegistrationServiceTransport] = 'grpc_asyncio',
+            client_options: ClientOptions = None,
+            ) -> None:
         """Instantiate the registration service client.
 
         Args:
@@ -121,20 +116,21 @@ class RegistrationServiceAsyncClient:
         """
 
         self._client = RegistrationServiceClient(
-            credentials=credentials, transport=transport, client_options=client_options,
+            credentials=credentials,
+            transport=transport,
+            client_options=client_options,
         )
 
-    async def create_namespace(
-        self,
-        request: registration_service.CreateNamespaceRequest = None,
-        *,
-        parent: str = None,
-        namespace: gcs_namespace.Namespace = None,
-        namespace_id: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_namespace.Namespace:
+    async def create_namespace(self,
+            request: registration_service.CreateNamespaceRequest = None,
+            *,
+            parent: str = None,
+            namespace: gcs_namespace.Namespace = None,
+            namespace_id: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_namespace.Namespace:
         r"""Creates a namespace, and returns the new Namespace.
 
         Args:
@@ -186,10 +182,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([parent, namespace, namespace_id]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.CreateNamespaceRequest(request)
 
@@ -214,24 +208,30 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def list_namespaces(
-        self,
-        request: registration_service.ListNamespacesRequest = None,
-        *,
-        parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> pagers.ListNamespacesAsyncPager:
+    async def list_namespaces(self,
+            request: registration_service.ListNamespacesRequest = None,
+            *,
+            parent: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> pagers.ListNamespacesAsyncPager:
         r"""Lists all namespaces.
 
         Args:
@@ -265,10 +265,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([parent]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.ListNamespacesRequest(request)
 
@@ -289,30 +287,39 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__aiter__` convenience method.
         response = pagers.ListNamespacesAsyncPager(
-            method=rpc, request=request, response=response, metadata=metadata,
+            method=rpc,
+            request=request,
+            response=response,
+            metadata=metadata,
         )
 
         # Done; return the response.
         return response
 
-    async def get_namespace(
-        self,
-        request: registration_service.GetNamespaceRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> namespace.Namespace:
+    async def get_namespace(self,
+            request: registration_service.GetNamespaceRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> namespace.Namespace:
         r"""Gets a namespace.
 
         Args:
@@ -345,10 +352,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([name]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.GetNamespaceRequest(request)
 
@@ -369,25 +374,31 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def update_namespace(
-        self,
-        request: registration_service.UpdateNamespaceRequest = None,
-        *,
-        namespace: gcs_namespace.Namespace = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_namespace.Namespace:
+    async def update_namespace(self,
+            request: registration_service.UpdateNamespaceRequest = None,
+            *,
+            namespace: gcs_namespace.Namespace = None,
+            update_mask: field_mask.FieldMask = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_namespace.Namespace:
         r"""Updates a namespace.
 
         Args:
@@ -425,10 +436,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([namespace, update_mask]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.UpdateNamespaceRequest(request)
 
@@ -451,26 +460,30 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata(
-                (("namespace.name", request.namespace.name),)
-            ),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('namespace.name', request.namespace.name),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def delete_namespace(
-        self,
-        request: registration_service.DeleteNamespaceRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> None:
+    async def delete_namespace(self,
+            request: registration_service.DeleteNamespaceRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> None:
         r"""Deletes a namespace. This also deletes all services
         and endpoints in the namespace.
 
@@ -495,10 +508,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([name]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.DeleteNamespaceRequest(request)
 
@@ -519,25 +530,29 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
         await rpc(
-            request, retry=retry, timeout=timeout, metadata=metadata,
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
-    async def create_service(
-        self,
-        request: registration_service.CreateServiceRequest = None,
-        *,
-        parent: str = None,
-        service: gcs_service.Service = None,
-        service_id: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_service.Service:
+    async def create_service(self,
+            request: registration_service.CreateServiceRequest = None,
+            *,
+            parent: str = None,
+            service: gcs_service.Service = None,
+            service_id: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_service.Service:
         r"""Creates a service, and returns the new Service.
 
         Args:
@@ -587,10 +602,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([parent, service, service_id]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.CreateServiceRequest(request)
 
@@ -615,24 +628,30 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def list_services(
-        self,
-        request: registration_service.ListServicesRequest = None,
-        *,
-        parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> pagers.ListServicesAsyncPager:
+    async def list_services(self,
+            request: registration_service.ListServicesRequest = None,
+            *,
+            parent: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> pagers.ListServicesAsyncPager:
         r"""Lists all services belonging to a namespace.
 
         Args:
@@ -666,10 +685,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([parent]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.ListServicesRequest(request)
 
@@ -690,30 +707,39 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__aiter__` convenience method.
         response = pagers.ListServicesAsyncPager(
-            method=rpc, request=request, response=response, metadata=metadata,
+            method=rpc,
+            request=request,
+            response=response,
+            metadata=metadata,
         )
 
         # Done; return the response.
         return response
 
-    async def get_service(
-        self,
-        request: registration_service.GetServiceRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> service.Service:
+    async def get_service(self,
+            request: registration_service.GetServiceRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> service.Service:
         r"""Gets a service.
 
         Args:
@@ -748,10 +774,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([name]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.GetServiceRequest(request)
 
@@ -772,25 +796,31 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def update_service(
-        self,
-        request: registration_service.UpdateServiceRequest = None,
-        *,
-        service: gcs_service.Service = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_service.Service:
+    async def update_service(self,
+            request: registration_service.UpdateServiceRequest = None,
+            *,
+            service: gcs_service.Service = None,
+            update_mask: field_mask.FieldMask = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_service.Service:
         r"""Updates a service.
 
         Args:
@@ -827,10 +857,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([service, update_mask]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.UpdateServiceRequest(request)
 
@@ -853,26 +881,30 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata(
-                (("service.name", request.service.name),)
-            ),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('service.name', request.service.name),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def delete_service(
-        self,
-        request: registration_service.DeleteServiceRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> None:
+    async def delete_service(self,
+            request: registration_service.DeleteServiceRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> None:
         r"""Deletes a service. This also deletes all endpoints
         associated with the service.
 
@@ -897,10 +929,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([name]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.DeleteServiceRequest(request)
 
@@ -921,25 +951,29 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
         await rpc(
-            request, retry=retry, timeout=timeout, metadata=metadata,
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
-    async def create_endpoint(
-        self,
-        request: registration_service.CreateEndpointRequest = None,
-        *,
-        parent: str = None,
-        endpoint: gcs_endpoint.Endpoint = None,
-        endpoint_id: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_endpoint.Endpoint:
+    async def create_endpoint(self,
+            request: registration_service.CreateEndpointRequest = None,
+            *,
+            parent: str = None,
+            endpoint: gcs_endpoint.Endpoint = None,
+            endpoint_id: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_endpoint.Endpoint:
         r"""Creates a endpoint, and returns the new Endpoint.
 
         Args:
@@ -988,10 +1022,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([parent, endpoint, endpoint_id]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.CreateEndpointRequest(request)
 
@@ -1016,24 +1048,30 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def list_endpoints(
-        self,
-        request: registration_service.ListEndpointsRequest = None,
-        *,
-        parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> pagers.ListEndpointsAsyncPager:
+    async def list_endpoints(self,
+            request: registration_service.ListEndpointsRequest = None,
+            *,
+            parent: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> pagers.ListEndpointsAsyncPager:
         r"""Lists all endpoints.
 
         Args:
@@ -1067,10 +1105,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([parent]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.ListEndpointsRequest(request)
 
@@ -1091,30 +1127,39 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__aiter__` convenience method.
         response = pagers.ListEndpointsAsyncPager(
-            method=rpc, request=request, response=response, metadata=metadata,
+            method=rpc,
+            request=request,
+            response=response,
+            metadata=metadata,
         )
 
         # Done; return the response.
         return response
 
-    async def get_endpoint(
-        self,
-        request: registration_service.GetEndpointRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> endpoint.Endpoint:
+    async def get_endpoint(self,
+            request: registration_service.GetEndpointRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> endpoint.Endpoint:
         r"""Gets a endpoint.
 
         Args:
@@ -1147,10 +1192,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([name]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.GetEndpointRequest(request)
 
@@ -1171,25 +1214,31 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def update_endpoint(
-        self,
-        request: registration_service.UpdateEndpointRequest = None,
-        *,
-        endpoint: gcs_endpoint.Endpoint = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_endpoint.Endpoint:
+    async def update_endpoint(self,
+            request: registration_service.UpdateEndpointRequest = None,
+            *,
+            endpoint: gcs_endpoint.Endpoint = None,
+            update_mask: field_mask.FieldMask = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_endpoint.Endpoint:
         r"""Updates a endpoint.
 
         Args:
@@ -1225,10 +1274,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([endpoint, update_mask]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.UpdateEndpointRequest(request)
 
@@ -1251,26 +1298,30 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata(
-                (("endpoint.name", request.endpoint.name),)
-            ),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('endpoint.name', request.endpoint.name),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def delete_endpoint(
-        self,
-        request: registration_service.DeleteEndpointRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> None:
+    async def delete_endpoint(self,
+            request: registration_service.DeleteEndpointRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> None:
         r"""Deletes a endpoint.
 
         Args:
@@ -1294,10 +1345,8 @@ class RegistrationServiceAsyncClient:
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         if request is not None and any([name]):
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         request = registration_service.DeleteEndpointRequest(request)
 
@@ -1318,22 +1367,26 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
         await rpc(
-            request, retry=retry, timeout=timeout, metadata=metadata,
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
-    async def get_iam_policy(
-        self,
-        request: iam_policy.GetIamPolicyRequest = None,
-        *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    async def get_iam_policy(self,
+            request: iam_policy.GetIamPolicyRequest = None,
+            *,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> policy.Policy:
         r"""Gets the IAM Policy for a resource (namespace or
         service only).
 
@@ -1435,23 +1488,29 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("resource", request.resource),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('resource', request.resource),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def set_iam_policy(
-        self,
-        request: iam_policy.SetIamPolicyRequest = None,
-        *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    async def set_iam_policy(self,
+            request: iam_policy.SetIamPolicyRequest = None,
+            *,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> policy.Policy:
         r"""Sets the IAM Policy for a resource (namespace or
         service only).
 
@@ -1553,23 +1612,29 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("resource", request.resource),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('resource', request.resource),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    async def test_iam_permissions(
-        self,
-        request: iam_policy.TestIamPermissionsRequest = None,
-        *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> iam_policy.TestIamPermissionsResponse:
+    async def test_iam_permissions(self,
+            request: iam_policy.TestIamPermissionsRequest = None,
+            *,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> iam_policy.TestIamPermissionsResponse:
         r"""Tests IAM permissions for a resource (namespace or
         service only).
 
@@ -1606,24 +1671,38 @@ class RegistrationServiceAsyncClient:
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("resource", request.resource),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('resource', request.resource),
+            )),
         )
 
         # Send the request.
-        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
 
+
+
+
+
+
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            "google-cloud-service-directory",
+            'google-cloud-service-directory',
         ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()
 
 
-__all__ = ("RegistrationServiceAsyncClient",)
+__all__ = (
+    'RegistrationServiceAsyncClient',
+)

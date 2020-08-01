@@ -25,12 +25,12 @@ from .grpc_asyncio import LookupServiceGrpcAsyncIOTransport
 
 # Compile a registry of transports.
 _transport_registry = OrderedDict()  # type: Dict[str, Type[LookupServiceTransport]]
-_transport_registry["grpc"] = LookupServiceGrpcTransport
-_transport_registry["grpc_asyncio"] = LookupServiceGrpcAsyncIOTransport
+_transport_registry['grpc'] = LookupServiceGrpcTransport
+_transport_registry['grpc_asyncio'] = LookupServiceGrpcAsyncIOTransport
 
 
 __all__ = (
-    "LookupServiceTransport",
-    "LookupServiceGrpcTransport",
-    "LookupServiceGrpcAsyncIOTransport",
+    'LookupServiceTransport',
+    'LookupServiceGrpcTransport',
+    'LookupServiceGrpcAsyncIOTransport',
 )

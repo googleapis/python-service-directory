@@ -17,11 +17,11 @@
 
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple
 
-from google.api_core import grpc_helpers_async  # type: ignore
-from google.auth import credentials  # type: ignore
+from google.api_core import grpc_helpers_async         # type: ignore
+from google.auth import credentials                    # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 
-import grpc  # type: ignore
+import grpc                        # type: ignore
 from grpc.experimental import aio  # type: ignore
 
 from google.cloud.servicedirectory_v1beta1.types import lookup_service
@@ -47,15 +47,13 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
     _stubs: Dict[str, Callable] = {}
 
     @classmethod
-    def create_channel(
-        cls,
-        host: str = "servicedirectory.googleapis.com",
-        credentials: credentials.Credentials = None,
-        credentials_file: Optional[str] = None,
-        scopes: Optional[Sequence[str]] = None,
-        quota_project_id: Optional[str] = None,
-        **kwargs,
-    ) -> aio.Channel:
+    def create_channel(cls,
+                       host: str = 'servicedirectory.googleapis.com',
+                       credentials: credentials.Credentials = None,
+                       credentials_file: Optional[str] = None,
+                       scopes: Optional[Sequence[str]] = None,
+                       quota_project_id: Optional[str] = None,
+                       **kwargs) -> aio.Channel:
         """Create and return a gRPC AsyncIO channel object.
         Args:
             address (Optional[str]): The host for the channel to use.
@@ -84,21 +82,19 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
             credentials_file=credentials_file,
             scopes=scopes,
             quota_project_id=quota_project_id,
-            **kwargs,
+            **kwargs
         )
 
-    def __init__(
-        self,
-        *,
-        host: str = "servicedirectory.googleapis.com",
-        credentials: credentials.Credentials = None,
-        credentials_file: Optional[str] = None,
-        scopes: Optional[Sequence[str]] = None,
-        channel: aio.Channel = None,
-        api_mtls_endpoint: str = None,
-        client_cert_source: Callable[[], Tuple[bytes, bytes]] = None,
-        quota_project_id=None,
-    ) -> None:
+    def __init__(self, *,
+            host: str = 'servicedirectory.googleapis.com',
+            credentials: credentials.Credentials = None,
+            credentials_file: Optional[str] = None,
+            scopes: Optional[Sequence[str]] = None,
+            channel: aio.Channel = None,
+            api_mtls_endpoint: str = None,
+            client_cert_source: Callable[[], Tuple[bytes, bytes]] = None,
+            quota_project_id=None,
+            ) -> None:
         """Instantiate the transport.
 
         Args:
@@ -142,11 +138,7 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
             # If a channel was explicitly provided, set it.
             self._grpc_channel = channel
         elif api_mtls_endpoint:
-            host = (
-                api_mtls_endpoint
-                if ":" in api_mtls_endpoint
-                else api_mtls_endpoint + ":443"
-            )
+            host = api_mtls_endpoint if ":" in api_mtls_endpoint else api_mtls_endpoint + ":443"
 
             # Create SSL credentials with client_cert_source or application
             # default SSL credentials.
@@ -188,21 +180,19 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
         """
         # Sanity check: Only create a new channel if we do not already
         # have one.
-        if not hasattr(self, "_grpc_channel"):
+        if not hasattr(self, '_grpc_channel'):
             self._grpc_channel = self.create_channel(
-                self._host, credentials=self._credentials,
+                self._host,
+                credentials=self._credentials,
             )
 
         # Return the channel from cache.
         return self._grpc_channel
 
     @property
-    def resolve_service(
-        self,
-    ) -> Callable[
-        [lookup_service.ResolveServiceRequest],
-        Awaitable[lookup_service.ResolveServiceResponse],
-    ]:
+    def resolve_service(self) -> Callable[
+            [lookup_service.ResolveServiceRequest],
+            Awaitable[lookup_service.ResolveServiceResponse]]:
         r"""Return a callable for the resolve service method over gRPC.
 
         Returns a
@@ -220,13 +210,15 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "resolve_service" not in self._stubs:
-            self._stubs["resolve_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.LookupService/ResolveService",
+        if 'resolve_service' not in self._stubs:
+            self._stubs['resolve_service'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.LookupService/ResolveService',
                 request_serializer=lookup_service.ResolveServiceRequest.serialize,
                 response_deserializer=lookup_service.ResolveServiceResponse.deserialize,
             )
-        return self._stubs["resolve_service"]
+        return self._stubs['resolve_service']
 
 
-__all__ = ("LookupServiceGrpcAsyncIOTransport",)
+__all__ = (
+    'LookupServiceGrpcAsyncIOTransport',
+)

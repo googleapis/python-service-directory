@@ -21,14 +21,14 @@ import re
 from typing import Callable, Dict, Sequence, Tuple, Type, Union
 import pkg_resources
 
-import google.api_core.client_options as ClientOptions  # type: ignore
-from google.api_core import exceptions  # type: ignore
-from google.api_core import gapic_v1  # type: ignore
-from google.api_core import retry as retries  # type: ignore
-from google.auth import credentials  # type: ignore
-from google.auth.transport import mtls  # type: ignore
+import google.api_core.client_options as ClientOptions # type: ignore
+from google.api_core import exceptions                 # type: ignore
+from google.api_core import gapic_v1                   # type: ignore
+from google.api_core import retry as retries           # type: ignore
+from google.auth import credentials                    # type: ignore
+from google.auth.transport import mtls                 # type: ignore
 from google.auth.exceptions import MutualTLSChannelError  # type: ignore
-from google.oauth2 import service_account  # type: ignore
+from google.oauth2 import service_account              # type: ignore
 
 from google.cloud.servicedirectory_v1beta1.services.registration_service import pagers
 from google.cloud.servicedirectory_v1beta1.types import endpoint
@@ -54,16 +54,13 @@ class RegistrationServiceClientMeta(type):
     support objects (e.g. transport) without polluting the client instance
     objects.
     """
+    _transport_registry = OrderedDict()  # type: Dict[str, Type[RegistrationServiceTransport]]
+    _transport_registry['grpc'] = RegistrationServiceGrpcTransport
+    _transport_registry['grpc_asyncio'] = RegistrationServiceGrpcAsyncIOTransport
 
-    _transport_registry = (
-        OrderedDict()
-    )  # type: Dict[str, Type[RegistrationServiceTransport]]
-    _transport_registry["grpc"] = RegistrationServiceGrpcTransport
-    _transport_registry["grpc_asyncio"] = RegistrationServiceGrpcAsyncIOTransport
-
-    def get_transport_class(
-        cls, label: str = None,
-    ) -> Type[RegistrationServiceTransport]:
+    def get_transport_class(cls,
+            label: str = None,
+        ) -> Type[RegistrationServiceTransport]:
         """Return an appropriate transport class.
 
         Args:
@@ -130,7 +127,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
 
         return api_endpoint.replace(".googleapis.com", ".mtls.googleapis.com")
 
-    DEFAULT_ENDPOINT = "servicedirectory.googleapis.com"
+    DEFAULT_ENDPOINT = 'servicedirectory.googleapis.com'
     DEFAULT_MTLS_ENDPOINT = _get_default_mtls_endpoint.__func__(  # type: ignore
         DEFAULT_ENDPOINT
     )
@@ -149,73 +146,49 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         Returns:
             {@api.name}: The constructed client.
         """
-        credentials = service_account.Credentials.from_service_account_file(filename)
-        kwargs["credentials"] = credentials
+        credentials = service_account.Credentials.from_service_account_file(
+            filename)
+        kwargs['credentials'] = credentials
         return cls(*args, **kwargs)
 
     from_service_account_json = from_service_account_file
 
     @staticmethod
-    def endpoint_path(
-        project: str, location: str, namespace: str, service: str, endpoint: str,
-    ) -> str:
+    def endpoint_path(project: str,location: str,namespace: str,service: str,endpoint: str,) -> str:
         """Return a fully-qualified endpoint string."""
-        return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}/endpoints/{endpoint}".format(
-            project=project,
-            location=location,
-            namespace=namespace,
-            service=service,
-            endpoint=endpoint,
-        )
+        return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}/endpoints/{endpoint}".format(project=project, location=location, namespace=namespace, service=service, endpoint=endpoint, )
 
     @staticmethod
-    def parse_endpoint_path(path: str) -> Dict[str, str]:
+    def parse_endpoint_path(path: str) -> Dict[str,str]:
         """Parse a endpoint path into its component segments."""
-        m = re.match(
-            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)/services/(?P<service>.+?)/endpoints/(?P<endpoint>.+?)$",
-            path,
-        )
+        m = re.match(r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)/services/(?P<service>.+?)/endpoints/(?P<endpoint>.+?)$", path)
         return m.groupdict() if m else {}
-
     @staticmethod
-    def namespace_path(project: str, location: str, namespace: str,) -> str:
+    def namespace_path(project: str,location: str,namespace: str,) -> str:
         """Return a fully-qualified namespace string."""
-        return "projects/{project}/locations/{location}/namespaces/{namespace}".format(
-            project=project, location=location, namespace=namespace,
-        )
+        return "projects/{project}/locations/{location}/namespaces/{namespace}".format(project=project, location=location, namespace=namespace, )
 
     @staticmethod
-    def parse_namespace_path(path: str) -> Dict[str, str]:
+    def parse_namespace_path(path: str) -> Dict[str,str]:
         """Parse a namespace path into its component segments."""
-        m = re.match(
-            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)$",
-            path,
-        )
+        m = re.match(r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)$", path)
         return m.groupdict() if m else {}
-
     @staticmethod
-    def service_path(project: str, location: str, namespace: str, service: str,) -> str:
+    def service_path(project: str,location: str,namespace: str,service: str,) -> str:
         """Return a fully-qualified service string."""
-        return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
-            project=project, location=location, namespace=namespace, service=service,
-        )
+        return "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(project=project, location=location, namespace=namespace, service=service, )
 
     @staticmethod
-    def parse_service_path(path: str) -> Dict[str, str]:
+    def parse_service_path(path: str) -> Dict[str,str]:
         """Parse a service path into its component segments."""
-        m = re.match(
-            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)/services/(?P<service>.+?)$",
-            path,
-        )
+        m = re.match(r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/namespaces/(?P<namespace>.+?)/services/(?P<service>.+?)$", path)
         return m.groupdict() if m else {}
 
-    def __init__(
-        self,
-        *,
-        credentials: credentials.Credentials = None,
-        transport: Union[str, RegistrationServiceTransport] = None,
-        client_options: ClientOptions = None,
-    ) -> None:
+    def __init__(self, *,
+            credentials: credentials.Credentials = None,
+            transport: Union[str, RegistrationServiceTransport] = None,
+            client_options: ClientOptions = None,
+            ) -> None:
         """Instantiate the registration service client.
 
         Args:
@@ -262,9 +235,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
                     or mtls.has_default_client_cert_source()
                 )
                 client_options.api_endpoint = (
-                    self.DEFAULT_MTLS_ENDPOINT
-                    if has_client_cert_source
-                    else self.DEFAULT_ENDPOINT
+                    self.DEFAULT_MTLS_ENDPOINT if has_client_cert_source else self.DEFAULT_ENDPOINT
                 )
             else:
                 raise MutualTLSChannelError(
@@ -277,10 +248,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         if isinstance(transport, RegistrationServiceTransport):
             # transport is a RegistrationServiceTransport instance.
             if credentials or client_options.credentials_file:
-                raise ValueError(
-                    "When providing a transport instance, "
-                    "provide its credentials directly."
-                )
+                raise ValueError('When providing a transport instance, '
+                                 'provide its credentials directly.')
             if client_options.scopes:
                 raise ValueError(
                     "When providing a transport instance, "
@@ -299,17 +268,16 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
                 quota_project_id=client_options.quota_project_id,
             )
 
-    def create_namespace(
-        self,
-        request: registration_service.CreateNamespaceRequest = None,
-        *,
-        parent: str = None,
-        namespace: gcs_namespace.Namespace = None,
-        namespace_id: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_namespace.Namespace:
+    def create_namespace(self,
+            request: registration_service.CreateNamespaceRequest = None,
+            *,
+            parent: str = None,
+            namespace: gcs_namespace.Namespace = None,
+            namespace_id: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_namespace.Namespace:
         r"""Creates a namespace, and returns the new Namespace.
 
         Args:
@@ -362,10 +330,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent, namespace, namespace_id])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.CreateNamespaceRequest.
@@ -391,24 +357,30 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def list_namespaces(
-        self,
-        request: registration_service.ListNamespacesRequest = None,
-        *,
-        parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> pagers.ListNamespacesPager:
+    def list_namespaces(self,
+            request: registration_service.ListNamespacesRequest = None,
+            *,
+            parent: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> pagers.ListNamespacesPager:
         r"""Lists all namespaces.
 
         Args:
@@ -443,10 +415,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.ListNamespacesRequest.
@@ -468,30 +438,39 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__iter__` convenience method.
         response = pagers.ListNamespacesPager(
-            method=rpc, request=request, response=response, metadata=metadata,
+            method=rpc,
+            request=request,
+            response=response,
+            metadata=metadata,
         )
 
         # Done; return the response.
         return response
 
-    def get_namespace(
-        self,
-        request: registration_service.GetNamespaceRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> namespace.Namespace:
+    def get_namespace(self,
+            request: registration_service.GetNamespaceRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> namespace.Namespace:
         r"""Gets a namespace.
 
         Args:
@@ -525,10 +504,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.GetNamespaceRequest.
@@ -550,25 +527,31 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def update_namespace(
-        self,
-        request: registration_service.UpdateNamespaceRequest = None,
-        *,
-        namespace: gcs_namespace.Namespace = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_namespace.Namespace:
+    def update_namespace(self,
+            request: registration_service.UpdateNamespaceRequest = None,
+            *,
+            namespace: gcs_namespace.Namespace = None,
+            update_mask: field_mask.FieldMask = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_namespace.Namespace:
         r"""Updates a namespace.
 
         Args:
@@ -607,10 +590,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([namespace, update_mask])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.UpdateNamespaceRequest.
@@ -634,26 +615,30 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata(
-                (("namespace.name", request.namespace.name),)
-            ),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('namespace.name', request.namespace.name),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def delete_namespace(
-        self,
-        request: registration_service.DeleteNamespaceRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> None:
+    def delete_namespace(self,
+            request: registration_service.DeleteNamespaceRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> None:
         r"""Deletes a namespace. This also deletes all services
         and endpoints in the namespace.
 
@@ -679,10 +664,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.DeleteNamespaceRequest.
@@ -704,25 +687,29 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
         rpc(
-            request, retry=retry, timeout=timeout, metadata=metadata,
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
-    def create_service(
-        self,
-        request: registration_service.CreateServiceRequest = None,
-        *,
-        parent: str = None,
-        service: gcs_service.Service = None,
-        service_id: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_service.Service:
+    def create_service(self,
+            request: registration_service.CreateServiceRequest = None,
+            *,
+            parent: str = None,
+            service: gcs_service.Service = None,
+            service_id: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_service.Service:
         r"""Creates a service, and returns the new Service.
 
         Args:
@@ -773,10 +760,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent, service, service_id])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.CreateServiceRequest.
@@ -802,24 +787,30 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def list_services(
-        self,
-        request: registration_service.ListServicesRequest = None,
-        *,
-        parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> pagers.ListServicesPager:
+    def list_services(self,
+            request: registration_service.ListServicesRequest = None,
+            *,
+            parent: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> pagers.ListServicesPager:
         r"""Lists all services belonging to a namespace.
 
         Args:
@@ -854,10 +845,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.ListServicesRequest.
@@ -879,30 +868,39 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__iter__` convenience method.
         response = pagers.ListServicesPager(
-            method=rpc, request=request, response=response, metadata=metadata,
+            method=rpc,
+            request=request,
+            response=response,
+            metadata=metadata,
         )
 
         # Done; return the response.
         return response
 
-    def get_service(
-        self,
-        request: registration_service.GetServiceRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> service.Service:
+    def get_service(self,
+            request: registration_service.GetServiceRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> service.Service:
         r"""Gets a service.
 
         Args:
@@ -938,10 +936,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.GetServiceRequest.
@@ -963,25 +959,31 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def update_service(
-        self,
-        request: registration_service.UpdateServiceRequest = None,
-        *,
-        service: gcs_service.Service = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_service.Service:
+    def update_service(self,
+            request: registration_service.UpdateServiceRequest = None,
+            *,
+            service: gcs_service.Service = None,
+            update_mask: field_mask.FieldMask = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_service.Service:
         r"""Updates a service.
 
         Args:
@@ -1019,10 +1021,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([service, update_mask])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.UpdateServiceRequest.
@@ -1046,26 +1046,30 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata(
-                (("service.name", request.service.name),)
-            ),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('service.name', request.service.name),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def delete_service(
-        self,
-        request: registration_service.DeleteServiceRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> None:
+    def delete_service(self,
+            request: registration_service.DeleteServiceRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> None:
         r"""Deletes a service. This also deletes all endpoints
         associated with the service.
 
@@ -1091,10 +1095,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.DeleteServiceRequest.
@@ -1116,25 +1118,29 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
         rpc(
-            request, retry=retry, timeout=timeout, metadata=metadata,
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
-    def create_endpoint(
-        self,
-        request: registration_service.CreateEndpointRequest = None,
-        *,
-        parent: str = None,
-        endpoint: gcs_endpoint.Endpoint = None,
-        endpoint_id: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_endpoint.Endpoint:
+    def create_endpoint(self,
+            request: registration_service.CreateEndpointRequest = None,
+            *,
+            parent: str = None,
+            endpoint: gcs_endpoint.Endpoint = None,
+            endpoint_id: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_endpoint.Endpoint:
         r"""Creates a endpoint, and returns the new Endpoint.
 
         Args:
@@ -1184,10 +1190,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent, endpoint, endpoint_id])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.CreateEndpointRequest.
@@ -1213,24 +1217,30 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def list_endpoints(
-        self,
-        request: registration_service.ListEndpointsRequest = None,
-        *,
-        parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> pagers.ListEndpointsPager:
+    def list_endpoints(self,
+            request: registration_service.ListEndpointsRequest = None,
+            *,
+            parent: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> pagers.ListEndpointsPager:
         r"""Lists all endpoints.
 
         Args:
@@ -1265,10 +1275,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.ListEndpointsRequest.
@@ -1290,30 +1298,39 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", request.parent),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', request.parent),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__iter__` convenience method.
         response = pagers.ListEndpointsPager(
-            method=rpc, request=request, response=response, metadata=metadata,
+            method=rpc,
+            request=request,
+            response=response,
+            metadata=metadata,
         )
 
         # Done; return the response.
         return response
 
-    def get_endpoint(
-        self,
-        request: registration_service.GetEndpointRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> endpoint.Endpoint:
+    def get_endpoint(self,
+            request: registration_service.GetEndpointRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> endpoint.Endpoint:
         r"""Gets a endpoint.
 
         Args:
@@ -1347,10 +1364,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.GetEndpointRequest.
@@ -1372,25 +1387,31 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def update_endpoint(
-        self,
-        request: registration_service.UpdateEndpointRequest = None,
-        *,
-        endpoint: gcs_endpoint.Endpoint = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> gcs_endpoint.Endpoint:
+    def update_endpoint(self,
+            request: registration_service.UpdateEndpointRequest = None,
+            *,
+            endpoint: gcs_endpoint.Endpoint = None,
+            update_mask: field_mask.FieldMask = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> gcs_endpoint.Endpoint:
         r"""Updates a endpoint.
 
         Args:
@@ -1427,10 +1448,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([endpoint, update_mask])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.UpdateEndpointRequest.
@@ -1454,26 +1473,30 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata(
-                (("endpoint.name", request.endpoint.name),)
-            ),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('endpoint.name', request.endpoint.name),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def delete_endpoint(
-        self,
-        request: registration_service.DeleteEndpointRequest = None,
-        *,
-        name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> None:
+    def delete_endpoint(self,
+            request: registration_service.DeleteEndpointRequest = None,
+            *,
+            name: str = None,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> None:
         r"""Deletes a endpoint.
 
         Args:
@@ -1498,10 +1521,8 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
-            raise ValueError(
-                "If the `request` argument is set, then none of "
-                "the individual field arguments should be set."
-            )
+            raise ValueError('If the `request` argument is set, then none of '
+                             'the individual field arguments should be set.')
 
         # Minor optimization to avoid making a copy if the user passes
         # in a registration_service.DeleteEndpointRequest.
@@ -1523,22 +1544,26 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('name', request.name),
+            )),
         )
 
         # Send the request.
         rpc(
-            request, retry=retry, timeout=timeout, metadata=metadata,
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
-    def get_iam_policy(
-        self,
-        request: iam_policy.GetIamPolicyRequest = None,
-        *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    def get_iam_policy(self,
+            request: iam_policy.GetIamPolicyRequest = None,
+            *,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> policy.Policy:
         r"""Gets the IAM Policy for a resource (namespace or
         service only).
 
@@ -1636,23 +1661,29 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("resource", request.resource),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('resource', request.resource),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def set_iam_policy(
-        self,
-        request: iam_policy.SetIamPolicyRequest = None,
-        *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    def set_iam_policy(self,
+            request: iam_policy.SetIamPolicyRequest = None,
+            *,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> policy.Policy:
         r"""Sets the IAM Policy for a resource (namespace or
         service only).
 
@@ -1750,23 +1781,29 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("resource", request.resource),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('resource', request.resource),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
-    def test_iam_permissions(
-        self,
-        request: iam_policy.TestIamPermissionsRequest = None,
-        *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
-        metadata: Sequence[Tuple[str, str]] = (),
-    ) -> iam_policy.TestIamPermissionsResponse:
+    def test_iam_permissions(self,
+            request: iam_policy.TestIamPermissionsRequest = None,
+            *,
+            retry: retries.Retry = gapic_v1.method.DEFAULT,
+            timeout: float = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+            ) -> iam_policy.TestIamPermissionsResponse:
         r"""Tests IAM permissions for a resource (namespace or
         service only).
 
@@ -1799,24 +1836,38 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         # Certain fields should be provided within the metadata header;
         # add these here.
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("resource", request.resource),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('resource', request.resource),
+            )),
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
 
 
+
+
+
+
+
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            "google-cloud-service-directory",
+            'google-cloud-service-directory',
         ).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()
 
 
-__all__ = ("RegistrationServiceClient",)
+__all__ = (
+    'RegistrationServiceClient',
+)

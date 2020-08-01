@@ -19,6 +19,6 @@ from .client import RegistrationServiceClient
 from .async_client import RegistrationServiceAsyncClient
 
 __all__ = (
-    "RegistrationServiceClient",
-    "RegistrationServiceAsyncClient",
+    'RegistrationServiceClient',
+    'RegistrationServiceAsyncClient',
 )
