@@ -71,7 +71,9 @@ class CreateNamespaceRequest(proto.Message):
     """
 
     parent = proto.Field(proto.STRING, number=1)
+
     namespace_id = proto.Field(proto.STRING, number=2)
+
     namespace = proto.Field(proto.MESSAGE, number=3, message=gcs_namespace.Namespace)
 
 
@@ -125,9 +127,13 @@ class ListNamespacesRequest(proto.Message):
     """
 
     parent = proto.Field(proto.STRING, number=1)
+
     page_size = proto.Field(proto.INT32, number=2)
+
     page_token = proto.Field(proto.STRING, number=3)
+
     filter = proto.Field(proto.STRING, number=4)
+
     order_by = proto.Field(proto.STRING, number=5)
 
 
@@ -151,6 +157,7 @@ class ListNamespacesResponse(proto.Message):
     namespaces = proto.RepeatedField(
         proto.MESSAGE, number=1, message=gcs_namespace.Namespace
     )
+
     next_page_token = proto.Field(proto.STRING, number=2)
 
 
@@ -180,6 +187,7 @@ class UpdateNamespaceRequest(proto.Message):
     """
 
     namespace = proto.Field(proto.MESSAGE, number=1, message=gcs_namespace.Namespace)
+
     update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask)
 
 
@@ -217,7 +225,9 @@ class CreateServiceRequest(proto.Message):
     """
 
     parent = proto.Field(proto.STRING, number=1)
+
     service_id = proto.Field(proto.STRING, number=2)
+
     service = proto.Field(proto.MESSAGE, number=3, message=gcs_service.Service)
 
 
@@ -265,9 +275,13 @@ class ListServicesRequest(proto.Message):
     """
 
     parent = proto.Field(proto.STRING, number=1)
+
     page_size = proto.Field(proto.INT32, number=2)
+
     page_token = proto.Field(proto.STRING, number=3)
+
     filter = proto.Field(proto.STRING, number=4)
+
     order_by = proto.Field(proto.STRING, number=5)
 
 
@@ -289,6 +303,7 @@ class ListServicesResponse(proto.Message):
         return self
 
     services = proto.RepeatedField(proto.MESSAGE, number=1, message=gcs_service.Service)
+
     next_page_token = proto.Field(proto.STRING, number=2)
 
 
@@ -320,6 +335,7 @@ class UpdateServiceRequest(proto.Message):
     """
 
     service = proto.Field(proto.MESSAGE, number=1, message=gcs_service.Service)
+
     update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask)
 
 
@@ -356,7 +372,9 @@ class CreateEndpointRequest(proto.Message):
     """
 
     parent = proto.Field(proto.STRING, number=1)
+
     endpoint_id = proto.Field(proto.STRING, number=2)
+
     endpoint = proto.Field(proto.MESSAGE, number=3, message=gcs_endpoint.Endpoint)
 
 
@@ -409,9 +427,13 @@ class ListEndpointsRequest(proto.Message):
     """
 
     parent = proto.Field(proto.STRING, number=1)
+
     page_size = proto.Field(proto.INT32, number=2)
+
     page_token = proto.Field(proto.STRING, number=3)
+
     filter = proto.Field(proto.STRING, number=4)
+
     order_by = proto.Field(proto.STRING, number=5)
 
 
@@ -435,6 +457,7 @@ class ListEndpointsResponse(proto.Message):
     endpoints = proto.RepeatedField(
         proto.MESSAGE, number=1, message=gcs_endpoint.Endpoint
     )
+
     next_page_token = proto.Field(proto.STRING, number=2)
 
 
@@ -465,6 +488,7 @@ class UpdateEndpointRequest(proto.Message):
     """
 
     endpoint = proto.Field(proto.MESSAGE, number=1, message=gcs_endpoint.Endpoint)
+
     update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask)
 
 

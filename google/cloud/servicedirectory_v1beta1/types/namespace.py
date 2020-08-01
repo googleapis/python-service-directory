@@ -41,6 +41,7 @@ class Namespace(proto.Message):
     """
 
     name = proto.Field(proto.STRING, number=1)
+
     labels = proto.MapField(proto.STRING, proto.STRING, number=2)
 
 
