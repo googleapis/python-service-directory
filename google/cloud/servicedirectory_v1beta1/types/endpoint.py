@@ -50,8 +50,11 @@ class Endpoint(proto.Message):
     """
 
     name = proto.Field(proto.STRING, number=1)
+
     address = proto.Field(proto.STRING, number=2)
+
     port = proto.Field(proto.INT32, number=3)
+
     metadata = proto.MapField(proto.STRING, proto.STRING, number=4)
 
 
