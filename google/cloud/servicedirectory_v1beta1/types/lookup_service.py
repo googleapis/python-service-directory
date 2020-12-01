@@ -63,7 +63,9 @@ class ResolveServiceRequest(proto.Message):
     """
 
     name = proto.Field(proto.STRING, number=1)
+
     max_endpoints = proto.Field(proto.INT32, number=2)
+
     endpoint_filter = proto.Field(proto.STRING, number=3)
 
 
