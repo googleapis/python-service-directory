@@ -31,8 +31,8 @@ from google.cloud.servicedirectory_v1beta1.types import lookup_service
 try:
     DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
-            "google-cloud-service-directory"
-        ).version
+            "google-cloud-service-directory",
+        ).version,
     )
 except pkg_resources.DistributionNotFound:
     DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo()
@@ -107,13 +107,13 @@ class LookupServiceTransport(abc.ABC):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
             self.resolve_service: gapic_v1.method.wrap_method(
-                self.resolve_service, default_timeout=None, client_info=client_info
-            )
+                self.resolve_service, default_timeout=None, client_info=client_info,
+            ),
         }
 
     @property
     def resolve_service(
-        self
+        self,
     ) -> typing.Callable[
         [lookup_service.ResolveServiceRequest],
         typing.Union[

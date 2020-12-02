@@ -259,7 +259,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def create_namespace(
-        self
+        self,
     ) -> Callable[
         [registration_service.CreateNamespaceRequest],
         Awaitable[gcs_namespace.Namespace],
@@ -288,7 +288,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def list_namespaces(
-        self
+        self,
     ) -> Callable[
         [registration_service.ListNamespacesRequest],
         Awaitable[registration_service.ListNamespacesResponse],
@@ -317,7 +317,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def get_namespace(
-        self
+        self,
     ) -> Callable[
         [registration_service.GetNamespaceRequest], Awaitable[namespace.Namespace]
     ]:
@@ -345,7 +345,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def update_namespace(
-        self
+        self,
     ) -> Callable[
         [registration_service.UpdateNamespaceRequest],
         Awaitable[gcs_namespace.Namespace],
@@ -374,7 +374,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def delete_namespace(
-        self
+        self,
     ) -> Callable[
         [registration_service.DeleteNamespaceRequest], Awaitable[empty.Empty]
     ]:
@@ -403,7 +403,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def create_service(
-        self
+        self,
     ) -> Callable[
         [registration_service.CreateServiceRequest], Awaitable[gcs_service.Service]
     ]:
@@ -431,7 +431,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def list_services(
-        self
+        self,
     ) -> Callable[
         [registration_service.ListServicesRequest],
         Awaitable[registration_service.ListServicesResponse],
@@ -460,7 +460,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def get_service(
-        self
+        self,
     ) -> Callable[[registration_service.GetServiceRequest], Awaitable[service.Service]]:
         r"""Return a callable for the get service method over gRPC.
 
@@ -486,7 +486,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def update_service(
-        self
+        self,
     ) -> Callable[
         [registration_service.UpdateServiceRequest], Awaitable[gcs_service.Service]
     ]:
@@ -514,7 +514,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def delete_service(
-        self
+        self,
     ) -> Callable[[registration_service.DeleteServiceRequest], Awaitable[empty.Empty]]:
         r"""Return a callable for the delete service method over gRPC.
 
@@ -541,7 +541,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def create_endpoint(
-        self
+        self,
     ) -> Callable[
         [registration_service.CreateEndpointRequest], Awaitable[gcs_endpoint.Endpoint]
     ]:
@@ -569,7 +569,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def list_endpoints(
-        self
+        self,
     ) -> Callable[
         [registration_service.ListEndpointsRequest],
         Awaitable[registration_service.ListEndpointsResponse],
@@ -598,7 +598,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def get_endpoint(
-        self
+        self,
     ) -> Callable[
         [registration_service.GetEndpointRequest], Awaitable[endpoint.Endpoint]
     ]:
@@ -626,7 +626,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def update_endpoint(
-        self
+        self,
     ) -> Callable[
         [registration_service.UpdateEndpointRequest], Awaitable[gcs_endpoint.Endpoint]
     ]:
@@ -654,7 +654,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def delete_endpoint(
-        self
+        self,
     ) -> Callable[[registration_service.DeleteEndpointRequest], Awaitable[empty.Empty]]:
         r"""Return a callable for the delete endpoint method over gRPC.
 
@@ -680,7 +680,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def get_iam_policy(
-        self
+        self,
     ) -> Callable[[iam_policy.GetIamPolicyRequest], Awaitable[policy.Policy]]:
         r"""Return a callable for the get iam policy method over gRPC.
 
@@ -707,7 +707,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def set_iam_policy(
-        self
+        self,
     ) -> Callable[[iam_policy.SetIamPolicyRequest], Awaitable[policy.Policy]]:
         r"""Return a callable for the set iam policy method over gRPC.
 
@@ -734,7 +734,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
 
     @property
     def test_iam_permissions(
-        self
+        self,
     ) -> Callable[
         [iam_policy.TestIamPermissionsRequest],
         Awaitable[iam_policy.TestIamPermissionsResponse],
