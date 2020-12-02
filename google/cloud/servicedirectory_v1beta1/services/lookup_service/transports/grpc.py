@@ -231,7 +231,7 @@ class LookupServiceGrpcTransport(LookupServiceTransport):
 
     @property
     def resolve_service(
-        self
+        self,
     ) -> Callable[
         [lookup_service.ResolveServiceRequest], lookup_service.ResolveServiceResponse
     ]:

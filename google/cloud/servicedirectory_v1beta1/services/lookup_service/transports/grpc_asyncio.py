@@ -235,7 +235,7 @@ class LookupServiceGrpcAsyncIOTransport(LookupServiceTransport):
 
     @property
     def resolve_service(
-        self
+        self,
     ) -> Callable[
         [lookup_service.ResolveServiceRequest],
         Awaitable[lookup_service.ResolveServiceResponse],

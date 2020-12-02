@@ -43,14 +43,9 @@ s.replace("google/**/*.py", '''["'](projects/\*/.*)["']\.''', "``\g<1>``" )
 templated_files = common.py_library(
     cov_level=100,
     samples=False,
-    unit_test_python_versions=["3.6", "3.7", "3.8"],
-    system_test_python_versions=["3.7"],
+    microgenerator=True,
 )
 
 s.move(templated_files, excludes=[".coveragerc"])  # the microgenerator has a good coveragerc file
-
-# Extra lint ignores for microgenerator tests
-# TODO: Remove when https://github.com/googleapis/gapic-generator-python/issues/425 is closed
-s.replace(".flake8", "(ignore = .*)", "\g<1>, F401, F841")
 
 s.shell.run(["nox", "-s", "blacken"], hide_output=False)
