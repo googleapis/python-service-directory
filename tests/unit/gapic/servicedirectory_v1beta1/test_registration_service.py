@@ -32,16 +32,10 @@ from google.api_core import grpc_helpers
 from google.api_core import grpc_helpers_async
 from google.auth import credentials
 from google.auth.exceptions import MutualTLSChannelError
-from google.cloud.servicedirectory_v1beta1.services.registration_service import (
-    RegistrationServiceAsyncClient,
-)
-from google.cloud.servicedirectory_v1beta1.services.registration_service import (
-    RegistrationServiceClient,
-)
+from google.cloud.servicedirectory_v1beta1.services.registration_service import RegistrationServiceAsyncClient
+from google.cloud.servicedirectory_v1beta1.services.registration_service import RegistrationServiceClient
 from google.cloud.servicedirectory_v1beta1.services.registration_service import pagers
-from google.cloud.servicedirectory_v1beta1.services.registration_service import (
-    transports,
-)
+from google.cloud.servicedirectory_v1beta1.services.registration_service import transports
 from google.cloud.servicedirectory_v1beta1.types import endpoint
 from google.cloud.servicedirectory_v1beta1.types import endpoint as gcs_endpoint
 from google.cloud.servicedirectory_v1beta1.types import namespace
@@ -65,11 +59,7 @@ def client_cert_source_callback():
 # This method modifies the default endpoint so the client can produce a different
 # mtls endpoint for endpoint testing purposes.
 def modify_default_endpoint(client):
-    return (
-        "foo.googleapis.com"
-        if ("localhost" in client.DEFAULT_ENDPOINT)
-        else client.DEFAULT_ENDPOINT
-    )
+    return "foo.googleapis.com" if ("localhost" in client.DEFAULT_ENDPOINT) else client.DEFAULT_ENDPOINT
 
 
 def test__get_default_mtls_endpoint():
@@ -80,36 +70,17 @@ def test__get_default_mtls_endpoint():
     non_googleapi = "api.example.com"
 
     assert RegistrationServiceClient._get_default_mtls_endpoint(None) is None
-    assert (
-        RegistrationServiceClient._get_default_mtls_endpoint(api_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        RegistrationServiceClient._get_default_mtls_endpoint(api_mtls_endpoint)
-        == api_mtls_endpoint
-    )
-    assert (
-        RegistrationServiceClient._get_default_mtls_endpoint(sandbox_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        RegistrationServiceClient._get_default_mtls_endpoint(sandbox_mtls_endpoint)
-        == sandbox_mtls_endpoint
-    )
-    assert (
-        RegistrationServiceClient._get_default_mtls_endpoint(non_googleapi)
-        == non_googleapi
-    )
+    assert RegistrationServiceClient._get_default_mtls_endpoint(api_endpoint) == api_mtls_endpoint
+    assert RegistrationServiceClient._get_default_mtls_endpoint(api_mtls_endpoint) == api_mtls_endpoint
+    assert RegistrationServiceClient._get_default_mtls_endpoint(sandbox_endpoint) == sandbox_mtls_endpoint
+    assert RegistrationServiceClient._get_default_mtls_endpoint(sandbox_mtls_endpoint) == sandbox_mtls_endpoint
+    assert RegistrationServiceClient._get_default_mtls_endpoint(non_googleapi) == non_googleapi
 
 
-@pytest.mark.parametrize(
-    "client_class", [RegistrationServiceClient, RegistrationServiceAsyncClient]
-)
+@pytest.mark.parametrize("client_class", [RegistrationServiceClient, RegistrationServiceAsyncClient])
 def test_registration_service_client_from_service_account_file(client_class):
     creds = credentials.AnonymousCredentials()
-    with mock.patch.object(
-        service_account.Credentials, "from_service_account_file"
-    ) as factory:
+    with mock.patch.object(service_account.Credentials, 'from_service_account_file') as factory:
         factory.return_value = creds
         client = client_class.from_service_account_file("dummy/file/path.json")
         assert client.transport._credentials == creds
@@ -117,7 +88,7 @@ def test_registration_service_client_from_service_account_file(client_class):
         client = client_class.from_service_account_json("dummy/file/path.json")
         assert client.transport._credentials == creds
 
-        assert client.transport._host == "servicedirectory.googleapis.com:443"
+        assert client.transport._host == 'servicedirectory.googleapis.com:443'
 
 
 def test_registration_service_client_get_transport_class():
@@ -128,48 +99,29 @@ def test_registration_service_client_get_transport_class():
     assert transport == transports.RegistrationServiceGrpcTransport
 
 
-@pytest.mark.parametrize(
-    "client_class,transport_class,transport_name",
-    [
-        (
-            RegistrationServiceClient,
-            transports.RegistrationServiceGrpcTransport,
-            "grpc",
-        ),
-        (
-            RegistrationServiceAsyncClient,
-            transports.RegistrationServiceGrpcAsyncIOTransport,
-            "grpc_asyncio",
-        ),
-    ],
-)
-@mock.patch.object(
-    RegistrationServiceClient,
-    "DEFAULT_ENDPOINT",
-    modify_default_endpoint(RegistrationServiceClient),
-)
-@mock.patch.object(
-    RegistrationServiceAsyncClient,
-    "DEFAULT_ENDPOINT",
-    modify_default_endpoint(RegistrationServiceAsyncClient),
-)
-def test_registration_service_client_client_options(
-    client_class, transport_class, transport_name
-):
+@pytest.mark.parametrize("client_class,transport_class,transport_name", [
+    (RegistrationServiceClient, transports.RegistrationServiceGrpcTransport, "grpc"),
+    (RegistrationServiceAsyncClient, transports.RegistrationServiceGrpcAsyncIOTransport, "grpc_asyncio")
+])
+@mock.patch.object(RegistrationServiceClient, "DEFAULT_ENDPOINT", modify_default_endpoint(RegistrationServiceClient))
+@mock.patch.object(RegistrationServiceAsyncClient, "DEFAULT_ENDPOINT", modify_default_endpoint(RegistrationServiceAsyncClient))
+def test_registration_service_client_client_options(client_class, transport_class, transport_name):
     # Check that if channel is provided we won't create a new one.
-    with mock.patch.object(RegistrationServiceClient, "get_transport_class") as gtc:
-        transport = transport_class(credentials=credentials.AnonymousCredentials())
+    with mock.patch.object(RegistrationServiceClient, 'get_transport_class') as gtc:
+        transport = transport_class(
+            credentials=credentials.AnonymousCredentials()
+        )
         client = client_class(transport=transport)
         gtc.assert_not_called()
 
     # Check that if channel is provided via str we will create a new one.
-    with mock.patch.object(RegistrationServiceClient, "get_transport_class") as gtc:
+    with mock.patch.object(RegistrationServiceClient, 'get_transport_class') as gtc:
         client = client_class(transport=transport_name)
         gtc.assert_called()
 
     # Check the case api_endpoint is provided.
     options = client_options.ClientOptions(api_endpoint="squid.clam.whelk")
-    with mock.patch.object(transport_class, "__init__") as patched:
+    with mock.patch.object(transport_class, '__init__') as patched:
         patched.return_value = None
         client = client_class(client_options=options)
         patched.assert_called_once_with(
@@ -185,7 +137,7 @@ def test_registration_service_client_client_options(
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS_ENDPOINT is
     # "never".
     with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "never"}):
-        with mock.patch.object(transport_class, "__init__") as patched:
+        with mock.patch.object(transport_class, '__init__') as patched:
             patched.return_value = None
             client = client_class()
             patched.assert_called_once_with(
@@ -201,7 +153,7 @@ def test_registration_service_client_client_options(
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS_ENDPOINT is
     # "always".
     with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "always"}):
-        with mock.patch.object(transport_class, "__init__") as patched:
+        with mock.patch.object(transport_class, '__init__') as patched:
             patched.return_value = None
             client = client_class()
             patched.assert_called_once_with(
@@ -221,15 +173,13 @@ def test_registration_service_client_client_options(
             client = client_class()
 
     # Check the case GOOGLE_API_USE_CLIENT_CERTIFICATE has unsupported value.
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}
-    ):
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": "Unsupported"}):
         with pytest.raises(ValueError):
             client = client_class()
 
     # Check the case quota_project_id is provided
     options = client_options.ClientOptions(quota_project_id="octopus")
-    with mock.patch.object(transport_class, "__init__") as patched:
+    with mock.patch.object(transport_class, '__init__') as patched:
         patched.return_value = None
         client = client_class(client_options=options)
         patched.assert_called_once_with(
@@ -242,66 +192,26 @@ def test_registration_service_client_client_options(
             client_info=transports.base.DEFAULT_CLIENT_INFO,
         )
 
-
-@pytest.mark.parametrize(
-    "client_class,transport_class,transport_name,use_client_cert_env",
-    [
-        (
-            RegistrationServiceClient,
-            transports.RegistrationServiceGrpcTransport,
-            "grpc",
-            "true",
-        ),
-        (
-            RegistrationServiceAsyncClient,
-            transports.RegistrationServiceGrpcAsyncIOTransport,
-            "grpc_asyncio",
-            "true",
-        ),
-        (
-            RegistrationServiceClient,
-            transports.RegistrationServiceGrpcTransport,
-            "grpc",
-            "false",
-        ),
-        (
-            RegistrationServiceAsyncClient,
-            transports.RegistrationServiceGrpcAsyncIOTransport,
-            "grpc_asyncio",
-            "false",
-        ),
-    ],
-)
-@mock.patch.object(
-    RegistrationServiceClient,
-    "DEFAULT_ENDPOINT",
-    modify_default_endpoint(RegistrationServiceClient),
-)
-@mock.patch.object(
-    RegistrationServiceAsyncClient,
-    "DEFAULT_ENDPOINT",
-    modify_default_endpoint(RegistrationServiceAsyncClient),
-)
+@pytest.mark.parametrize("client_class,transport_class,transport_name,use_client_cert_env", [
+    (RegistrationServiceClient, transports.RegistrationServiceGrpcTransport, "grpc", "true"),
+    (RegistrationServiceAsyncClient, transports.RegistrationServiceGrpcAsyncIOTransport, "grpc_asyncio", "true"),
+    (RegistrationServiceClient, transports.RegistrationServiceGrpcTransport, "grpc", "false"),
+    (RegistrationServiceAsyncClient, transports.RegistrationServiceGrpcAsyncIOTransport, "grpc_asyncio", "false")
+])
+@mock.patch.object(RegistrationServiceClient, "DEFAULT_ENDPOINT", modify_default_endpoint(RegistrationServiceClient))
+@mock.patch.object(RegistrationServiceAsyncClient, "DEFAULT_ENDPOINT", modify_default_endpoint(RegistrationServiceAsyncClient))
 @mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS_ENDPOINT": "auto"})
-def test_registration_service_client_mtls_env_auto(
-    client_class, transport_class, transport_name, use_client_cert_env
-):
+def test_registration_service_client_mtls_env_auto(client_class, transport_class, transport_name, use_client_cert_env):
     # This tests the endpoint autoswitch behavior. Endpoint is autoswitched to the default
     # mtls endpoint, if GOOGLE_API_USE_CLIENT_CERTIFICATE is "true" and client cert exists.
 
     # Check the case client_cert_source is provided. Whether client cert is used depends on
     # GOOGLE_API_USE_CLIENT_CERTIFICATE value.
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": use_client_cert_env}
-    ):
-        options = client_options.ClientOptions(
-            client_cert_source=client_cert_source_callback
-        )
-        with mock.patch.object(transport_class, "__init__") as patched:
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": use_client_cert_env}):
+        options = client_options.ClientOptions(client_cert_source=client_cert_source_callback)
+        with mock.patch.object(transport_class, '__init__') as patched:
             ssl_channel_creds = mock.Mock()
-            with mock.patch(
-                "grpc.ssl_channel_credentials", return_value=ssl_channel_creds
-            ):
+            with mock.patch('grpc.ssl_channel_credentials', return_value=ssl_channel_creds):
                 patched.return_value = None
                 client = client_class(client_options=options)
 
@@ -324,21 +234,11 @@ def test_registration_service_client_mtls_env_auto(
 
     # Check the case ADC client cert is provided. Whether client cert is used depends on
     # GOOGLE_API_USE_CLIENT_CERTIFICATE value.
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": use_client_cert_env}
-    ):
-        with mock.patch.object(transport_class, "__init__") as patched:
-            with mock.patch(
-                "google.auth.transport.grpc.SslCredentials.__init__", return_value=None
-            ):
-                with mock.patch(
-                    "google.auth.transport.grpc.SslCredentials.is_mtls",
-                    new_callable=mock.PropertyMock,
-                ) as is_mtls_mock:
-                    with mock.patch(
-                        "google.auth.transport.grpc.SslCredentials.ssl_credentials",
-                        new_callable=mock.PropertyMock,
-                    ) as ssl_credentials_mock:
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": use_client_cert_env}):
+        with mock.patch.object(transport_class, '__init__') as patched:
+            with mock.patch('google.auth.transport.grpc.SslCredentials.__init__', return_value=None):
+                with mock.patch('google.auth.transport.grpc.SslCredentials.is_mtls', new_callable=mock.PropertyMock) as is_mtls_mock:
+                    with mock.patch('google.auth.transport.grpc.SslCredentials.ssl_credentials', new_callable=mock.PropertyMock) as ssl_credentials_mock:
                         if use_client_cert_env == "false":
                             is_mtls_mock.return_value = False
                             ssl_credentials_mock.return_value = None
@@ -348,9 +248,7 @@ def test_registration_service_client_mtls_env_auto(
                             is_mtls_mock.return_value = True
                             ssl_credentials_mock.return_value = mock.Mock()
                             expected_host = client.DEFAULT_MTLS_ENDPOINT
-                            expected_ssl_channel_creds = (
-                                ssl_credentials_mock.return_value
-                            )
+                            expected_ssl_channel_creds = ssl_credentials_mock.return_value
 
                         patched.return_value = None
                         client = client_class()
@@ -365,17 +263,10 @@ def test_registration_service_client_mtls_env_auto(
                         )
 
     # Check the case client_cert_source and ADC client cert are not provided.
-    with mock.patch.dict(
-        os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": use_client_cert_env}
-    ):
-        with mock.patch.object(transport_class, "__init__") as patched:
-            with mock.patch(
-                "google.auth.transport.grpc.SslCredentials.__init__", return_value=None
-            ):
-                with mock.patch(
-                    "google.auth.transport.grpc.SslCredentials.is_mtls",
-                    new_callable=mock.PropertyMock,
-                ) as is_mtls_mock:
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_CLIENT_CERTIFICATE": use_client_cert_env}):
+        with mock.patch.object(transport_class, '__init__') as patched:
+            with mock.patch('google.auth.transport.grpc.SslCredentials.__init__', return_value=None):
+                with mock.patch('google.auth.transport.grpc.SslCredentials.is_mtls', new_callable=mock.PropertyMock) as is_mtls_mock:
                     is_mtls_mock.return_value = False
                     patched.return_value = None
                     client = client_class()
@@ -390,27 +281,16 @@ def test_registration_service_client_mtls_env_auto(
                     )
 
 
-@pytest.mark.parametrize(
-    "client_class,transport_class,transport_name",
-    [
-        (
-            RegistrationServiceClient,
-            transports.RegistrationServiceGrpcTransport,
-            "grpc",
-        ),
-        (
-            RegistrationServiceAsyncClient,
-            transports.RegistrationServiceGrpcAsyncIOTransport,
-            "grpc_asyncio",
-        ),
-    ],
-)
-def test_registration_service_client_client_options_scopes(
-    client_class, transport_class, transport_name
-):
+@pytest.mark.parametrize("client_class,transport_class,transport_name", [
+    (RegistrationServiceClient, transports.RegistrationServiceGrpcTransport, "grpc"),
+    (RegistrationServiceAsyncClient, transports.RegistrationServiceGrpcAsyncIOTransport, "grpc_asyncio")
+])
+def test_registration_service_client_client_options_scopes(client_class, transport_class, transport_name):
     # Check the case scopes are provided.
-    options = client_options.ClientOptions(scopes=["1", "2"],)
-    with mock.patch.object(transport_class, "__init__") as patched:
+    options = client_options.ClientOptions(
+        scopes=["1", "2"],
+    )
+    with mock.patch.object(transport_class, '__init__') as patched:
         patched.return_value = None
         client = client_class(client_options=options)
         patched.assert_called_once_with(
@@ -423,28 +303,16 @@ def test_registration_service_client_client_options_scopes(
             client_info=transports.base.DEFAULT_CLIENT_INFO,
         )
 
-
-@pytest.mark.parametrize(
-    "client_class,transport_class,transport_name",
-    [
-        (
-            RegistrationServiceClient,
-            transports.RegistrationServiceGrpcTransport,
-            "grpc",
-        ),
-        (
-            RegistrationServiceAsyncClient,
-            transports.RegistrationServiceGrpcAsyncIOTransport,
-            "grpc_asyncio",
-        ),
-    ],
-)
-def test_registration_service_client_client_options_credentials_file(
-    client_class, transport_class, transport_name
-):
+@pytest.mark.parametrize("client_class,transport_class,transport_name", [
+    (RegistrationServiceClient, transports.RegistrationServiceGrpcTransport, "grpc"),
+    (RegistrationServiceAsyncClient, transports.RegistrationServiceGrpcAsyncIOTransport, "grpc_asyncio")
+])
+def test_registration_service_client_client_options_credentials_file(client_class, transport_class, transport_name):
     # Check the case credentials file is provided.
-    options = client_options.ClientOptions(credentials_file="credentials.json")
-    with mock.patch.object(transport_class, "__init__") as patched:
+    options = client_options.ClientOptions(
+        credentials_file="credentials.json"
+    )
+    with mock.patch.object(transport_class, '__init__') as patched:
         patched.return_value = None
         client = client_class(client_options=options)
         patched.assert_called_once_with(
@@ -459,12 +327,10 @@ def test_registration_service_client_client_options_credentials_file(
 
 
 def test_registration_service_client_client_options_from_dict():
-    with mock.patch(
-        "google.cloud.servicedirectory_v1beta1.services.registration_service.transports.RegistrationServiceGrpcTransport.__init__"
-    ) as grpc_transport:
+    with mock.patch('google.cloud.servicedirectory_v1beta1.services.registration_service.transports.RegistrationServiceGrpcTransport.__init__') as grpc_transport:
         grpc_transport.return_value = None
         client = RegistrationServiceClient(
-            client_options={"api_endpoint": "squid.clam.whelk"}
+            client_options={'api_endpoint': 'squid.clam.whelk'}
         )
         grpc_transport.assert_called_once_with(
             credentials=None,
@@ -477,11 +343,10 @@ def test_registration_service_client_client_options_from_dict():
         )
 
 
-def test_create_namespace(
-    transport: str = "grpc", request_type=registration_service.CreateNamespaceRequest
-):
+def test_create_namespace(transport: str = 'grpc', request_type=registration_service.CreateNamespaceRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -489,9 +354,14 @@ def test_create_namespace(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = gcs_namespace.Namespace(name="name_value",)
+        call.return_value = gcs_namespace.Namespace(
+            name='name_value',
+
+        )
 
         response = client.create_namespace(request)
 
@@ -505,7 +375,7 @@ def test_create_namespace(
 
     assert isinstance(response, gcs_namespace.Namespace)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 def test_create_namespace_from_dict():
@@ -513,12 +383,10 @@ def test_create_namespace_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_create_namespace_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.CreateNamespaceRequest,
-):
+async def test_create_namespace_async(transport: str = 'grpc_asyncio', request_type=registration_service.CreateNamespaceRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -526,11 +394,13 @@ async def test_create_namespace_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_namespace.Namespace(name="name_value",)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_namespace.Namespace(
+            name='name_value',
+        ))
 
         response = await client.create_namespace(request)
 
@@ -543,7 +413,7 @@ async def test_create_namespace_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, gcs_namespace.Namespace)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -552,15 +422,19 @@ async def test_create_namespace_async_from_dict():
 
 
 def test_create_namespace_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.CreateNamespaceRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_namespace),
+            '__call__') as call:
         call.return_value = gcs_namespace.Namespace()
 
         client.create_namespace(request)
@@ -572,7 +446,10 @@ def test_create_namespace_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -584,13 +461,13 @@ async def test_create_namespace_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.CreateNamespaceRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_namespace), "__call__") as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_namespace.Namespace()
-        )
+    with mock.patch.object(
+            type(client.transport.create_namespace),
+            '__call__') as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_namespace.Namespace())
 
         await client.create_namespace(request)
 
@@ -601,23 +478,30 @@ async def test_create_namespace_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 def test_create_namespace_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_namespace.Namespace()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.create_namespace(
-            parent="parent_value",
-            namespace=gcs_namespace.Namespace(name="name_value"),
-            namespace_id="namespace_id_value",
+            parent='parent_value',
+            namespace=gcs_namespace.Namespace(name='name_value'),
+            namespace_id='namespace_id_value',
         )
 
         # Establish that the underlying call was made with the expected
@@ -625,24 +509,26 @@ def test_create_namespace_flattened():
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
-        assert args[0].namespace == gcs_namespace.Namespace(name="name_value")
+        assert args[0].namespace == gcs_namespace.Namespace(name='name_value')
 
-        assert args[0].namespace_id == "namespace_id_value"
+        assert args[0].namespace_id == 'namespace_id_value'
 
 
 def test_create_namespace_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.create_namespace(
             registration_service.CreateNamespaceRequest(),
-            parent="parent_value",
-            namespace=gcs_namespace.Namespace(name="name_value"),
-            namespace_id="namespace_id_value",
+            parent='parent_value',
+            namespace=gcs_namespace.Namespace(name='name_value'),
+            namespace_id='namespace_id_value',
         )
 
 
@@ -653,19 +539,19 @@ async def test_create_namespace_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_namespace.Namespace()
 
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_namespace.Namespace()
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_namespace.Namespace())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         response = await client.create_namespace(
-            parent="parent_value",
-            namespace=gcs_namespace.Namespace(name="name_value"),
-            namespace_id="namespace_id_value",
+            parent='parent_value',
+            namespace=gcs_namespace.Namespace(name='name_value'),
+            namespace_id='namespace_id_value',
         )
 
         # Establish that the underlying call was made with the expected
@@ -673,11 +559,11 @@ async def test_create_namespace_flattened_async():
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
-        assert args[0].namespace == gcs_namespace.Namespace(name="name_value")
+        assert args[0].namespace == gcs_namespace.Namespace(name='name_value')
 
-        assert args[0].namespace_id == "namespace_id_value"
+        assert args[0].namespace_id == 'namespace_id_value'
 
 
 @pytest.mark.asyncio
@@ -691,17 +577,16 @@ async def test_create_namespace_flattened_error_async():
     with pytest.raises(ValueError):
         await client.create_namespace(
             registration_service.CreateNamespaceRequest(),
-            parent="parent_value",
-            namespace=gcs_namespace.Namespace(name="name_value"),
-            namespace_id="namespace_id_value",
+            parent='parent_value',
+            namespace=gcs_namespace.Namespace(name='name_value'),
+            namespace_id='namespace_id_value',
         )
 
 
-def test_list_namespaces(
-    transport: str = "grpc", request_type=registration_service.ListNamespacesRequest
-):
+def test_list_namespaces(transport: str = 'grpc', request_type=registration_service.ListNamespacesRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -709,10 +594,13 @@ def test_list_namespaces(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_namespaces), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_namespaces),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = registration_service.ListNamespacesResponse(
-            next_page_token="next_page_token_value",
+            next_page_token='next_page_token_value',
+
         )
 
         response = client.list_namespaces(request)
@@ -727,7 +615,7 @@ def test_list_namespaces(
 
     assert isinstance(response, pagers.ListNamespacesPager)
 
-    assert response.next_page_token == "next_page_token_value"
+    assert response.next_page_token == 'next_page_token_value'
 
 
 def test_list_namespaces_from_dict():
@@ -735,12 +623,10 @@ def test_list_namespaces_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_list_namespaces_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.ListNamespacesRequest,
-):
+async def test_list_namespaces_async(transport: str = 'grpc_asyncio', request_type=registration_service.ListNamespacesRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -748,13 +634,13 @@ async def test_list_namespaces_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_namespaces), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_namespaces),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            registration_service.ListNamespacesResponse(
-                next_page_token="next_page_token_value",
-            )
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(registration_service.ListNamespacesResponse(
+            next_page_token='next_page_token_value',
+        ))
 
         response = await client.list_namespaces(request)
 
@@ -767,7 +653,7 @@ async def test_list_namespaces_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, pagers.ListNamespacesAsyncPager)
 
-    assert response.next_page_token == "next_page_token_value"
+    assert response.next_page_token == 'next_page_token_value'
 
 
 @pytest.mark.asyncio
@@ -776,15 +662,19 @@ async def test_list_namespaces_async_from_dict():
 
 
 def test_list_namespaces_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.ListNamespacesRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_namespaces), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_namespaces),
+            '__call__') as call:
         call.return_value = registration_service.ListNamespacesResponse()
 
         client.list_namespaces(request)
@@ -796,7 +686,10 @@ def test_list_namespaces_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -808,13 +701,13 @@ async def test_list_namespaces_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.ListNamespacesRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_namespaces), "__call__") as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            registration_service.ListNamespacesResponse()
-        )
+    with mock.patch.object(
+            type(client.transport.list_namespaces),
+            '__call__') as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(registration_service.ListNamespacesResponse())
 
         await client.list_namespaces(request)
 
@@ -825,37 +718,49 @@ async def test_list_namespaces_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 def test_list_namespaces_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_namespaces), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_namespaces),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = registration_service.ListNamespacesResponse()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.list_namespaces(parent="parent_value",)
+        client.list_namespaces(
+            parent='parent_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
 
 def test_list_namespaces_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.list_namespaces(
-            registration_service.ListNamespacesRequest(), parent="parent_value",
+            registration_service.ListNamespacesRequest(),
+            parent='parent_value',
         )
 
 
@@ -866,23 +771,25 @@ async def test_list_namespaces_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_namespaces), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_namespaces),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = registration_service.ListNamespacesResponse()
 
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            registration_service.ListNamespacesResponse()
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(registration_service.ListNamespacesResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_namespaces(parent="parent_value",)
+        response = await client.list_namespaces(
+            parent='parent_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
 
 @pytest.mark.asyncio
@@ -895,15 +802,20 @@ async def test_list_namespaces_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.list_namespaces(
-            registration_service.ListNamespacesRequest(), parent="parent_value",
+            registration_service.ListNamespacesRequest(),
+            parent='parent_value',
         )
 
 
 def test_list_namespaces_pager():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials,)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_namespaces), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_namespaces),
+            '__call__') as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListNamespacesResponse(
@@ -912,23 +824,32 @@ def test_list_namespaces_pager():
                     namespace.Namespace(),
                     namespace.Namespace(),
                 ],
-                next_page_token="abc",
+                next_page_token='abc',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[], next_page_token="def",
+                namespaces=[],
+                next_page_token='def',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[namespace.Namespace(),], next_page_token="ghi",
+                namespaces=[
+                    namespace.Namespace(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[namespace.Namespace(), namespace.Namespace(),],
+                namespaces=[
+                    namespace.Namespace(),
+                    namespace.Namespace(),
+                ],
             ),
             RuntimeError,
         )
 
         metadata = ()
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", ""),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', ''),
+            )),
         )
         pager = client.list_namespaces(request={})
 
@@ -936,14 +857,18 @@ def test_list_namespaces_pager():
 
         results = [i for i in pager]
         assert len(results) == 6
-        assert all(isinstance(i, namespace.Namespace) for i in results)
-
+        assert all(isinstance(i, namespace.Namespace)
+                   for i in results)
 
 def test_list_namespaces_pages():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials,)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_namespaces), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_namespaces),
+            '__call__') as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListNamespacesResponse(
@@ -952,23 +877,29 @@ def test_list_namespaces_pages():
                     namespace.Namespace(),
                     namespace.Namespace(),
                 ],
-                next_page_token="abc",
+                next_page_token='abc',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[], next_page_token="def",
+                namespaces=[],
+                next_page_token='def',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[namespace.Namespace(),], next_page_token="ghi",
+                namespaces=[
+                    namespace.Namespace(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[namespace.Namespace(), namespace.Namespace(),],
+                namespaces=[
+                    namespace.Namespace(),
+                    namespace.Namespace(),
+                ],
             ),
             RuntimeError,
         )
         pages = list(client.list_namespaces(request={}).pages)
-        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
             assert page_.raw_page.next_page_token == token
-
 
 @pytest.mark.asyncio
 async def test_list_namespaces_async_pager():
@@ -978,8 +909,8 @@ async def test_list_namespaces_async_pager():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_namespaces), "__call__", new_callable=mock.AsyncMock
-    ) as call:
+            type(client.transport.list_namespaces),
+            '__call__', new_callable=mock.AsyncMock) as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListNamespacesResponse(
@@ -988,28 +919,35 @@ async def test_list_namespaces_async_pager():
                     namespace.Namespace(),
                     namespace.Namespace(),
                 ],
-                next_page_token="abc",
+                next_page_token='abc',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[], next_page_token="def",
+                namespaces=[],
+                next_page_token='def',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[namespace.Namespace(),], next_page_token="ghi",
+                namespaces=[
+                    namespace.Namespace(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[namespace.Namespace(), namespace.Namespace(),],
+                namespaces=[
+                    namespace.Namespace(),
+                    namespace.Namespace(),
+                ],
             ),
             RuntimeError,
         )
         async_pager = await client.list_namespaces(request={},)
-        assert async_pager.next_page_token == "abc"
+        assert async_pager.next_page_token == 'abc'
         responses = []
         async for response in async_pager:
             responses.append(response)
 
         assert len(responses) == 6
-        assert all(isinstance(i, namespace.Namespace) for i in responses)
-
+        assert all(isinstance(i, namespace.Namespace)
+                   for i in responses)
 
 @pytest.mark.asyncio
 async def test_list_namespaces_async_pages():
@@ -1019,8 +957,8 @@ async def test_list_namespaces_async_pages():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_namespaces), "__call__", new_callable=mock.AsyncMock
-    ) as call:
+            type(client.transport.list_namespaces),
+            '__call__', new_callable=mock.AsyncMock) as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListNamespacesResponse(
@@ -1029,31 +967,37 @@ async def test_list_namespaces_async_pages():
                     namespace.Namespace(),
                     namespace.Namespace(),
                 ],
-                next_page_token="abc",
+                next_page_token='abc',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[], next_page_token="def",
+                namespaces=[],
+                next_page_token='def',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[namespace.Namespace(),], next_page_token="ghi",
+                namespaces=[
+                    namespace.Namespace(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListNamespacesResponse(
-                namespaces=[namespace.Namespace(), namespace.Namespace(),],
+                namespaces=[
+                    namespace.Namespace(),
+                    namespace.Namespace(),
+                ],
             ),
             RuntimeError,
         )
         pages = []
         async for page_ in (await client.list_namespaces(request={})).pages:
             pages.append(page_)
-        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
             assert page_.raw_page.next_page_token == token
 
 
-def test_get_namespace(
-    transport: str = "grpc", request_type=registration_service.GetNamespaceRequest
-):
+def test_get_namespace(transport: str = 'grpc', request_type=registration_service.GetNamespaceRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1061,9 +1005,14 @@ def test_get_namespace(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = namespace.Namespace(name="name_value",)
+        call.return_value = namespace.Namespace(
+            name='name_value',
+
+        )
 
         response = client.get_namespace(request)
 
@@ -1077,7 +1026,7 @@ def test_get_namespace(
 
     assert isinstance(response, namespace.Namespace)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 def test_get_namespace_from_dict():
@@ -1085,12 +1034,10 @@ def test_get_namespace_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_get_namespace_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.GetNamespaceRequest,
-):
+async def test_get_namespace_async(transport: str = 'grpc_asyncio', request_type=registration_service.GetNamespaceRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1098,11 +1045,13 @@ async def test_get_namespace_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            namespace.Namespace(name="name_value",)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(namespace.Namespace(
+            name='name_value',
+        ))
 
         response = await client.get_namespace(request)
 
@@ -1115,7 +1064,7 @@ async def test_get_namespace_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, namespace.Namespace)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -1124,15 +1073,19 @@ async def test_get_namespace_async_from_dict():
 
 
 def test_get_namespace_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.GetNamespaceRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_namespace),
+            '__call__') as call:
         call.return_value = namespace.Namespace()
 
         client.get_namespace(request)
@@ -1144,7 +1097,10 @@ def test_get_namespace_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -1156,10 +1112,12 @@ async def test_get_namespace_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.GetNamespaceRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_namespace),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(namespace.Namespace())
 
         await client.get_namespace(request)
@@ -1171,37 +1129,49 @@ async def test_get_namespace_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 def test_get_namespace_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = namespace.Namespace()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.get_namespace(name="name_value",)
+        client.get_namespace(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 def test_get_namespace_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.get_namespace(
-            registration_service.GetNamespaceRequest(), name="name_value",
+            registration_service.GetNamespaceRequest(),
+            name='name_value',
         )
 
 
@@ -1212,21 +1182,25 @@ async def test_get_namespace_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = namespace.Namespace()
 
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(namespace.Namespace())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_namespace(name="name_value",)
+        response = await client.get_namespace(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -1239,15 +1213,15 @@ async def test_get_namespace_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.get_namespace(
-            registration_service.GetNamespaceRequest(), name="name_value",
+            registration_service.GetNamespaceRequest(),
+            name='name_value',
         )
 
 
-def test_update_namespace(
-    transport: str = "grpc", request_type=registration_service.UpdateNamespaceRequest
-):
+def test_update_namespace(transport: str = 'grpc', request_type=registration_service.UpdateNamespaceRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1255,9 +1229,14 @@ def test_update_namespace(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = gcs_namespace.Namespace(name="name_value",)
+        call.return_value = gcs_namespace.Namespace(
+            name='name_value',
+
+        )
 
         response = client.update_namespace(request)
 
@@ -1271,7 +1250,7 @@ def test_update_namespace(
 
     assert isinstance(response, gcs_namespace.Namespace)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 def test_update_namespace_from_dict():
@@ -1279,12 +1258,10 @@ def test_update_namespace_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_update_namespace_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.UpdateNamespaceRequest,
-):
+async def test_update_namespace_async(transport: str = 'grpc_asyncio', request_type=registration_service.UpdateNamespaceRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1292,11 +1269,13 @@ async def test_update_namespace_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_namespace.Namespace(name="name_value",)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_namespace.Namespace(
+            name='name_value',
+        ))
 
         response = await client.update_namespace(request)
 
@@ -1309,7 +1288,7 @@ async def test_update_namespace_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, gcs_namespace.Namespace)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -1318,15 +1297,19 @@ async def test_update_namespace_async_from_dict():
 
 
 def test_update_namespace_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.UpdateNamespaceRequest()
-    request.namespace.name = "namespace.name/value"
+    request.namespace.name = 'namespace.name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_namespace),
+            '__call__') as call:
         call.return_value = gcs_namespace.Namespace()
 
         client.update_namespace(request)
@@ -1338,9 +1321,10 @@ def test_update_namespace_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "namespace.name=namespace.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        'x-goog-request-params',
+        'namespace.name=namespace.name/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -1352,13 +1336,13 @@ async def test_update_namespace_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.UpdateNamespaceRequest()
-    request.namespace.name = "namespace.name/value"
+    request.namespace.name = 'namespace.name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_namespace), "__call__") as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_namespace.Namespace()
-        )
+    with mock.patch.object(
+            type(client.transport.update_namespace),
+            '__call__') as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_namespace.Namespace())
 
         await client.update_namespace(request)
 
@@ -1369,24 +1353,29 @@ async def test_update_namespace_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "namespace.name=namespace.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        'x-goog-request-params',
+        'namespace.name=namespace.name/value',
+    ) in kw['metadata']
 
 
 def test_update_namespace_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_namespace.Namespace()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.update_namespace(
-            namespace=gcs_namespace.Namespace(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            namespace=gcs_namespace.Namespace(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
         # Establish that the underlying call was made with the expected
@@ -1394,21 +1383,23 @@ def test_update_namespace_flattened():
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].namespace == gcs_namespace.Namespace(name="name_value")
+        assert args[0].namespace == gcs_namespace.Namespace(name='name_value')
 
-        assert args[0].update_mask == field_mask.FieldMask(paths=["paths_value"])
+        assert args[0].update_mask == field_mask.FieldMask(paths=['paths_value'])
 
 
 def test_update_namespace_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.update_namespace(
             registration_service.UpdateNamespaceRequest(),
-            namespace=gcs_namespace.Namespace(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            namespace=gcs_namespace.Namespace(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
 
@@ -1419,18 +1410,18 @@ async def test_update_namespace_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_namespace.Namespace()
 
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_namespace.Namespace()
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_namespace.Namespace())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         response = await client.update_namespace(
-            namespace=gcs_namespace.Namespace(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            namespace=gcs_namespace.Namespace(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
         # Establish that the underlying call was made with the expected
@@ -1438,9 +1429,9 @@ async def test_update_namespace_flattened_async():
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].namespace == gcs_namespace.Namespace(name="name_value")
+        assert args[0].namespace == gcs_namespace.Namespace(name='name_value')
 
-        assert args[0].update_mask == field_mask.FieldMask(paths=["paths_value"])
+        assert args[0].update_mask == field_mask.FieldMask(paths=['paths_value'])
 
 
 @pytest.mark.asyncio
@@ -1454,16 +1445,15 @@ async def test_update_namespace_flattened_error_async():
     with pytest.raises(ValueError):
         await client.update_namespace(
             registration_service.UpdateNamespaceRequest(),
-            namespace=gcs_namespace.Namespace(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            namespace=gcs_namespace.Namespace(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
 
-def test_delete_namespace(
-    transport: str = "grpc", request_type=registration_service.DeleteNamespaceRequest
-):
+def test_delete_namespace(transport: str = 'grpc', request_type=registration_service.DeleteNamespaceRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1471,7 +1461,9 @@ def test_delete_namespace(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = None
 
@@ -1492,12 +1484,10 @@ def test_delete_namespace_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_delete_namespace_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.DeleteNamespaceRequest,
-):
+async def test_delete_namespace_async(transport: str = 'grpc_asyncio', request_type=registration_service.DeleteNamespaceRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1505,7 +1495,9 @@ async def test_delete_namespace_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
 
@@ -1527,15 +1519,19 @@ async def test_delete_namespace_async_from_dict():
 
 
 def test_delete_namespace_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.DeleteNamespaceRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_namespace),
+            '__call__') as call:
         call.return_value = None
 
         client.delete_namespace(request)
@@ -1547,7 +1543,10 @@ def test_delete_namespace_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -1559,10 +1558,12 @@ async def test_delete_namespace_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.DeleteNamespaceRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_namespace),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
 
         await client.delete_namespace(request)
@@ -1574,37 +1575,49 @@ async def test_delete_namespace_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 def test_delete_namespace_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = None
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.delete_namespace(name="name_value",)
+        client.delete_namespace(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 def test_delete_namespace_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_namespace(
-            registration_service.DeleteNamespaceRequest(), name="name_value",
+            registration_service.DeleteNamespaceRequest(),
+            name='name_value',
         )
 
 
@@ -1615,21 +1628,25 @@ async def test_delete_namespace_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_namespace), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_namespace),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = None
 
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_namespace(name="name_value",)
+        response = await client.delete_namespace(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -1642,15 +1659,15 @@ async def test_delete_namespace_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_namespace(
-            registration_service.DeleteNamespaceRequest(), name="name_value",
+            registration_service.DeleteNamespaceRequest(),
+            name='name_value',
         )
 
 
-def test_create_service(
-    transport: str = "grpc", request_type=registration_service.CreateServiceRequest
-):
+def test_create_service(transport: str = 'grpc', request_type=registration_service.CreateServiceRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1658,9 +1675,14 @@ def test_create_service(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = gcs_service.Service(name="name_value",)
+        call.return_value = gcs_service.Service(
+            name='name_value',
+
+        )
 
         response = client.create_service(request)
 
@@ -1674,7 +1696,7 @@ def test_create_service(
 
     assert isinstance(response, gcs_service.Service)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 def test_create_service_from_dict():
@@ -1682,12 +1704,10 @@ def test_create_service_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_create_service_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.CreateServiceRequest,
-):
+async def test_create_service_async(transport: str = 'grpc_asyncio', request_type=registration_service.CreateServiceRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1695,11 +1715,13 @@ async def test_create_service_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_service.Service(name="name_value",)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_service.Service(
+            name='name_value',
+        ))
 
         response = await client.create_service(request)
 
@@ -1712,7 +1734,7 @@ async def test_create_service_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, gcs_service.Service)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -1721,15 +1743,19 @@ async def test_create_service_async_from_dict():
 
 
 def test_create_service_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.CreateServiceRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_service),
+            '__call__') as call:
         call.return_value = gcs_service.Service()
 
         client.create_service(request)
@@ -1741,7 +1767,10 @@ def test_create_service_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -1753,10 +1782,12 @@ async def test_create_service_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.CreateServiceRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_service),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_service.Service())
 
         await client.create_service(request)
@@ -1768,23 +1799,30 @@ async def test_create_service_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 def test_create_service_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_service.Service()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.create_service(
-            parent="parent_value",
-            service=gcs_service.Service(name="name_value"),
-            service_id="service_id_value",
+            parent='parent_value',
+            service=gcs_service.Service(name='name_value'),
+            service_id='service_id_value',
         )
 
         # Establish that the underlying call was made with the expected
@@ -1792,24 +1830,26 @@ def test_create_service_flattened():
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
-        assert args[0].service == gcs_service.Service(name="name_value")
+        assert args[0].service == gcs_service.Service(name='name_value')
 
-        assert args[0].service_id == "service_id_value"
+        assert args[0].service_id == 'service_id_value'
 
 
 def test_create_service_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.create_service(
             registration_service.CreateServiceRequest(),
-            parent="parent_value",
-            service=gcs_service.Service(name="name_value"),
-            service_id="service_id_value",
+            parent='parent_value',
+            service=gcs_service.Service(name='name_value'),
+            service_id='service_id_value',
         )
 
 
@@ -1820,7 +1860,9 @@ async def test_create_service_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_service.Service()
 
@@ -1828,9 +1870,9 @@ async def test_create_service_flattened_async():
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         response = await client.create_service(
-            parent="parent_value",
-            service=gcs_service.Service(name="name_value"),
-            service_id="service_id_value",
+            parent='parent_value',
+            service=gcs_service.Service(name='name_value'),
+            service_id='service_id_value',
         )
 
         # Establish that the underlying call was made with the expected
@@ -1838,11 +1880,11 @@ async def test_create_service_flattened_async():
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
-        assert args[0].service == gcs_service.Service(name="name_value")
+        assert args[0].service == gcs_service.Service(name='name_value')
 
-        assert args[0].service_id == "service_id_value"
+        assert args[0].service_id == 'service_id_value'
 
 
 @pytest.mark.asyncio
@@ -1856,17 +1898,16 @@ async def test_create_service_flattened_error_async():
     with pytest.raises(ValueError):
         await client.create_service(
             registration_service.CreateServiceRequest(),
-            parent="parent_value",
-            service=gcs_service.Service(name="name_value"),
-            service_id="service_id_value",
+            parent='parent_value',
+            service=gcs_service.Service(name='name_value'),
+            service_id='service_id_value',
         )
 
 
-def test_list_services(
-    transport: str = "grpc", request_type=registration_service.ListServicesRequest
-):
+def test_list_services(transport: str = 'grpc', request_type=registration_service.ListServicesRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1874,10 +1915,13 @@ def test_list_services(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_services), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_services),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = registration_service.ListServicesResponse(
-            next_page_token="next_page_token_value",
+            next_page_token='next_page_token_value',
+
         )
 
         response = client.list_services(request)
@@ -1892,7 +1936,7 @@ def test_list_services(
 
     assert isinstance(response, pagers.ListServicesPager)
 
-    assert response.next_page_token == "next_page_token_value"
+    assert response.next_page_token == 'next_page_token_value'
 
 
 def test_list_services_from_dict():
@@ -1900,12 +1944,10 @@ def test_list_services_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_list_services_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.ListServicesRequest,
-):
+async def test_list_services_async(transport: str = 'grpc_asyncio', request_type=registration_service.ListServicesRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1913,13 +1955,13 @@ async def test_list_services_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_services), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_services),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            registration_service.ListServicesResponse(
-                next_page_token="next_page_token_value",
-            )
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(registration_service.ListServicesResponse(
+            next_page_token='next_page_token_value',
+        ))
 
         response = await client.list_services(request)
 
@@ -1932,7 +1974,7 @@ async def test_list_services_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, pagers.ListServicesAsyncPager)
 
-    assert response.next_page_token == "next_page_token_value"
+    assert response.next_page_token == 'next_page_token_value'
 
 
 @pytest.mark.asyncio
@@ -1941,15 +1983,19 @@ async def test_list_services_async_from_dict():
 
 
 def test_list_services_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.ListServicesRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_services), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_services),
+            '__call__') as call:
         call.return_value = registration_service.ListServicesResponse()
 
         client.list_services(request)
@@ -1961,7 +2007,10 @@ def test_list_services_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -1973,13 +2022,13 @@ async def test_list_services_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.ListServicesRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_services), "__call__") as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            registration_service.ListServicesResponse()
-        )
+    with mock.patch.object(
+            type(client.transport.list_services),
+            '__call__') as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(registration_service.ListServicesResponse())
 
         await client.list_services(request)
 
@@ -1990,37 +2039,49 @@ async def test_list_services_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 def test_list_services_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_services), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_services),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = registration_service.ListServicesResponse()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.list_services(parent="parent_value",)
+        client.list_services(
+            parent='parent_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
 
 def test_list_services_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.list_services(
-            registration_service.ListServicesRequest(), parent="parent_value",
+            registration_service.ListServicesRequest(),
+            parent='parent_value',
         )
 
 
@@ -2031,23 +2092,25 @@ async def test_list_services_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_services), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_services),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = registration_service.ListServicesResponse()
 
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            registration_service.ListServicesResponse()
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(registration_service.ListServicesResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_services(parent="parent_value",)
+        response = await client.list_services(
+            parent='parent_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
 
 @pytest.mark.asyncio
@@ -2060,36 +2123,54 @@ async def test_list_services_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.list_services(
-            registration_service.ListServicesRequest(), parent="parent_value",
+            registration_service.ListServicesRequest(),
+            parent='parent_value',
         )
 
 
 def test_list_services_pager():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials,)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_services), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_services),
+            '__call__') as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListServicesResponse(
-                services=[service.Service(), service.Service(), service.Service(),],
-                next_page_token="abc",
+                services=[
+                    service.Service(),
+                    service.Service(),
+                    service.Service(),
+                ],
+                next_page_token='abc',
             ),
             registration_service.ListServicesResponse(
-                services=[], next_page_token="def",
+                services=[],
+                next_page_token='def',
             ),
             registration_service.ListServicesResponse(
-                services=[service.Service(),], next_page_token="ghi",
+                services=[
+                    service.Service(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListServicesResponse(
-                services=[service.Service(), service.Service(),],
+                services=[
+                    service.Service(),
+                    service.Service(),
+                ],
             ),
             RuntimeError,
         )
 
         metadata = ()
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", ""),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', ''),
+            )),
         )
         pager = client.list_services(request={})
 
@@ -2097,35 +2178,49 @@ def test_list_services_pager():
 
         results = [i for i in pager]
         assert len(results) == 6
-        assert all(isinstance(i, service.Service) for i in results)
-
+        assert all(isinstance(i, service.Service)
+                   for i in results)
 
 def test_list_services_pages():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials,)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_services), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_services),
+            '__call__') as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListServicesResponse(
-                services=[service.Service(), service.Service(), service.Service(),],
-                next_page_token="abc",
+                services=[
+                    service.Service(),
+                    service.Service(),
+                    service.Service(),
+                ],
+                next_page_token='abc',
             ),
             registration_service.ListServicesResponse(
-                services=[], next_page_token="def",
+                services=[],
+                next_page_token='def',
             ),
             registration_service.ListServicesResponse(
-                services=[service.Service(),], next_page_token="ghi",
+                services=[
+                    service.Service(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListServicesResponse(
-                services=[service.Service(), service.Service(),],
+                services=[
+                    service.Service(),
+                    service.Service(),
+                ],
             ),
             RuntimeError,
         )
         pages = list(client.list_services(request={}).pages)
-        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
             assert page_.raw_page.next_page_token == token
-
 
 @pytest.mark.asyncio
 async def test_list_services_async_pager():
@@ -2135,34 +2230,45 @@ async def test_list_services_async_pager():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_services), "__call__", new_callable=mock.AsyncMock
-    ) as call:
+            type(client.transport.list_services),
+            '__call__', new_callable=mock.AsyncMock) as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListServicesResponse(
-                services=[service.Service(), service.Service(), service.Service(),],
-                next_page_token="abc",
+                services=[
+                    service.Service(),
+                    service.Service(),
+                    service.Service(),
+                ],
+                next_page_token='abc',
             ),
             registration_service.ListServicesResponse(
-                services=[], next_page_token="def",
+                services=[],
+                next_page_token='def',
             ),
             registration_service.ListServicesResponse(
-                services=[service.Service(),], next_page_token="ghi",
+                services=[
+                    service.Service(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListServicesResponse(
-                services=[service.Service(), service.Service(),],
+                services=[
+                    service.Service(),
+                    service.Service(),
+                ],
             ),
             RuntimeError,
         )
         async_pager = await client.list_services(request={},)
-        assert async_pager.next_page_token == "abc"
+        assert async_pager.next_page_token == 'abc'
         responses = []
         async for response in async_pager:
             responses.append(response)
 
         assert len(responses) == 6
-        assert all(isinstance(i, service.Service) for i in responses)
-
+        assert all(isinstance(i, service.Service)
+                   for i in responses)
 
 @pytest.mark.asyncio
 async def test_list_services_async_pages():
@@ -2172,37 +2278,47 @@ async def test_list_services_async_pages():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_services), "__call__", new_callable=mock.AsyncMock
-    ) as call:
+            type(client.transport.list_services),
+            '__call__', new_callable=mock.AsyncMock) as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListServicesResponse(
-                services=[service.Service(), service.Service(), service.Service(),],
-                next_page_token="abc",
+                services=[
+                    service.Service(),
+                    service.Service(),
+                    service.Service(),
+                ],
+                next_page_token='abc',
             ),
             registration_service.ListServicesResponse(
-                services=[], next_page_token="def",
+                services=[],
+                next_page_token='def',
             ),
             registration_service.ListServicesResponse(
-                services=[service.Service(),], next_page_token="ghi",
+                services=[
+                    service.Service(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListServicesResponse(
-                services=[service.Service(), service.Service(),],
+                services=[
+                    service.Service(),
+                    service.Service(),
+                ],
             ),
             RuntimeError,
         )
         pages = []
         async for page_ in (await client.list_services(request={})).pages:
             pages.append(page_)
-        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
             assert page_.raw_page.next_page_token == token
 
 
-def test_get_service(
-    transport: str = "grpc", request_type=registration_service.GetServiceRequest
-):
+def test_get_service(transport: str = 'grpc', request_type=registration_service.GetServiceRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2210,9 +2326,14 @@ def test_get_service(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = service.Service(name="name_value",)
+        call.return_value = service.Service(
+            name='name_value',
+
+        )
 
         response = client.get_service(request)
 
@@ -2226,7 +2347,7 @@ def test_get_service(
 
     assert isinstance(response, service.Service)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 def test_get_service_from_dict():
@@ -2234,11 +2355,10 @@ def test_get_service_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_get_service_async(
-    transport: str = "grpc_asyncio", request_type=registration_service.GetServiceRequest
-):
+async def test_get_service_async(transport: str = 'grpc_asyncio', request_type=registration_service.GetServiceRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2246,11 +2366,13 @@ async def test_get_service_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            service.Service(name="name_value",)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(service.Service(
+            name='name_value',
+        ))
 
         response = await client.get_service(request)
 
@@ -2263,7 +2385,7 @@ async def test_get_service_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, service.Service)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -2272,15 +2394,19 @@ async def test_get_service_async_from_dict():
 
 
 def test_get_service_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.GetServiceRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_service),
+            '__call__') as call:
         call.return_value = service.Service()
 
         client.get_service(request)
@@ -2292,7 +2418,10 @@ def test_get_service_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -2304,10 +2433,12 @@ async def test_get_service_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.GetServiceRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_service),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(service.Service())
 
         await client.get_service(request)
@@ -2319,37 +2450,49 @@ async def test_get_service_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 def test_get_service_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = service.Service()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.get_service(name="name_value",)
+        client.get_service(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 def test_get_service_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.get_service(
-            registration_service.GetServiceRequest(), name="name_value",
+            registration_service.GetServiceRequest(),
+            name='name_value',
         )
 
 
@@ -2360,21 +2503,25 @@ async def test_get_service_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = service.Service()
 
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(service.Service())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_service(name="name_value",)
+        response = await client.get_service(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -2387,15 +2534,15 @@ async def test_get_service_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.get_service(
-            registration_service.GetServiceRequest(), name="name_value",
+            registration_service.GetServiceRequest(),
+            name='name_value',
         )
 
 
-def test_update_service(
-    transport: str = "grpc", request_type=registration_service.UpdateServiceRequest
-):
+def test_update_service(transport: str = 'grpc', request_type=registration_service.UpdateServiceRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2403,9 +2550,14 @@ def test_update_service(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = gcs_service.Service(name="name_value",)
+        call.return_value = gcs_service.Service(
+            name='name_value',
+
+        )
 
         response = client.update_service(request)
 
@@ -2419,7 +2571,7 @@ def test_update_service(
 
     assert isinstance(response, gcs_service.Service)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 def test_update_service_from_dict():
@@ -2427,12 +2579,10 @@ def test_update_service_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_update_service_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.UpdateServiceRequest,
-):
+async def test_update_service_async(transport: str = 'grpc_asyncio', request_type=registration_service.UpdateServiceRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2440,11 +2590,13 @@ async def test_update_service_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_service.Service(name="name_value",)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_service.Service(
+            name='name_value',
+        ))
 
         response = await client.update_service(request)
 
@@ -2457,7 +2609,7 @@ async def test_update_service_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, gcs_service.Service)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -2466,15 +2618,19 @@ async def test_update_service_async_from_dict():
 
 
 def test_update_service_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.UpdateServiceRequest()
-    request.service.name = "service.name/value"
+    request.service.name = 'service.name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_service),
+            '__call__') as call:
         call.return_value = gcs_service.Service()
 
         client.update_service(request)
@@ -2486,9 +2642,10 @@ def test_update_service_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "service.name=service.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        'x-goog-request-params',
+        'service.name=service.name/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -2500,10 +2657,12 @@ async def test_update_service_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.UpdateServiceRequest()
-    request.service.name = "service.name/value"
+    request.service.name = 'service.name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_service),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_service.Service())
 
         await client.update_service(request)
@@ -2515,24 +2674,29 @@ async def test_update_service_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "service.name=service.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        'x-goog-request-params',
+        'service.name=service.name/value',
+    ) in kw['metadata']
 
 
 def test_update_service_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_service.Service()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.update_service(
-            service=gcs_service.Service(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            service=gcs_service.Service(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
         # Establish that the underlying call was made with the expected
@@ -2540,21 +2704,23 @@ def test_update_service_flattened():
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].service == gcs_service.Service(name="name_value")
+        assert args[0].service == gcs_service.Service(name='name_value')
 
-        assert args[0].update_mask == field_mask.FieldMask(paths=["paths_value"])
+        assert args[0].update_mask == field_mask.FieldMask(paths=['paths_value'])
 
 
 def test_update_service_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.update_service(
             registration_service.UpdateServiceRequest(),
-            service=gcs_service.Service(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            service=gcs_service.Service(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
 
@@ -2565,7 +2731,9 @@ async def test_update_service_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_service.Service()
 
@@ -2573,8 +2741,8 @@ async def test_update_service_flattened_async():
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         response = await client.update_service(
-            service=gcs_service.Service(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            service=gcs_service.Service(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
         # Establish that the underlying call was made with the expected
@@ -2582,9 +2750,9 @@ async def test_update_service_flattened_async():
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].service == gcs_service.Service(name="name_value")
+        assert args[0].service == gcs_service.Service(name='name_value')
 
-        assert args[0].update_mask == field_mask.FieldMask(paths=["paths_value"])
+        assert args[0].update_mask == field_mask.FieldMask(paths=['paths_value'])
 
 
 @pytest.mark.asyncio
@@ -2598,16 +2766,15 @@ async def test_update_service_flattened_error_async():
     with pytest.raises(ValueError):
         await client.update_service(
             registration_service.UpdateServiceRequest(),
-            service=gcs_service.Service(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            service=gcs_service.Service(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
 
-def test_delete_service(
-    transport: str = "grpc", request_type=registration_service.DeleteServiceRequest
-):
+def test_delete_service(transport: str = 'grpc', request_type=registration_service.DeleteServiceRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2615,7 +2782,9 @@ def test_delete_service(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = None
 
@@ -2636,12 +2805,10 @@ def test_delete_service_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_delete_service_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.DeleteServiceRequest,
-):
+async def test_delete_service_async(transport: str = 'grpc_asyncio', request_type=registration_service.DeleteServiceRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2649,7 +2816,9 @@ async def test_delete_service_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
 
@@ -2671,15 +2840,19 @@ async def test_delete_service_async_from_dict():
 
 
 def test_delete_service_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.DeleteServiceRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_service),
+            '__call__') as call:
         call.return_value = None
 
         client.delete_service(request)
@@ -2691,7 +2864,10 @@ def test_delete_service_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -2703,10 +2879,12 @@ async def test_delete_service_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.DeleteServiceRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_service),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
 
         await client.delete_service(request)
@@ -2718,37 +2896,49 @@ async def test_delete_service_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 def test_delete_service_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = None
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.delete_service(name="name_value",)
+        client.delete_service(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 def test_delete_service_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_service(
-            registration_service.DeleteServiceRequest(), name="name_value",
+            registration_service.DeleteServiceRequest(),
+            name='name_value',
         )
 
 
@@ -2759,21 +2949,25 @@ async def test_delete_service_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_service), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_service),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = None
 
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_service(name="name_value",)
+        response = await client.delete_service(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -2786,15 +2980,15 @@ async def test_delete_service_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_service(
-            registration_service.DeleteServiceRequest(), name="name_value",
+            registration_service.DeleteServiceRequest(),
+            name='name_value',
         )
 
 
-def test_create_endpoint(
-    transport: str = "grpc", request_type=registration_service.CreateEndpointRequest
-):
+def test_create_endpoint(transport: str = 'grpc', request_type=registration_service.CreateEndpointRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2802,10 +2996,17 @@ def test_create_endpoint(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_endpoint.Endpoint(
-            name="name_value", address="address_value", port=453,
+            name='name_value',
+
+            address='address_value',
+
+            port=453,
+
         )
 
         response = client.create_endpoint(request)
@@ -2820,9 +3021,9 @@ def test_create_endpoint(
 
     assert isinstance(response, gcs_endpoint.Endpoint)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
-    assert response.address == "address_value"
+    assert response.address == 'address_value'
 
     assert response.port == 453
 
@@ -2832,12 +3033,10 @@ def test_create_endpoint_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_create_endpoint_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.CreateEndpointRequest,
-):
+async def test_create_endpoint_async(transport: str = 'grpc_asyncio', request_type=registration_service.CreateEndpointRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2845,11 +3044,15 @@ async def test_create_endpoint_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_endpoint.Endpoint(name="name_value", address="address_value", port=453,)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_endpoint.Endpoint(
+            name='name_value',
+            address='address_value',
+            port=453,
+        ))
 
         response = await client.create_endpoint(request)
 
@@ -2862,9 +3065,9 @@ async def test_create_endpoint_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, gcs_endpoint.Endpoint)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
-    assert response.address == "address_value"
+    assert response.address == 'address_value'
 
     assert response.port == 453
 
@@ -2875,15 +3078,19 @@ async def test_create_endpoint_async_from_dict():
 
 
 def test_create_endpoint_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.CreateEndpointRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_endpoint),
+            '__call__') as call:
         call.return_value = gcs_endpoint.Endpoint()
 
         client.create_endpoint(request)
@@ -2895,7 +3102,10 @@ def test_create_endpoint_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -2907,13 +3117,13 @@ async def test_create_endpoint_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.CreateEndpointRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_endpoint), "__call__") as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_endpoint.Endpoint()
-        )
+    with mock.patch.object(
+            type(client.transport.create_endpoint),
+            '__call__') as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_endpoint.Endpoint())
 
         await client.create_endpoint(request)
 
@@ -2924,23 +3134,30 @@ async def test_create_endpoint_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 def test_create_endpoint_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_endpoint.Endpoint()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.create_endpoint(
-            parent="parent_value",
-            endpoint=gcs_endpoint.Endpoint(name="name_value"),
-            endpoint_id="endpoint_id_value",
+            parent='parent_value',
+            endpoint=gcs_endpoint.Endpoint(name='name_value'),
+            endpoint_id='endpoint_id_value',
         )
 
         # Establish that the underlying call was made with the expected
@@ -2948,24 +3165,26 @@ def test_create_endpoint_flattened():
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
-        assert args[0].endpoint == gcs_endpoint.Endpoint(name="name_value")
+        assert args[0].endpoint == gcs_endpoint.Endpoint(name='name_value')
 
-        assert args[0].endpoint_id == "endpoint_id_value"
+        assert args[0].endpoint_id == 'endpoint_id_value'
 
 
 def test_create_endpoint_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.create_endpoint(
             registration_service.CreateEndpointRequest(),
-            parent="parent_value",
-            endpoint=gcs_endpoint.Endpoint(name="name_value"),
-            endpoint_id="endpoint_id_value",
+            parent='parent_value',
+            endpoint=gcs_endpoint.Endpoint(name='name_value'),
+            endpoint_id='endpoint_id_value',
         )
 
 
@@ -2976,19 +3195,19 @@ async def test_create_endpoint_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.create_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.create_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_endpoint.Endpoint()
 
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_endpoint.Endpoint()
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_endpoint.Endpoint())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         response = await client.create_endpoint(
-            parent="parent_value",
-            endpoint=gcs_endpoint.Endpoint(name="name_value"),
-            endpoint_id="endpoint_id_value",
+            parent='parent_value',
+            endpoint=gcs_endpoint.Endpoint(name='name_value'),
+            endpoint_id='endpoint_id_value',
         )
 
         # Establish that the underlying call was made with the expected
@@ -2996,11 +3215,11 @@ async def test_create_endpoint_flattened_async():
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
-        assert args[0].endpoint == gcs_endpoint.Endpoint(name="name_value")
+        assert args[0].endpoint == gcs_endpoint.Endpoint(name='name_value')
 
-        assert args[0].endpoint_id == "endpoint_id_value"
+        assert args[0].endpoint_id == 'endpoint_id_value'
 
 
 @pytest.mark.asyncio
@@ -3014,17 +3233,16 @@ async def test_create_endpoint_flattened_error_async():
     with pytest.raises(ValueError):
         await client.create_endpoint(
             registration_service.CreateEndpointRequest(),
-            parent="parent_value",
-            endpoint=gcs_endpoint.Endpoint(name="name_value"),
-            endpoint_id="endpoint_id_value",
+            parent='parent_value',
+            endpoint=gcs_endpoint.Endpoint(name='name_value'),
+            endpoint_id='endpoint_id_value',
         )
 
 
-def test_list_endpoints(
-    transport: str = "grpc", request_type=registration_service.ListEndpointsRequest
-):
+def test_list_endpoints(transport: str = 'grpc', request_type=registration_service.ListEndpointsRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3032,10 +3250,13 @@ def test_list_endpoints(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_endpoints), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_endpoints),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = registration_service.ListEndpointsResponse(
-            next_page_token="next_page_token_value",
+            next_page_token='next_page_token_value',
+
         )
 
         response = client.list_endpoints(request)
@@ -3050,7 +3271,7 @@ def test_list_endpoints(
 
     assert isinstance(response, pagers.ListEndpointsPager)
 
-    assert response.next_page_token == "next_page_token_value"
+    assert response.next_page_token == 'next_page_token_value'
 
 
 def test_list_endpoints_from_dict():
@@ -3058,12 +3279,10 @@ def test_list_endpoints_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_list_endpoints_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.ListEndpointsRequest,
-):
+async def test_list_endpoints_async(transport: str = 'grpc_asyncio', request_type=registration_service.ListEndpointsRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3071,13 +3290,13 @@ async def test_list_endpoints_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_endpoints), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_endpoints),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            registration_service.ListEndpointsResponse(
-                next_page_token="next_page_token_value",
-            )
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(registration_service.ListEndpointsResponse(
+            next_page_token='next_page_token_value',
+        ))
 
         response = await client.list_endpoints(request)
 
@@ -3090,7 +3309,7 @@ async def test_list_endpoints_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, pagers.ListEndpointsAsyncPager)
 
-    assert response.next_page_token == "next_page_token_value"
+    assert response.next_page_token == 'next_page_token_value'
 
 
 @pytest.mark.asyncio
@@ -3099,15 +3318,19 @@ async def test_list_endpoints_async_from_dict():
 
 
 def test_list_endpoints_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.ListEndpointsRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_endpoints), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_endpoints),
+            '__call__') as call:
         call.return_value = registration_service.ListEndpointsResponse()
 
         client.list_endpoints(request)
@@ -3119,7 +3342,10 @@ def test_list_endpoints_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -3131,13 +3357,13 @@ async def test_list_endpoints_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.ListEndpointsRequest()
-    request.parent = "parent/value"
+    request.parent = 'parent/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_endpoints), "__call__") as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            registration_service.ListEndpointsResponse()
-        )
+    with mock.patch.object(
+            type(client.transport.list_endpoints),
+            '__call__') as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(registration_service.ListEndpointsResponse())
 
         await client.list_endpoints(request)
 
@@ -3148,37 +3374,49 @@ async def test_list_endpoints_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'parent=parent/value',
+    ) in kw['metadata']
 
 
 def test_list_endpoints_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_endpoints), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_endpoints),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = registration_service.ListEndpointsResponse()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.list_endpoints(parent="parent_value",)
+        client.list_endpoints(
+            parent='parent_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
 
 def test_list_endpoints_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.list_endpoints(
-            registration_service.ListEndpointsRequest(), parent="parent_value",
+            registration_service.ListEndpointsRequest(),
+            parent='parent_value',
         )
 
 
@@ -3189,23 +3427,25 @@ async def test_list_endpoints_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_endpoints), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_endpoints),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = registration_service.ListEndpointsResponse()
 
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            registration_service.ListEndpointsResponse()
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(registration_service.ListEndpointsResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_endpoints(parent="parent_value",)
+        response = await client.list_endpoints(
+            parent='parent_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].parent == "parent_value"
+        assert args[0].parent == 'parent_value'
 
 
 @pytest.mark.asyncio
@@ -3218,15 +3458,20 @@ async def test_list_endpoints_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.list_endpoints(
-            registration_service.ListEndpointsRequest(), parent="parent_value",
+            registration_service.ListEndpointsRequest(),
+            parent='parent_value',
         )
 
 
 def test_list_endpoints_pager():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials,)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_endpoints), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_endpoints),
+            '__call__') as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListEndpointsResponse(
@@ -3235,23 +3480,32 @@ def test_list_endpoints_pager():
                     endpoint.Endpoint(),
                     endpoint.Endpoint(),
                 ],
-                next_page_token="abc",
+                next_page_token='abc',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[], next_page_token="def",
+                endpoints=[],
+                next_page_token='def',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[endpoint.Endpoint(),], next_page_token="ghi",
+                endpoints=[
+                    endpoint.Endpoint(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[endpoint.Endpoint(), endpoint.Endpoint(),],
+                endpoints=[
+                    endpoint.Endpoint(),
+                    endpoint.Endpoint(),
+                ],
             ),
             RuntimeError,
         )
 
         metadata = ()
         metadata = tuple(metadata) + (
-            gapic_v1.routing_header.to_grpc_metadata((("parent", ""),)),
+            gapic_v1.routing_header.to_grpc_metadata((
+                ('parent', ''),
+            )),
         )
         pager = client.list_endpoints(request={})
 
@@ -3259,14 +3513,18 @@ def test_list_endpoints_pager():
 
         results = [i for i in pager]
         assert len(results) == 6
-        assert all(isinstance(i, endpoint.Endpoint) for i in results)
-
+        assert all(isinstance(i, endpoint.Endpoint)
+                   for i in results)
 
 def test_list_endpoints_pages():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials,)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.list_endpoints), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.list_endpoints),
+            '__call__') as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListEndpointsResponse(
@@ -3275,23 +3533,29 @@ def test_list_endpoints_pages():
                     endpoint.Endpoint(),
                     endpoint.Endpoint(),
                 ],
-                next_page_token="abc",
+                next_page_token='abc',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[], next_page_token="def",
+                endpoints=[],
+                next_page_token='def',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[endpoint.Endpoint(),], next_page_token="ghi",
+                endpoints=[
+                    endpoint.Endpoint(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[endpoint.Endpoint(), endpoint.Endpoint(),],
+                endpoints=[
+                    endpoint.Endpoint(),
+                    endpoint.Endpoint(),
+                ],
             ),
             RuntimeError,
         )
         pages = list(client.list_endpoints(request={}).pages)
-        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
             assert page_.raw_page.next_page_token == token
-
 
 @pytest.mark.asyncio
 async def test_list_endpoints_async_pager():
@@ -3301,8 +3565,8 @@ async def test_list_endpoints_async_pager():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_endpoints), "__call__", new_callable=mock.AsyncMock
-    ) as call:
+            type(client.transport.list_endpoints),
+            '__call__', new_callable=mock.AsyncMock) as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListEndpointsResponse(
@@ -3311,28 +3575,35 @@ async def test_list_endpoints_async_pager():
                     endpoint.Endpoint(),
                     endpoint.Endpoint(),
                 ],
-                next_page_token="abc",
+                next_page_token='abc',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[], next_page_token="def",
+                endpoints=[],
+                next_page_token='def',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[endpoint.Endpoint(),], next_page_token="ghi",
+                endpoints=[
+                    endpoint.Endpoint(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[endpoint.Endpoint(), endpoint.Endpoint(),],
+                endpoints=[
+                    endpoint.Endpoint(),
+                    endpoint.Endpoint(),
+                ],
             ),
             RuntimeError,
         )
         async_pager = await client.list_endpoints(request={},)
-        assert async_pager.next_page_token == "abc"
+        assert async_pager.next_page_token == 'abc'
         responses = []
         async for response in async_pager:
             responses.append(response)
 
         assert len(responses) == 6
-        assert all(isinstance(i, endpoint.Endpoint) for i in responses)
-
+        assert all(isinstance(i, endpoint.Endpoint)
+                   for i in responses)
 
 @pytest.mark.asyncio
 async def test_list_endpoints_async_pages():
@@ -3342,8 +3613,8 @@ async def test_list_endpoints_async_pages():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.list_endpoints), "__call__", new_callable=mock.AsyncMock
-    ) as call:
+            type(client.transport.list_endpoints),
+            '__call__', new_callable=mock.AsyncMock) as call:
         # Set the response to a series of pages.
         call.side_effect = (
             registration_service.ListEndpointsResponse(
@@ -3352,31 +3623,37 @@ async def test_list_endpoints_async_pages():
                     endpoint.Endpoint(),
                     endpoint.Endpoint(),
                 ],
-                next_page_token="abc",
+                next_page_token='abc',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[], next_page_token="def",
+                endpoints=[],
+                next_page_token='def',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[endpoint.Endpoint(),], next_page_token="ghi",
+                endpoints=[
+                    endpoint.Endpoint(),
+                ],
+                next_page_token='ghi',
             ),
             registration_service.ListEndpointsResponse(
-                endpoints=[endpoint.Endpoint(), endpoint.Endpoint(),],
+                endpoints=[
+                    endpoint.Endpoint(),
+                    endpoint.Endpoint(),
+                ],
             ),
             RuntimeError,
         )
         pages = []
         async for page_ in (await client.list_endpoints(request={})).pages:
             pages.append(page_)
-        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+        for page_, token in zip(pages, ['abc','def','ghi', '']):
             assert page_.raw_page.next_page_token == token
 
 
-def test_get_endpoint(
-    transport: str = "grpc", request_type=registration_service.GetEndpointRequest
-):
+def test_get_endpoint(transport: str = 'grpc', request_type=registration_service.GetEndpointRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3384,10 +3661,17 @@ def test_get_endpoint(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = endpoint.Endpoint(
-            name="name_value", address="address_value", port=453,
+            name='name_value',
+
+            address='address_value',
+
+            port=453,
+
         )
 
         response = client.get_endpoint(request)
@@ -3402,9 +3686,9 @@ def test_get_endpoint(
 
     assert isinstance(response, endpoint.Endpoint)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
-    assert response.address == "address_value"
+    assert response.address == 'address_value'
 
     assert response.port == 453
 
@@ -3414,12 +3698,10 @@ def test_get_endpoint_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_get_endpoint_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.GetEndpointRequest,
-):
+async def test_get_endpoint_async(transport: str = 'grpc_asyncio', request_type=registration_service.GetEndpointRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3427,11 +3709,15 @@ async def test_get_endpoint_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            endpoint.Endpoint(name="name_value", address="address_value", port=453,)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(endpoint.Endpoint(
+            name='name_value',
+            address='address_value',
+            port=453,
+        ))
 
         response = await client.get_endpoint(request)
 
@@ -3444,9 +3730,9 @@ async def test_get_endpoint_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, endpoint.Endpoint)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
-    assert response.address == "address_value"
+    assert response.address == 'address_value'
 
     assert response.port == 453
 
@@ -3457,15 +3743,19 @@ async def test_get_endpoint_async_from_dict():
 
 
 def test_get_endpoint_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.GetEndpointRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_endpoint),
+            '__call__') as call:
         call.return_value = endpoint.Endpoint()
 
         client.get_endpoint(request)
@@ -3477,7 +3767,10 @@ def test_get_endpoint_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -3489,10 +3782,12 @@ async def test_get_endpoint_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.GetEndpointRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_endpoint),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(endpoint.Endpoint())
 
         await client.get_endpoint(request)
@@ -3504,37 +3799,49 @@ async def test_get_endpoint_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 def test_get_endpoint_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = endpoint.Endpoint()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.get_endpoint(name="name_value",)
+        client.get_endpoint(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 def test_get_endpoint_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.get_endpoint(
-            registration_service.GetEndpointRequest(), name="name_value",
+            registration_service.GetEndpointRequest(),
+            name='name_value',
         )
 
 
@@ -3545,21 +3852,25 @@ async def test_get_endpoint_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = endpoint.Endpoint()
 
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(endpoint.Endpoint())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_endpoint(name="name_value",)
+        response = await client.get_endpoint(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -3572,15 +3883,15 @@ async def test_get_endpoint_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.get_endpoint(
-            registration_service.GetEndpointRequest(), name="name_value",
+            registration_service.GetEndpointRequest(),
+            name='name_value',
         )
 
 
-def test_update_endpoint(
-    transport: str = "grpc", request_type=registration_service.UpdateEndpointRequest
-):
+def test_update_endpoint(transport: str = 'grpc', request_type=registration_service.UpdateEndpointRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3588,10 +3899,17 @@ def test_update_endpoint(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_endpoint.Endpoint(
-            name="name_value", address="address_value", port=453,
+            name='name_value',
+
+            address='address_value',
+
+            port=453,
+
         )
 
         response = client.update_endpoint(request)
@@ -3606,9 +3924,9 @@ def test_update_endpoint(
 
     assert isinstance(response, gcs_endpoint.Endpoint)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
-    assert response.address == "address_value"
+    assert response.address == 'address_value'
 
     assert response.port == 453
 
@@ -3618,12 +3936,10 @@ def test_update_endpoint_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_update_endpoint_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.UpdateEndpointRequest,
-):
+async def test_update_endpoint_async(transport: str = 'grpc_asyncio', request_type=registration_service.UpdateEndpointRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3631,11 +3947,15 @@ async def test_update_endpoint_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_endpoint.Endpoint(name="name_value", address="address_value", port=453,)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_endpoint.Endpoint(
+            name='name_value',
+            address='address_value',
+            port=453,
+        ))
 
         response = await client.update_endpoint(request)
 
@@ -3648,9 +3968,9 @@ async def test_update_endpoint_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, gcs_endpoint.Endpoint)
 
-    assert response.name == "name_value"
+    assert response.name == 'name_value'
 
-    assert response.address == "address_value"
+    assert response.address == 'address_value'
 
     assert response.port == 453
 
@@ -3661,15 +3981,19 @@ async def test_update_endpoint_async_from_dict():
 
 
 def test_update_endpoint_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.UpdateEndpointRequest()
-    request.endpoint.name = "endpoint.name/value"
+    request.endpoint.name = 'endpoint.name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_endpoint),
+            '__call__') as call:
         call.return_value = gcs_endpoint.Endpoint()
 
         client.update_endpoint(request)
@@ -3681,9 +4005,10 @@ def test_update_endpoint_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "endpoint.name=endpoint.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        'x-goog-request-params',
+        'endpoint.name=endpoint.name/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -3695,13 +4020,13 @@ async def test_update_endpoint_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.UpdateEndpointRequest()
-    request.endpoint.name = "endpoint.name/value"
+    request.endpoint.name = 'endpoint.name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_endpoint), "__call__") as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_endpoint.Endpoint()
-        )
+    with mock.patch.object(
+            type(client.transport.update_endpoint),
+            '__call__') as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_endpoint.Endpoint())
 
         await client.update_endpoint(request)
 
@@ -3712,24 +4037,29 @@ async def test_update_endpoint_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "endpoint.name=endpoint.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        'x-goog-request-params',
+        'endpoint.name=endpoint.name/value',
+    ) in kw['metadata']
 
 
 def test_update_endpoint_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_endpoint.Endpoint()
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.update_endpoint(
-            endpoint=gcs_endpoint.Endpoint(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            endpoint=gcs_endpoint.Endpoint(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
         # Establish that the underlying call was made with the expected
@@ -3737,21 +4067,23 @@ def test_update_endpoint_flattened():
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].endpoint == gcs_endpoint.Endpoint(name="name_value")
+        assert args[0].endpoint == gcs_endpoint.Endpoint(name='name_value')
 
-        assert args[0].update_mask == field_mask.FieldMask(paths=["paths_value"])
+        assert args[0].update_mask == field_mask.FieldMask(paths=['paths_value'])
 
 
 def test_update_endpoint_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.update_endpoint(
             registration_service.UpdateEndpointRequest(),
-            endpoint=gcs_endpoint.Endpoint(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            endpoint=gcs_endpoint.Endpoint(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
 
@@ -3762,18 +4094,18 @@ async def test_update_endpoint_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.update_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.update_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_endpoint.Endpoint()
 
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_endpoint.Endpoint()
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gcs_endpoint.Endpoint())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         response = await client.update_endpoint(
-            endpoint=gcs_endpoint.Endpoint(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            endpoint=gcs_endpoint.Endpoint(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
         # Establish that the underlying call was made with the expected
@@ -3781,9 +4113,9 @@ async def test_update_endpoint_flattened_async():
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].endpoint == gcs_endpoint.Endpoint(name="name_value")
+        assert args[0].endpoint == gcs_endpoint.Endpoint(name='name_value')
 
-        assert args[0].update_mask == field_mask.FieldMask(paths=["paths_value"])
+        assert args[0].update_mask == field_mask.FieldMask(paths=['paths_value'])
 
 
 @pytest.mark.asyncio
@@ -3797,16 +4129,15 @@ async def test_update_endpoint_flattened_error_async():
     with pytest.raises(ValueError):
         await client.update_endpoint(
             registration_service.UpdateEndpointRequest(),
-            endpoint=gcs_endpoint.Endpoint(name="name_value"),
-            update_mask=field_mask.FieldMask(paths=["paths_value"]),
+            endpoint=gcs_endpoint.Endpoint(name='name_value'),
+            update_mask=field_mask.FieldMask(paths=['paths_value']),
         )
 
 
-def test_delete_endpoint(
-    transport: str = "grpc", request_type=registration_service.DeleteEndpointRequest
-):
+def test_delete_endpoint(transport: str = 'grpc', request_type=registration_service.DeleteEndpointRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3814,7 +4145,9 @@ def test_delete_endpoint(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = None
 
@@ -3835,12 +4168,10 @@ def test_delete_endpoint_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_delete_endpoint_async(
-    transport: str = "grpc_asyncio",
-    request_type=registration_service.DeleteEndpointRequest,
-):
+async def test_delete_endpoint_async(transport: str = 'grpc_asyncio', request_type=registration_service.DeleteEndpointRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3848,7 +4179,9 @@ async def test_delete_endpoint_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
 
@@ -3870,15 +4203,19 @@ async def test_delete_endpoint_async_from_dict():
 
 
 def test_delete_endpoint_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.DeleteEndpointRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_endpoint),
+            '__call__') as call:
         call.return_value = None
 
         client.delete_endpoint(request)
@@ -3890,7 +4227,10 @@ def test_delete_endpoint_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -3902,10 +4242,12 @@ async def test_delete_endpoint_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = registration_service.DeleteEndpointRequest()
-    request.name = "name/value"
+    request.name = 'name/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_endpoint),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
 
         await client.delete_endpoint(request)
@@ -3917,37 +4259,49 @@ async def test_delete_endpoint_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'name=name/value',
+    ) in kw['metadata']
 
 
 def test_delete_endpoint_flattened():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = None
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.delete_endpoint(name="name_value",)
+        client.delete_endpoint(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 def test_delete_endpoint_flattened_error():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_endpoint(
-            registration_service.DeleteEndpointRequest(), name="name_value",
+            registration_service.DeleteEndpointRequest(),
+            name='name_value',
         )
 
 
@@ -3958,21 +4312,25 @@ async def test_delete_endpoint_flattened_async():
     )
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.delete_endpoint), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.delete_endpoint),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = None
 
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_endpoint(name="name_value",)
+        response = await client.delete_endpoint(
+            name='name_value',
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
 
-        assert args[0].name == "name_value"
+        assert args[0].name == 'name_value'
 
 
 @pytest.mark.asyncio
@@ -3985,15 +4343,15 @@ async def test_delete_endpoint_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_endpoint(
-            registration_service.DeleteEndpointRequest(), name="name_value",
+            registration_service.DeleteEndpointRequest(),
+            name='name_value',
         )
 
 
-def test_get_iam_policy(
-    transport: str = "grpc", request_type=iam_policy.GetIamPolicyRequest
-):
+def test_get_iam_policy(transport: str = 'grpc', request_type=iam_policy.GetIamPolicyRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4001,9 +4359,16 @@ def test_get_iam_policy(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_iam_policy),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = policy.Policy(version=774, etag=b"etag_blob",)
+        call.return_value = policy.Policy(
+            version=774,
+
+            etag=b'etag_blob',
+
+        )
 
         response = client.get_iam_policy(request)
 
@@ -4019,7 +4384,7 @@ def test_get_iam_policy(
 
     assert response.version == 774
 
-    assert response.etag == b"etag_blob"
+    assert response.etag == b'etag_blob'
 
 
 def test_get_iam_policy_from_dict():
@@ -4027,11 +4392,10 @@ def test_get_iam_policy_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_get_iam_policy_async(
-    transport: str = "grpc_asyncio", request_type=iam_policy.GetIamPolicyRequest
-):
+async def test_get_iam_policy_async(transport: str = 'grpc_asyncio', request_type=iam_policy.GetIamPolicyRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4039,11 +4403,14 @@ async def test_get_iam_policy_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_iam_policy),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            policy.Policy(version=774, etag=b"etag_blob",)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy.Policy(
+            version=774,
+            etag=b'etag_blob',
+        ))
 
         response = await client.get_iam_policy(request)
 
@@ -4058,7 +4425,7 @@ async def test_get_iam_policy_async(
 
     assert response.version == 774
 
-    assert response.etag == b"etag_blob"
+    assert response.etag == b'etag_blob'
 
 
 @pytest.mark.asyncio
@@ -4067,15 +4434,19 @@ async def test_get_iam_policy_async_from_dict():
 
 
 def test_get_iam_policy_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = iam_policy.GetIamPolicyRequest()
-    request.resource = "resource/value"
+    request.resource = 'resource/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_iam_policy),
+            '__call__') as call:
         call.return_value = policy.Policy()
 
         client.get_iam_policy(request)
@@ -4087,7 +4458,10 @@ def test_get_iam_policy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'resource=resource/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -4099,10 +4473,12 @@ async def test_get_iam_policy_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = iam_policy.GetIamPolicyRequest()
-    request.resource = "resource/value"
+    request.resource = 'resource/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_iam_policy),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy.Policy())
 
         await client.get_iam_policy(request)
@@ -4114,30 +4490,35 @@ async def test_get_iam_policy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'resource=resource/value',
+    ) in kw['metadata']
 
 
 def test_get_iam_policy_from_dict_foreign():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.get_iam_policy),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = policy.Policy()
 
-        response = client.get_iam_policy(
-            request={
-                "resource": "resource_value",
-                "options": options.GetPolicyOptions(requested_policy_version=2598),
+        response = client.get_iam_policy(request={
+            'resource': 'resource_value',
+            'options': options.GetPolicyOptions(requested_policy_version=2598),
             }
         )
         call.assert_called()
 
 
-def test_set_iam_policy(
-    transport: str = "grpc", request_type=iam_policy.SetIamPolicyRequest
-):
+def test_set_iam_policy(transport: str = 'grpc', request_type=iam_policy.SetIamPolicyRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4145,9 +4526,16 @@ def test_set_iam_policy(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.set_iam_policy),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = policy.Policy(version=774, etag=b"etag_blob",)
+        call.return_value = policy.Policy(
+            version=774,
+
+            etag=b'etag_blob',
+
+        )
 
         response = client.set_iam_policy(request)
 
@@ -4163,7 +4551,7 @@ def test_set_iam_policy(
 
     assert response.version == 774
 
-    assert response.etag == b"etag_blob"
+    assert response.etag == b'etag_blob'
 
 
 def test_set_iam_policy_from_dict():
@@ -4171,11 +4559,10 @@ def test_set_iam_policy_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_set_iam_policy_async(
-    transport: str = "grpc_asyncio", request_type=iam_policy.SetIamPolicyRequest
-):
+async def test_set_iam_policy_async(transport: str = 'grpc_asyncio', request_type=iam_policy.SetIamPolicyRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4183,11 +4570,14 @@ async def test_set_iam_policy_async(
     request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.set_iam_policy),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            policy.Policy(version=774, etag=b"etag_blob",)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy.Policy(
+            version=774,
+            etag=b'etag_blob',
+        ))
 
         response = await client.set_iam_policy(request)
 
@@ -4202,7 +4592,7 @@ async def test_set_iam_policy_async(
 
     assert response.version == 774
 
-    assert response.etag == b"etag_blob"
+    assert response.etag == b'etag_blob'
 
 
 @pytest.mark.asyncio
@@ -4211,15 +4601,19 @@ async def test_set_iam_policy_async_from_dict():
 
 
 def test_set_iam_policy_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = iam_policy.SetIamPolicyRequest()
-    request.resource = "resource/value"
+    request.resource = 'resource/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.set_iam_policy),
+            '__call__') as call:
         call.return_value = policy.Policy()
 
         client.set_iam_policy(request)
@@ -4231,7 +4625,10 @@ def test_set_iam_policy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'resource=resource/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -4243,10 +4640,12 @@ async def test_set_iam_policy_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = iam_policy.SetIamPolicyRequest()
-    request.resource = "resource/value"
+    request.resource = 'resource/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.set_iam_policy),
+            '__call__') as call:
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy.Policy())
 
         await client.set_iam_policy(request)
@@ -4258,30 +4657,35 @@ async def test_set_iam_policy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'resource=resource/value',
+    ) in kw['metadata']
 
 
 def test_set_iam_policy_from_dict_foreign():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
     # Mock the actual call within the gRPC stub, and fake the request.
-    with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
+    with mock.patch.object(
+            type(client.transport.set_iam_policy),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = policy.Policy()
 
-        response = client.set_iam_policy(
-            request={
-                "resource": "resource_value",
-                "policy": policy.Policy(version=774),
+        response = client.set_iam_policy(request={
+            'resource': 'resource_value',
+            'policy': policy.Policy(version=774),
             }
         )
         call.assert_called()
 
 
-def test_test_iam_permissions(
-    transport: str = "grpc", request_type=iam_policy.TestIamPermissionsRequest
-):
+def test_test_iam_permissions(transport: str = 'grpc', request_type=iam_policy.TestIamPermissionsRequest):
     client = RegistrationServiceClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4290,11 +4694,12 @@ def test_test_iam_permissions(
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.test_iam_permissions), "__call__"
-    ) as call:
+            type(client.transport.test_iam_permissions),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = iam_policy.TestIamPermissionsResponse(
-            permissions=["permissions_value"],
+            permissions=['permissions_value'],
+
         )
 
         response = client.test_iam_permissions(request)
@@ -4309,7 +4714,7 @@ def test_test_iam_permissions(
 
     assert isinstance(response, iam_policy.TestIamPermissionsResponse)
 
-    assert response.permissions == ["permissions_value"]
+    assert response.permissions == ['permissions_value']
 
 
 def test_test_iam_permissions_from_dict():
@@ -4317,11 +4722,10 @@ def test_test_iam_permissions_from_dict():
 
 
 @pytest.mark.asyncio
-async def test_test_iam_permissions_async(
-    transport: str = "grpc_asyncio", request_type=iam_policy.TestIamPermissionsRequest
-):
+async def test_test_iam_permissions_async(transport: str = 'grpc_asyncio', request_type=iam_policy.TestIamPermissionsRequest):
     client = RegistrationServiceAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4330,12 +4734,12 @@ async def test_test_iam_permissions_async(
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.test_iam_permissions), "__call__"
-    ) as call:
+            type(client.transport.test_iam_permissions),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            iam_policy.TestIamPermissionsResponse(permissions=["permissions_value"],)
-        )
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(iam_policy.TestIamPermissionsResponse(
+            permissions=['permissions_value'],
+        ))
 
         response = await client.test_iam_permissions(request)
 
@@ -4348,7 +4752,7 @@ async def test_test_iam_permissions_async(
     # Establish that the response is the type that we expect.
     assert isinstance(response, iam_policy.TestIamPermissionsResponse)
 
-    assert response.permissions == ["permissions_value"]
+    assert response.permissions == ['permissions_value']
 
 
 @pytest.mark.asyncio
@@ -4357,17 +4761,19 @@ async def test_test_iam_permissions_async_from_dict():
 
 
 def test_test_iam_permissions_field_headers():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = iam_policy.TestIamPermissionsRequest()
-    request.resource = "resource/value"
+    request.resource = 'resource/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.test_iam_permissions), "__call__"
-    ) as call:
+            type(client.transport.test_iam_permissions),
+            '__call__') as call:
         call.return_value = iam_policy.TestIamPermissionsResponse()
 
         client.test_iam_permissions(request)
@@ -4379,7 +4785,10 @@ def test_test_iam_permissions_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'resource=resource/value',
+    ) in kw['metadata']
 
 
 @pytest.mark.asyncio
@@ -4391,15 +4800,13 @@ async def test_test_iam_permissions_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = iam_policy.TestIamPermissionsRequest()
-    request.resource = "resource/value"
+    request.resource = 'resource/value'
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.test_iam_permissions), "__call__"
-    ) as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            iam_policy.TestIamPermissionsResponse()
-        )
+            type(client.transport.test_iam_permissions),
+            '__call__') as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(iam_policy.TestIamPermissionsResponse())
 
         await client.test_iam_permissions(request)
 
@@ -4410,22 +4817,26 @@ async def test_test_iam_permissions_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        'x-goog-request-params',
+        'resource=resource/value',
+    ) in kw['metadata']
 
 
 def test_test_iam_permissions_from_dict_foreign():
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
-        type(client.transport.test_iam_permissions), "__call__"
-    ) as call:
+            type(client.transport.test_iam_permissions),
+            '__call__') as call:
         # Designate an appropriate return value for the call.
         call.return_value = iam_policy.TestIamPermissionsResponse()
 
-        response = client.test_iam_permissions(
-            request={
-                "resource": "resource_value",
-                "permissions": ["permissions_value"],
+        response = client.test_iam_permissions(request={
+            'resource': 'resource_value',
+            'permissions': ['permissions_value'],
             }
         )
         call.assert_called()
@@ -4438,7 +4849,8 @@ def test_credentials_transport_error():
     )
     with pytest.raises(ValueError):
         client = RegistrationServiceClient(
-            credentials=credentials.AnonymousCredentials(), transport=transport,
+            credentials=credentials.AnonymousCredentials(),
+            transport=transport,
         )
 
     # It is an error to provide a credentials file and a transport instance.
@@ -4457,7 +4869,8 @@ def test_credentials_transport_error():
     )
     with pytest.raises(ValueError):
         client = RegistrationServiceClient(
-            client_options={"scopes": ["1", "2"]}, transport=transport,
+            client_options={"scopes": ["1", "2"]},
+            transport=transport,
         )
 
 
@@ -4485,16 +4898,13 @@ def test_transport_get_channel():
     assert channel
 
 
-@pytest.mark.parametrize(
-    "transport_class",
-    [
-        transports.RegistrationServiceGrpcTransport,
-        transports.RegistrationServiceGrpcAsyncIOTransport,
-    ],
-)
+@pytest.mark.parametrize("transport_class", [
+    transports.RegistrationServiceGrpcTransport,
+    transports.RegistrationServiceGrpcAsyncIOTransport
+])
 def test_transport_adc(transport_class):
     # Test default credentials are used if not provided.
-    with mock.patch.object(auth, "default") as adc:
+    with mock.patch.object(auth, 'default') as adc:
         adc.return_value = (credentials.AnonymousCredentials(), None)
         transport_class()
         adc.assert_called_once()
@@ -4502,8 +4912,13 @@ def test_transport_adc(transport_class):
 
 def test_transport_grpc_default():
     # A client should use the gRPC transport by default.
-    client = RegistrationServiceClient(credentials=credentials.AnonymousCredentials(),)
-    assert isinstance(client.transport, transports.RegistrationServiceGrpcTransport,)
+    client = RegistrationServiceClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
+    assert isinstance(
+        client.transport,
+        transports.RegistrationServiceGrpcTransport,
+    )
 
 
 def test_registration_service_base_transport_error():
@@ -4511,15 +4926,13 @@ def test_registration_service_base_transport_error():
     with pytest.raises(exceptions.DuplicateCredentialArgs):
         transport = transports.RegistrationServiceTransport(
             credentials=credentials.AnonymousCredentials(),
-            credentials_file="credentials.json",
+            credentials_file="credentials.json"
         )
 
 
 def test_registration_service_base_transport():
     # Instantiate the base transport.
-    with mock.patch(
-        "google.cloud.servicedirectory_v1beta1.services.registration_service.transports.RegistrationServiceTransport.__init__"
-    ) as Transport:
+    with mock.patch('google.cloud.servicedirectory_v1beta1.services.registration_service.transports.RegistrationServiceTransport.__init__') as Transport:
         Transport.return_value = None
         transport = transports.RegistrationServiceTransport(
             credentials=credentials.AnonymousCredentials(),
@@ -4528,25 +4941,25 @@ def test_registration_service_base_transport():
     # Every method on the transport should just blindly
     # raise NotImplementedError.
     methods = (
-        "create_namespace",
-        "list_namespaces",
-        "get_namespace",
-        "update_namespace",
-        "delete_namespace",
-        "create_service",
-        "list_services",
-        "get_service",
-        "update_service",
-        "delete_service",
-        "create_endpoint",
-        "list_endpoints",
-        "get_endpoint",
-        "update_endpoint",
-        "delete_endpoint",
-        "get_iam_policy",
-        "set_iam_policy",
-        "test_iam_permissions",
-    )
+        'create_namespace',
+        'list_namespaces',
+        'get_namespace',
+        'update_namespace',
+        'delete_namespace',
+        'create_service',
+        'list_services',
+        'get_service',
+        'update_service',
+        'delete_service',
+        'create_endpoint',
+        'list_endpoints',
+        'get_endpoint',
+        'update_endpoint',
+        'delete_endpoint',
+        'get_iam_policy',
+        'set_iam_policy',
+        'test_iam_permissions',
+        )
     for method in methods:
         with pytest.raises(NotImplementedError):
             getattr(transport, method)(request=object())
@@ -4554,28 +4967,23 @@ def test_registration_service_base_transport():
 
 def test_registration_service_base_transport_with_credentials_file():
     # Instantiate the base transport with a credentials file
-    with mock.patch.object(
-        auth, "load_credentials_from_file"
-    ) as load_creds, mock.patch(
-        "google.cloud.servicedirectory_v1beta1.services.registration_service.transports.RegistrationServiceTransport._prep_wrapped_messages"
-    ) as Transport:
+    with mock.patch.object(auth, 'load_credentials_from_file') as load_creds, mock.patch('google.cloud.servicedirectory_v1beta1.services.registration_service.transports.RegistrationServiceTransport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         load_creds.return_value = (credentials.AnonymousCredentials(), None)
         transport = transports.RegistrationServiceTransport(
-            credentials_file="credentials.json", quota_project_id="octopus",
+            credentials_file="credentials.json",
+            quota_project_id="octopus",
         )
-        load_creds.assert_called_once_with(
-            "credentials.json",
-            scopes=("https://www.googleapis.com/auth/cloud-platform",),
+        load_creds.assert_called_once_with("credentials.json", scopes=(
+            'https://www.googleapis.com/auth/cloud-platform',
+            ),
             quota_project_id="octopus",
         )
 
 
 def test_registration_service_base_transport_with_adc():
     # Test the default credentials are used if credentials and credentials_file are None.
-    with mock.patch.object(auth, "default") as adc, mock.patch(
-        "google.cloud.servicedirectory_v1beta1.services.registration_service.transports.RegistrationServiceTransport._prep_wrapped_messages"
-    ) as Transport:
+    with mock.patch.object(auth, 'default') as adc, mock.patch('google.cloud.servicedirectory_v1beta1.services.registration_service.transports.RegistrationServiceTransport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         adc.return_value = (credentials.AnonymousCredentials(), None)
         transport = transports.RegistrationServiceTransport()
@@ -4584,11 +4992,11 @@ def test_registration_service_base_transport_with_adc():
 
 def test_registration_service_auth_adc():
     # If no credentials are provided, we should use ADC credentials.
-    with mock.patch.object(auth, "default") as adc:
+    with mock.patch.object(auth, 'default') as adc:
         adc.return_value = (credentials.AnonymousCredentials(), None)
         RegistrationServiceClient()
-        adc.assert_called_once_with(
-            scopes=("https://www.googleapis.com/auth/cloud-platform",),
+        adc.assert_called_once_with(scopes=(
+            'https://www.googleapis.com/auth/cloud-platform',),
             quota_project_id=None,
         )
 
@@ -4596,43 +5004,37 @@ def test_registration_service_auth_adc():
 def test_registration_service_transport_auth_adc():
     # If credentials and host are not provided, the transport class should use
     # ADC credentials.
-    with mock.patch.object(auth, "default") as adc:
+    with mock.patch.object(auth, 'default') as adc:
         adc.return_value = (credentials.AnonymousCredentials(), None)
-        transports.RegistrationServiceGrpcTransport(
-            host="squid.clam.whelk", quota_project_id="octopus"
-        )
-        adc.assert_called_once_with(
-            scopes=("https://www.googleapis.com/auth/cloud-platform",),
+        transports.RegistrationServiceGrpcTransport(host="squid.clam.whelk", quota_project_id="octopus")
+        adc.assert_called_once_with(scopes=(
+            'https://www.googleapis.com/auth/cloud-platform',),
             quota_project_id="octopus",
         )
-
 
 def test_registration_service_host_no_port():
     client = RegistrationServiceClient(
         credentials=credentials.AnonymousCredentials(),
-        client_options=client_options.ClientOptions(
-            api_endpoint="servicedirectory.googleapis.com"
-        ),
+        client_options=client_options.ClientOptions(api_endpoint='servicedirectory.googleapis.com'),
     )
-    assert client.transport._host == "servicedirectory.googleapis.com:443"
+    assert client.transport._host == 'servicedirectory.googleapis.com:443'
 
 
 def test_registration_service_host_with_port():
     client = RegistrationServiceClient(
         credentials=credentials.AnonymousCredentials(),
-        client_options=client_options.ClientOptions(
-            api_endpoint="servicedirectory.googleapis.com:8000"
-        ),
+        client_options=client_options.ClientOptions(api_endpoint='servicedirectory.googleapis.com:8000'),
     )
-    assert client.transport._host == "servicedirectory.googleapis.com:8000"
+    assert client.transport._host == 'servicedirectory.googleapis.com:8000'
 
 
 def test_registration_service_grpc_transport_channel():
-    channel = grpc.insecure_channel("http://localhost/")
+    channel = grpc.insecure_channel('http://localhost/')
 
     # Check that channel is used if provided.
     transport = transports.RegistrationServiceGrpcTransport(
-        host="squid.clam.whelk", channel=channel,
+        host="squid.clam.whelk",
+        channel=channel,
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
@@ -4640,33 +5042,24 @@ def test_registration_service_grpc_transport_channel():
 
 
 def test_registration_service_grpc_asyncio_transport_channel():
-    channel = aio.insecure_channel("http://localhost/")
+    channel = aio.insecure_channel('http://localhost/')
 
     # Check that channel is used if provided.
     transport = transports.RegistrationServiceGrpcAsyncIOTransport(
-        host="squid.clam.whelk", channel=channel,
+        host="squid.clam.whelk",
+        channel=channel,
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
     assert transport._ssl_channel_credentials == None
 
 
-@pytest.mark.parametrize(
-    "transport_class",
-    [
-        transports.RegistrationServiceGrpcTransport,
-        transports.RegistrationServiceGrpcAsyncIOTransport,
-    ],
-)
+@pytest.mark.parametrize("transport_class", [transports.RegistrationServiceGrpcTransport, transports.RegistrationServiceGrpcAsyncIOTransport])
 def test_registration_service_transport_channel_mtls_with_client_cert_source(
-    transport_class,
+    transport_class
 ):
-    with mock.patch(
-        "grpc.ssl_channel_credentials", autospec=True
-    ) as grpc_ssl_channel_cred:
-        with mock.patch.object(
-            transport_class, "create_channel", autospec=True
-        ) as grpc_create_channel:
+    with mock.patch("grpc.ssl_channel_credentials", autospec=True) as grpc_ssl_channel_cred:
+        with mock.patch.object(transport_class, "create_channel", autospec=True) as grpc_create_channel:
             mock_ssl_cred = mock.Mock()
             grpc_ssl_channel_cred.return_value = mock_ssl_cred
 
@@ -4675,7 +5068,7 @@ def test_registration_service_transport_channel_mtls_with_client_cert_source(
 
             cred = credentials.AnonymousCredentials()
             with pytest.warns(DeprecationWarning):
-                with mock.patch.object(auth, "default") as adc:
+                with mock.patch.object(auth, 'default') as adc:
                     adc.return_value = (cred, None)
                     transport = transport_class(
                         host="squid.clam.whelk",
@@ -4691,7 +5084,9 @@ def test_registration_service_transport_channel_mtls_with_client_cert_source(
                 "mtls.squid.clam.whelk:443",
                 credentials=cred,
                 credentials_file=None,
-                scopes=("https://www.googleapis.com/auth/cloud-platform",),
+                scopes=(
+                    'https://www.googleapis.com/auth/cloud-platform',
+                ),
                 ssl_credentials=mock_ssl_cred,
                 quota_project_id=None,
             )
@@ -4699,23 +5094,17 @@ def test_registration_service_transport_channel_mtls_with_client_cert_source(
             assert transport._ssl_channel_credentials == mock_ssl_cred
 
 
-@pytest.mark.parametrize(
-    "transport_class",
-    [
-        transports.RegistrationServiceGrpcTransport,
-        transports.RegistrationServiceGrpcAsyncIOTransport,
-    ],
-)
-def test_registration_service_transport_channel_mtls_with_adc(transport_class):
+@pytest.mark.parametrize("transport_class", [transports.RegistrationServiceGrpcTransport, transports.RegistrationServiceGrpcAsyncIOTransport])
+def test_registration_service_transport_channel_mtls_with_adc(
+    transport_class
+):
     mock_ssl_cred = mock.Mock()
     with mock.patch.multiple(
         "google.auth.transport.grpc.SslCredentials",
         __init__=mock.Mock(return_value=None),
         ssl_credentials=mock.PropertyMock(return_value=mock_ssl_cred),
     ):
-        with mock.patch.object(
-            transport_class, "create_channel", autospec=True
-        ) as grpc_create_channel:
+        with mock.patch.object(transport_class, "create_channel", autospec=True) as grpc_create_channel:
             mock_grpc_channel = mock.Mock()
             grpc_create_channel.return_value = mock_grpc_channel
             mock_cred = mock.Mock()
@@ -4732,7 +5121,9 @@ def test_registration_service_transport_channel_mtls_with_adc(transport_class):
                 "mtls.squid.clam.whelk:443",
                 credentials=mock_cred,
                 credentials_file=None,
-                scopes=("https://www.googleapis.com/auth/cloud-platform",),
+                scopes=(
+                    'https://www.googleapis.com/auth/cloud-platform',
+                ),
                 ssl_credentials=mock_ssl_cred,
                 quota_project_id=None,
             )
@@ -4746,26 +5137,19 @@ def test_endpoint_path():
     service = "octopus"
     endpoint = "oyster"
 
-    expected = "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}/endpoints/{endpoint}".format(
-        project=project,
-        location=location,
-        namespace=namespace,
-        service=service,
-        endpoint=endpoint,
-    )
-    actual = RegistrationServiceClient.endpoint_path(
-        project, location, namespace, service, endpoint
-    )
+    expected = "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}/endpoints/{endpoint}".format(project=project, location=location, namespace=namespace, service=service, endpoint=endpoint, )
+    actual = RegistrationServiceClient.endpoint_path(project, location, namespace, service, endpoint)
     assert expected == actual
 
 
 def test_parse_endpoint_path():
     expected = {
-        "project": "nudibranch",
-        "location": "cuttlefish",
-        "namespace": "mussel",
-        "service": "winkle",
-        "endpoint": "nautilus",
+    "project": "nudibranch",
+    "location": "cuttlefish",
+    "namespace": "mussel",
+    "service": "winkle",
+    "endpoint": "nautilus",
+
     }
     path = RegistrationServiceClient.endpoint_path(**expected)
 
@@ -4773,24 +5157,22 @@ def test_parse_endpoint_path():
     actual = RegistrationServiceClient.parse_endpoint_path(path)
     assert expected == actual
 
-
 def test_namespace_path():
     project = "scallop"
     location = "abalone"
     namespace = "squid"
 
-    expected = "projects/{project}/locations/{location}/namespaces/{namespace}".format(
-        project=project, location=location, namespace=namespace,
-    )
+    expected = "projects/{project}/locations/{location}/namespaces/{namespace}".format(project=project, location=location, namespace=namespace, )
     actual = RegistrationServiceClient.namespace_path(project, location, namespace)
     assert expected == actual
 
 
 def test_parse_namespace_path():
     expected = {
-        "project": "clam",
-        "location": "whelk",
-        "namespace": "octopus",
+    "project": "clam",
+    "location": "whelk",
+    "namespace": "octopus",
+
     }
     path = RegistrationServiceClient.namespace_path(**expected)
 
@@ -4798,28 +5180,24 @@ def test_parse_namespace_path():
     actual = RegistrationServiceClient.parse_namespace_path(path)
     assert expected == actual
 
-
 def test_service_path():
     project = "oyster"
     location = "nudibranch"
     namespace = "cuttlefish"
     service = "mussel"
 
-    expected = "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
-        project=project, location=location, namespace=namespace, service=service,
-    )
-    actual = RegistrationServiceClient.service_path(
-        project, location, namespace, service
-    )
+    expected = "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(project=project, location=location, namespace=namespace, service=service, )
+    actual = RegistrationServiceClient.service_path(project, location, namespace, service)
     assert expected == actual
 
 
 def test_parse_service_path():
     expected = {
-        "project": "winkle",
-        "location": "nautilus",
-        "namespace": "scallop",
-        "service": "abalone",
+    "project": "winkle",
+    "location": "nautilus",
+    "namespace": "scallop",
+    "service": "abalone",
+
     }
     path = RegistrationServiceClient.service_path(**expected)
 
@@ -4827,20 +5205,18 @@ def test_parse_service_path():
     actual = RegistrationServiceClient.parse_service_path(path)
     assert expected == actual
 
-
 def test_common_billing_account_path():
     billing_account = "squid"
 
-    expected = "billingAccounts/{billing_account}".format(
-        billing_account=billing_account,
-    )
+    expected = "billingAccounts/{billing_account}".format(billing_account=billing_account, )
     actual = RegistrationServiceClient.common_billing_account_path(billing_account)
     assert expected == actual
 
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "clam",
+    "billing_account": "clam",
+
     }
     path = RegistrationServiceClient.common_billing_account_path(**expected)
 
@@ -4848,18 +5224,18 @@ def test_parse_common_billing_account_path():
     actual = RegistrationServiceClient.parse_common_billing_account_path(path)
     assert expected == actual
 
-
 def test_common_folder_path():
     folder = "whelk"
 
-    expected = "folders/{folder}".format(folder=folder,)
+    expected = "folders/{folder}".format(folder=folder, )
     actual = RegistrationServiceClient.common_folder_path(folder)
     assert expected == actual
 
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "octopus",
+    "folder": "octopus",
+
     }
     path = RegistrationServiceClient.common_folder_path(**expected)
 
@@ -4867,18 +5243,18 @@ def test_parse_common_folder_path():
     actual = RegistrationServiceClient.parse_common_folder_path(path)
     assert expected == actual
 
-
 def test_common_organization_path():
     organization = "oyster"
 
-    expected = "organizations/{organization}".format(organization=organization,)
+    expected = "organizations/{organization}".format(organization=organization, )
     actual = RegistrationServiceClient.common_organization_path(organization)
     assert expected == actual
 
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "nudibranch",
+    "organization": "nudibranch",
+
     }
     path = RegistrationServiceClient.common_organization_path(**expected)
 
@@ -4886,18 +5262,18 @@ def test_parse_common_organization_path():
     actual = RegistrationServiceClient.parse_common_organization_path(path)
     assert expected == actual
 
-
 def test_common_project_path():
     project = "cuttlefish"
 
-    expected = "projects/{project}".format(project=project,)
+    expected = "projects/{project}".format(project=project, )
     actual = RegistrationServiceClient.common_project_path(project)
     assert expected == actual
 
 
 def test_parse_common_project_path():
     expected = {
-        "project": "mussel",
+    "project": "mussel",
+
     }
     path = RegistrationServiceClient.common_project_path(**expected)
 
@@ -4905,22 +5281,20 @@ def test_parse_common_project_path():
     actual = RegistrationServiceClient.parse_common_project_path(path)
     assert expected == actual
 
-
 def test_common_location_path():
     project = "winkle"
     location = "nautilus"
 
-    expected = "projects/{project}/locations/{location}".format(
-        project=project, location=location,
-    )
+    expected = "projects/{project}/locations/{location}".format(project=project, location=location, )
     actual = RegistrationServiceClient.common_location_path(project, location)
     assert expected == actual
 
 
 def test_parse_common_location_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
+    "project": "scallop",
+    "location": "abalone",
+
     }
     path = RegistrationServiceClient.common_location_path(**expected)
 
@@ -4932,19 +5306,17 @@ def test_parse_common_location_path():
 def test_client_withDEFAULT_CLIENT_INFO():
     client_info = gapic_v1.client_info.ClientInfo()
 
-    with mock.patch.object(
-        transports.RegistrationServiceTransport, "_prep_wrapped_messages"
-    ) as prep:
+    with mock.patch.object(transports.RegistrationServiceTransport, '_prep_wrapped_messages') as prep:
         client = RegistrationServiceClient(
-            credentials=credentials.AnonymousCredentials(), client_info=client_info,
+            credentials=credentials.AnonymousCredentials(),
+            client_info=client_info,
         )
         prep.assert_called_once_with(client_info)
 
-    with mock.patch.object(
-        transports.RegistrationServiceTransport, "_prep_wrapped_messages"
-    ) as prep:
+    with mock.patch.object(transports.RegistrationServiceTransport, '_prep_wrapped_messages') as prep:
         transport_class = RegistrationServiceClient.get_transport_class()
         transport = transport_class(
-            credentials=credentials.AnonymousCredentials(), client_info=client_info,
+            credentials=credentials.AnonymousCredentials(),
+            client_info=client_info,
         )
         prep.assert_called_once_with(client_info)

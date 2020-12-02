@@ -18,13 +18,13 @@
 import warnings
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple
 
-from google.api_core import gapic_v1  # type: ignore
-from google.api_core import grpc_helpers_async  # type: ignore
-from google import auth  # type: ignore
-from google.auth import credentials  # type: ignore
+from google.api_core import gapic_v1                   # type: ignore
+from google.api_core import grpc_helpers_async         # type: ignore
+from google import auth                                # type: ignore
+from google.auth import credentials                    # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 
-import grpc  # type: ignore
+import grpc                        # type: ignore
 from grpc.experimental import aio  # type: ignore
 
 from google.cloud.servicedirectory_v1beta1.types import endpoint
@@ -74,15 +74,13 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
     _stubs: Dict[str, Callable] = {}
 
     @classmethod
-    def create_channel(
-        cls,
-        host: str = "servicedirectory.googleapis.com",
-        credentials: credentials.Credentials = None,
-        credentials_file: Optional[str] = None,
-        scopes: Optional[Sequence[str]] = None,
-        quota_project_id: Optional[str] = None,
-        **kwargs,
-    ) -> aio.Channel:
+    def create_channel(cls,
+                       host: str = 'servicedirectory.googleapis.com',
+                       credentials: credentials.Credentials = None,
+                       credentials_file: Optional[str] = None,
+                       scopes: Optional[Sequence[str]] = None,
+                       quota_project_id: Optional[str] = None,
+                       **kwargs) -> aio.Channel:
         """Create and return a gRPC AsyncIO channel object.
         Args:
             address (Optional[str]): The host for the channel to use.
@@ -111,23 +109,21 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
             credentials_file=credentials_file,
             scopes=scopes,
             quota_project_id=quota_project_id,
-            **kwargs,
+            **kwargs
         )
 
-    def __init__(
-        self,
-        *,
-        host: str = "servicedirectory.googleapis.com",
-        credentials: credentials.Credentials = None,
-        credentials_file: Optional[str] = None,
-        scopes: Optional[Sequence[str]] = None,
-        channel: aio.Channel = None,
-        api_mtls_endpoint: str = None,
-        client_cert_source: Callable[[], Tuple[bytes, bytes]] = None,
-        ssl_channel_credentials: grpc.ChannelCredentials = None,
-        quota_project_id=None,
-        client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
-    ) -> None:
+    def __init__(self, *,
+            host: str = 'servicedirectory.googleapis.com',
+            credentials: credentials.Credentials = None,
+            credentials_file: Optional[str] = None,
+            scopes: Optional[Sequence[str]] = None,
+            channel: aio.Channel = None,
+            api_mtls_endpoint: str = None,
+            client_cert_source: Callable[[], Tuple[bytes, bytes]] = None,
+            ssl_channel_credentials: grpc.ChannelCredentials = None,
+            quota_project_id=None,
+            client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+            ) -> None:
         """Instantiate the transport.
 
         Args:
@@ -181,21 +177,12 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
             self._grpc_channel = channel
             self._ssl_channel_credentials = None
         elif api_mtls_endpoint:
-            warnings.warn(
-                "api_mtls_endpoint and client_cert_source are deprecated",
-                DeprecationWarning,
-            )
+            warnings.warn("api_mtls_endpoint and client_cert_source are deprecated", DeprecationWarning)
 
-            host = (
-                api_mtls_endpoint
-                if ":" in api_mtls_endpoint
-                else api_mtls_endpoint + ":443"
-            )
+            host = api_mtls_endpoint if ":" in api_mtls_endpoint else api_mtls_endpoint + ":443"
 
             if credentials is None:
-                credentials, _ = auth.default(
-                    scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id
-                )
+                credentials, _ = auth.default(scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id)
 
             # Create SSL credentials with client_cert_source or application
             # default SSL credentials.
@@ -221,9 +208,7 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
             host = host if ":" in host else host + ":443"
 
             if credentials is None:
-                credentials, _ = auth.default(
-                    scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id
-                )
+                credentials, _ = auth.default(scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id)
 
             # create a new channel. The provided one is ignored.
             self._grpc_channel = type(self).create_channel(
@@ -258,12 +243,9 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         return self._grpc_channel
 
     @property
-    def create_namespace(
-        self,
-    ) -> Callable[
-        [registration_service.CreateNamespaceRequest],
-        Awaitable[gcs_namespace.Namespace],
-    ]:
+    def create_namespace(self) -> Callable[
+            [registration_service.CreateNamespaceRequest],
+            Awaitable[gcs_namespace.Namespace]]:
         r"""Return a callable for the create namespace method over gRPC.
 
         Creates a namespace, and returns the new Namespace.
@@ -278,21 +260,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "create_namespace" not in self._stubs:
-            self._stubs["create_namespace"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/CreateNamespace",
+        if 'create_namespace' not in self._stubs:
+            self._stubs['create_namespace'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/CreateNamespace',
                 request_serializer=registration_service.CreateNamespaceRequest.serialize,
                 response_deserializer=gcs_namespace.Namespace.deserialize,
             )
-        return self._stubs["create_namespace"]
+        return self._stubs['create_namespace']
 
     @property
-    def list_namespaces(
-        self,
-    ) -> Callable[
-        [registration_service.ListNamespacesRequest],
-        Awaitable[registration_service.ListNamespacesResponse],
-    ]:
+    def list_namespaces(self) -> Callable[
+            [registration_service.ListNamespacesRequest],
+            Awaitable[registration_service.ListNamespacesResponse]]:
         r"""Return a callable for the list namespaces method over gRPC.
 
         Lists all namespaces.
@@ -307,20 +286,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "list_namespaces" not in self._stubs:
-            self._stubs["list_namespaces"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/ListNamespaces",
+        if 'list_namespaces' not in self._stubs:
+            self._stubs['list_namespaces'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/ListNamespaces',
                 request_serializer=registration_service.ListNamespacesRequest.serialize,
                 response_deserializer=registration_service.ListNamespacesResponse.deserialize,
             )
-        return self._stubs["list_namespaces"]
+        return self._stubs['list_namespaces']
 
     @property
-    def get_namespace(
-        self,
-    ) -> Callable[
-        [registration_service.GetNamespaceRequest], Awaitable[namespace.Namespace]
-    ]:
+    def get_namespace(self) -> Callable[
+            [registration_service.GetNamespaceRequest],
+            Awaitable[namespace.Namespace]]:
         r"""Return a callable for the get namespace method over gRPC.
 
         Gets a namespace.
@@ -335,21 +312,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "get_namespace" not in self._stubs:
-            self._stubs["get_namespace"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/GetNamespace",
+        if 'get_namespace' not in self._stubs:
+            self._stubs['get_namespace'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/GetNamespace',
                 request_serializer=registration_service.GetNamespaceRequest.serialize,
                 response_deserializer=namespace.Namespace.deserialize,
             )
-        return self._stubs["get_namespace"]
+        return self._stubs['get_namespace']
 
     @property
-    def update_namespace(
-        self,
-    ) -> Callable[
-        [registration_service.UpdateNamespaceRequest],
-        Awaitable[gcs_namespace.Namespace],
-    ]:
+    def update_namespace(self) -> Callable[
+            [registration_service.UpdateNamespaceRequest],
+            Awaitable[gcs_namespace.Namespace]]:
         r"""Return a callable for the update namespace method over gRPC.
 
         Updates a namespace.
@@ -364,20 +338,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "update_namespace" not in self._stubs:
-            self._stubs["update_namespace"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/UpdateNamespace",
+        if 'update_namespace' not in self._stubs:
+            self._stubs['update_namespace'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/UpdateNamespace',
                 request_serializer=registration_service.UpdateNamespaceRequest.serialize,
                 response_deserializer=gcs_namespace.Namespace.deserialize,
             )
-        return self._stubs["update_namespace"]
+        return self._stubs['update_namespace']
 
     @property
-    def delete_namespace(
-        self,
-    ) -> Callable[
-        [registration_service.DeleteNamespaceRequest], Awaitable[empty.Empty]
-    ]:
+    def delete_namespace(self) -> Callable[
+            [registration_service.DeleteNamespaceRequest],
+            Awaitable[empty.Empty]]:
         r"""Return a callable for the delete namespace method over gRPC.
 
         Deletes a namespace. This also deletes all services
@@ -393,20 +365,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "delete_namespace" not in self._stubs:
-            self._stubs["delete_namespace"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/DeleteNamespace",
+        if 'delete_namespace' not in self._stubs:
+            self._stubs['delete_namespace'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/DeleteNamespace',
                 request_serializer=registration_service.DeleteNamespaceRequest.serialize,
                 response_deserializer=empty.Empty.FromString,
             )
-        return self._stubs["delete_namespace"]
+        return self._stubs['delete_namespace']
 
     @property
-    def create_service(
-        self,
-    ) -> Callable[
-        [registration_service.CreateServiceRequest], Awaitable[gcs_service.Service]
-    ]:
+    def create_service(self) -> Callable[
+            [registration_service.CreateServiceRequest],
+            Awaitable[gcs_service.Service]]:
         r"""Return a callable for the create service method over gRPC.
 
         Creates a service, and returns the new Service.
@@ -421,21 +391,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "create_service" not in self._stubs:
-            self._stubs["create_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/CreateService",
+        if 'create_service' not in self._stubs:
+            self._stubs['create_service'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/CreateService',
                 request_serializer=registration_service.CreateServiceRequest.serialize,
                 response_deserializer=gcs_service.Service.deserialize,
             )
-        return self._stubs["create_service"]
+        return self._stubs['create_service']
 
     @property
-    def list_services(
-        self,
-    ) -> Callable[
-        [registration_service.ListServicesRequest],
-        Awaitable[registration_service.ListServicesResponse],
-    ]:
+    def list_services(self) -> Callable[
+            [registration_service.ListServicesRequest],
+            Awaitable[registration_service.ListServicesResponse]]:
         r"""Return a callable for the list services method over gRPC.
 
         Lists all services belonging to a namespace.
@@ -450,18 +417,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "list_services" not in self._stubs:
-            self._stubs["list_services"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/ListServices",
+        if 'list_services' not in self._stubs:
+            self._stubs['list_services'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/ListServices',
                 request_serializer=registration_service.ListServicesRequest.serialize,
                 response_deserializer=registration_service.ListServicesResponse.deserialize,
             )
-        return self._stubs["list_services"]
+        return self._stubs['list_services']
 
     @property
-    def get_service(
-        self,
-    ) -> Callable[[registration_service.GetServiceRequest], Awaitable[service.Service]]:
+    def get_service(self) -> Callable[
+            [registration_service.GetServiceRequest],
+            Awaitable[service.Service]]:
         r"""Return a callable for the get service method over gRPC.
 
         Gets a service.
@@ -476,20 +443,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "get_service" not in self._stubs:
-            self._stubs["get_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/GetService",
+        if 'get_service' not in self._stubs:
+            self._stubs['get_service'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/GetService',
                 request_serializer=registration_service.GetServiceRequest.serialize,
                 response_deserializer=service.Service.deserialize,
             )
-        return self._stubs["get_service"]
+        return self._stubs['get_service']
 
     @property
-    def update_service(
-        self,
-    ) -> Callable[
-        [registration_service.UpdateServiceRequest], Awaitable[gcs_service.Service]
-    ]:
+    def update_service(self) -> Callable[
+            [registration_service.UpdateServiceRequest],
+            Awaitable[gcs_service.Service]]:
         r"""Return a callable for the update service method over gRPC.
 
         Updates a service.
@@ -504,18 +469,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "update_service" not in self._stubs:
-            self._stubs["update_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/UpdateService",
+        if 'update_service' not in self._stubs:
+            self._stubs['update_service'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/UpdateService',
                 request_serializer=registration_service.UpdateServiceRequest.serialize,
                 response_deserializer=gcs_service.Service.deserialize,
             )
-        return self._stubs["update_service"]
+        return self._stubs['update_service']
 
     @property
-    def delete_service(
-        self,
-    ) -> Callable[[registration_service.DeleteServiceRequest], Awaitable[empty.Empty]]:
+    def delete_service(self) -> Callable[
+            [registration_service.DeleteServiceRequest],
+            Awaitable[empty.Empty]]:
         r"""Return a callable for the delete service method over gRPC.
 
         Deletes a service. This also deletes all endpoints
@@ -531,20 +496,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "delete_service" not in self._stubs:
-            self._stubs["delete_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/DeleteService",
+        if 'delete_service' not in self._stubs:
+            self._stubs['delete_service'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/DeleteService',
                 request_serializer=registration_service.DeleteServiceRequest.serialize,
                 response_deserializer=empty.Empty.FromString,
             )
-        return self._stubs["delete_service"]
+        return self._stubs['delete_service']
 
     @property
-    def create_endpoint(
-        self,
-    ) -> Callable[
-        [registration_service.CreateEndpointRequest], Awaitable[gcs_endpoint.Endpoint]
-    ]:
+    def create_endpoint(self) -> Callable[
+            [registration_service.CreateEndpointRequest],
+            Awaitable[gcs_endpoint.Endpoint]]:
         r"""Return a callable for the create endpoint method over gRPC.
 
         Creates a endpoint, and returns the new Endpoint.
@@ -559,21 +522,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "create_endpoint" not in self._stubs:
-            self._stubs["create_endpoint"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/CreateEndpoint",
+        if 'create_endpoint' not in self._stubs:
+            self._stubs['create_endpoint'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/CreateEndpoint',
                 request_serializer=registration_service.CreateEndpointRequest.serialize,
                 response_deserializer=gcs_endpoint.Endpoint.deserialize,
             )
-        return self._stubs["create_endpoint"]
+        return self._stubs['create_endpoint']
 
     @property
-    def list_endpoints(
-        self,
-    ) -> Callable[
-        [registration_service.ListEndpointsRequest],
-        Awaitable[registration_service.ListEndpointsResponse],
-    ]:
+    def list_endpoints(self) -> Callable[
+            [registration_service.ListEndpointsRequest],
+            Awaitable[registration_service.ListEndpointsResponse]]:
         r"""Return a callable for the list endpoints method over gRPC.
 
         Lists all endpoints.
@@ -588,20 +548,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "list_endpoints" not in self._stubs:
-            self._stubs["list_endpoints"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/ListEndpoints",
+        if 'list_endpoints' not in self._stubs:
+            self._stubs['list_endpoints'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/ListEndpoints',
                 request_serializer=registration_service.ListEndpointsRequest.serialize,
                 response_deserializer=registration_service.ListEndpointsResponse.deserialize,
             )
-        return self._stubs["list_endpoints"]
+        return self._stubs['list_endpoints']
 
     @property
-    def get_endpoint(
-        self,
-    ) -> Callable[
-        [registration_service.GetEndpointRequest], Awaitable[endpoint.Endpoint]
-    ]:
+    def get_endpoint(self) -> Callable[
+            [registration_service.GetEndpointRequest],
+            Awaitable[endpoint.Endpoint]]:
         r"""Return a callable for the get endpoint method over gRPC.
 
         Gets a endpoint.
@@ -616,20 +574,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "get_endpoint" not in self._stubs:
-            self._stubs["get_endpoint"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/GetEndpoint",
+        if 'get_endpoint' not in self._stubs:
+            self._stubs['get_endpoint'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/GetEndpoint',
                 request_serializer=registration_service.GetEndpointRequest.serialize,
                 response_deserializer=endpoint.Endpoint.deserialize,
             )
-        return self._stubs["get_endpoint"]
+        return self._stubs['get_endpoint']
 
     @property
-    def update_endpoint(
-        self,
-    ) -> Callable[
-        [registration_service.UpdateEndpointRequest], Awaitable[gcs_endpoint.Endpoint]
-    ]:
+    def update_endpoint(self) -> Callable[
+            [registration_service.UpdateEndpointRequest],
+            Awaitable[gcs_endpoint.Endpoint]]:
         r"""Return a callable for the update endpoint method over gRPC.
 
         Updates a endpoint.
@@ -644,18 +600,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "update_endpoint" not in self._stubs:
-            self._stubs["update_endpoint"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/UpdateEndpoint",
+        if 'update_endpoint' not in self._stubs:
+            self._stubs['update_endpoint'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/UpdateEndpoint',
                 request_serializer=registration_service.UpdateEndpointRequest.serialize,
                 response_deserializer=gcs_endpoint.Endpoint.deserialize,
             )
-        return self._stubs["update_endpoint"]
+        return self._stubs['update_endpoint']
 
     @property
-    def delete_endpoint(
-        self,
-    ) -> Callable[[registration_service.DeleteEndpointRequest], Awaitable[empty.Empty]]:
+    def delete_endpoint(self) -> Callable[
+            [registration_service.DeleteEndpointRequest],
+            Awaitable[empty.Empty]]:
         r"""Return a callable for the delete endpoint method over gRPC.
 
         Deletes a endpoint.
@@ -670,18 +626,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "delete_endpoint" not in self._stubs:
-            self._stubs["delete_endpoint"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/DeleteEndpoint",
+        if 'delete_endpoint' not in self._stubs:
+            self._stubs['delete_endpoint'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/DeleteEndpoint',
                 request_serializer=registration_service.DeleteEndpointRequest.serialize,
                 response_deserializer=empty.Empty.FromString,
             )
-        return self._stubs["delete_endpoint"]
+        return self._stubs['delete_endpoint']
 
     @property
-    def get_iam_policy(
-        self,
-    ) -> Callable[[iam_policy.GetIamPolicyRequest], Awaitable[policy.Policy]]:
+    def get_iam_policy(self) -> Callable[
+            [iam_policy.GetIamPolicyRequest],
+            Awaitable[policy.Policy]]:
         r"""Return a callable for the get iam policy method over gRPC.
 
         Gets the IAM Policy for a resource (namespace or
@@ -697,18 +653,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "get_iam_policy" not in self._stubs:
-            self._stubs["get_iam_policy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/GetIamPolicy",
+        if 'get_iam_policy' not in self._stubs:
+            self._stubs['get_iam_policy'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/GetIamPolicy',
                 request_serializer=iam_policy.GetIamPolicyRequest.SerializeToString,
                 response_deserializer=policy.Policy.FromString,
             )
-        return self._stubs["get_iam_policy"]
+        return self._stubs['get_iam_policy']
 
     @property
-    def set_iam_policy(
-        self,
-    ) -> Callable[[iam_policy.SetIamPolicyRequest], Awaitable[policy.Policy]]:
+    def set_iam_policy(self) -> Callable[
+            [iam_policy.SetIamPolicyRequest],
+            Awaitable[policy.Policy]]:
         r"""Return a callable for the set iam policy method over gRPC.
 
         Sets the IAM Policy for a resource (namespace or
@@ -724,21 +680,18 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "set_iam_policy" not in self._stubs:
-            self._stubs["set_iam_policy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/SetIamPolicy",
+        if 'set_iam_policy' not in self._stubs:
+            self._stubs['set_iam_policy'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/SetIamPolicy',
                 request_serializer=iam_policy.SetIamPolicyRequest.SerializeToString,
                 response_deserializer=policy.Policy.FromString,
             )
-        return self._stubs["set_iam_policy"]
+        return self._stubs['set_iam_policy']
 
     @property
-    def test_iam_permissions(
-        self,
-    ) -> Callable[
-        [iam_policy.TestIamPermissionsRequest],
-        Awaitable[iam_policy.TestIamPermissionsResponse],
-    ]:
+    def test_iam_permissions(self) -> Callable[
+            [iam_policy.TestIamPermissionsRequest],
+            Awaitable[iam_policy.TestIamPermissionsResponse]]:
         r"""Return a callable for the test iam permissions method over gRPC.
 
         Tests IAM permissions for a resource (namespace or
@@ -754,13 +707,15 @@ class RegistrationServiceGrpcAsyncIOTransport(RegistrationServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if "test_iam_permissions" not in self._stubs:
-            self._stubs["test_iam_permissions"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/TestIamPermissions",
+        if 'test_iam_permissions' not in self._stubs:
+            self._stubs['test_iam_permissions'] = self.grpc_channel.unary_unary(
+                '/google.cloud.servicedirectory.v1beta1.RegistrationService/TestIamPermissions',
                 request_serializer=iam_policy.TestIamPermissionsRequest.SerializeToString,
                 response_deserializer=iam_policy.TestIamPermissionsResponse.FromString,
             )
-        return self._stubs["test_iam_permissions"]
+        return self._stubs['test_iam_permissions']
 
 
-__all__ = ("RegistrationServiceGrpcAsyncIOTransport",)
+__all__ = (
+    'RegistrationServiceGrpcAsyncIOTransport',
+)

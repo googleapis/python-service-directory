@@ -22,8 +22,11 @@ from google.cloud.servicedirectory_v1beta1.types import service as gcs_service
 
 
 __protobuf__ = proto.module(
-    package="google.cloud.servicedirectory.v1beta1",
-    manifest={"ResolveServiceRequest", "ResolveServiceResponse",},
+    package='google.cloud.servicedirectory.v1beta1',
+    manifest={
+        'ResolveServiceRequest',
+        'ResolveServiceResponse',
+    },
 )
 
 
@@ -78,7 +81,9 @@ class ResolveServiceResponse(proto.Message):
 
     """
 
-    service = proto.Field(proto.MESSAGE, number=1, message=gcs_service.Service,)
+    service = proto.Field(proto.MESSAGE, number=1,
+        message=gcs_service.Service,
+    )
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

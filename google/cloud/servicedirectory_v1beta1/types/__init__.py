@@ -15,13 +15,19 @@
 # limitations under the License.
 #
 
-from .endpoint import Endpoint
-from .service import Service
+from .endpoint import (
+    Endpoint,
+)
+from .service import (
+    Service,
+)
 from .lookup_service import (
     ResolveServiceRequest,
     ResolveServiceResponse,
 )
-from .namespace import Namespace
+from .namespace import (
+    Namespace,
+)
 from .registration_service import (
     CreateNamespaceRequest,
     ListNamespacesRequest,
@@ -44,27 +50,27 @@ from .registration_service import (
 )
 
 __all__ = (
-    "Endpoint",
-    "Service",
-    "ResolveServiceRequest",
-    "ResolveServiceResponse",
-    "Namespace",
-    "CreateNamespaceRequest",
-    "ListNamespacesRequest",
-    "ListNamespacesResponse",
-    "GetNamespaceRequest",
-    "UpdateNamespaceRequest",
-    "DeleteNamespaceRequest",
-    "CreateServiceRequest",
-    "ListServicesRequest",
-    "ListServicesResponse",
-    "GetServiceRequest",
-    "UpdateServiceRequest",
-    "DeleteServiceRequest",
-    "CreateEndpointRequest",
-    "ListEndpointsRequest",
-    "ListEndpointsResponse",
-    "GetEndpointRequest",
-    "UpdateEndpointRequest",
-    "DeleteEndpointRequest",
+    'Endpoint',
+    'Service',
+    'ResolveServiceRequest',
+    'ResolveServiceResponse',
+    'Namespace',
+    'CreateNamespaceRequest',
+    'ListNamespacesRequest',
+    'ListNamespacesResponse',
+    'GetNamespaceRequest',
+    'UpdateNamespaceRequest',
+    'DeleteNamespaceRequest',
+    'CreateServiceRequest',
+    'ListServicesRequest',
+    'ListServicesResponse',
+    'GetServiceRequest',
+    'UpdateServiceRequest',
+    'DeleteServiceRequest',
+    'CreateEndpointRequest',
+    'ListEndpointsRequest',
+    'ListEndpointsResponse',
+    'GetEndpointRequest',
+    'UpdateEndpointRequest',
+    'DeleteEndpointRequest',
 )

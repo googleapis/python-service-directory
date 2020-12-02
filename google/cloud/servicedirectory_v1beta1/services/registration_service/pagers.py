@@ -40,15 +40,12 @@ class ListNamespacesPager:
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
-
-    def __init__(
-        self,
-        method: Callable[..., registration_service.ListNamespacesResponse],
-        request: registration_service.ListNamespacesRequest,
-        response: registration_service.ListNamespacesResponse,
-        *,
-        metadata: Sequence[Tuple[str, str]] = ()
-    ):
+    def __init__(self,
+            method: Callable[..., registration_service.ListNamespacesResponse],
+            request: registration_service.ListNamespacesRequest,
+            response: registration_service.ListNamespacesResponse,
+            *,
+            metadata: Sequence[Tuple[str, str]] = ()):
         """Instantiate the pager.
 
         Args:
@@ -82,7 +79,7 @@ class ListNamespacesPager:
             yield from page.namespaces
 
     def __repr__(self) -> str:
-        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+        return '{0}<{1!r}>'.format(self.__class__.__name__, self._response)
 
 
 class ListNamespacesAsyncPager:
@@ -102,15 +99,12 @@ class ListNamespacesAsyncPager:
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
-
-    def __init__(
-        self,
-        method: Callable[..., Awaitable[registration_service.ListNamespacesResponse]],
-        request: registration_service.ListNamespacesRequest,
-        response: registration_service.ListNamespacesResponse,
-        *,
-        metadata: Sequence[Tuple[str, str]] = ()
-    ):
+    def __init__(self,
+            method: Callable[..., Awaitable[registration_service.ListNamespacesResponse]],
+            request: registration_service.ListNamespacesRequest,
+            response: registration_service.ListNamespacesResponse,
+            *,
+            metadata: Sequence[Tuple[str, str]] = ()):
         """Instantiate the pager.
 
         Args:
@@ -148,7 +142,7 @@ class ListNamespacesAsyncPager:
         return async_generator()
 
     def __repr__(self) -> str:
-        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+        return '{0}<{1!r}>'.format(self.__class__.__name__, self._response)
 
 
 class ListServicesPager:
@@ -168,15 +162,12 @@ class ListServicesPager:
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
-
-    def __init__(
-        self,
-        method: Callable[..., registration_service.ListServicesResponse],
-        request: registration_service.ListServicesRequest,
-        response: registration_service.ListServicesResponse,
-        *,
-        metadata: Sequence[Tuple[str, str]] = ()
-    ):
+    def __init__(self,
+            method: Callable[..., registration_service.ListServicesResponse],
+            request: registration_service.ListServicesRequest,
+            response: registration_service.ListServicesResponse,
+            *,
+            metadata: Sequence[Tuple[str, str]] = ()):
         """Instantiate the pager.
 
         Args:
@@ -210,7 +201,7 @@ class ListServicesPager:
             yield from page.services
 
     def __repr__(self) -> str:
-        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+        return '{0}<{1!r}>'.format(self.__class__.__name__, self._response)
 
 
 class ListServicesAsyncPager:
@@ -230,15 +221,12 @@ class ListServicesAsyncPager:
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
-
-    def __init__(
-        self,
-        method: Callable[..., Awaitable[registration_service.ListServicesResponse]],
-        request: registration_service.ListServicesRequest,
-        response: registration_service.ListServicesResponse,
-        *,
-        metadata: Sequence[Tuple[str, str]] = ()
-    ):
+    def __init__(self,
+            method: Callable[..., Awaitable[registration_service.ListServicesResponse]],
+            request: registration_service.ListServicesRequest,
+            response: registration_service.ListServicesResponse,
+            *,
+            metadata: Sequence[Tuple[str, str]] = ()):
         """Instantiate the pager.
 
         Args:
@@ -276,7 +264,7 @@ class ListServicesAsyncPager:
         return async_generator()
 
     def __repr__(self) -> str:
-        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+        return '{0}<{1!r}>'.format(self.__class__.__name__, self._response)
 
 
 class ListEndpointsPager:
@@ -296,15 +284,12 @@ class ListEndpointsPager:
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
-
-    def __init__(
-        self,
-        method: Callable[..., registration_service.ListEndpointsResponse],
-        request: registration_service.ListEndpointsRequest,
-        response: registration_service.ListEndpointsResponse,
-        *,
-        metadata: Sequence[Tuple[str, str]] = ()
-    ):
+    def __init__(self,
+            method: Callable[..., registration_service.ListEndpointsResponse],
+            request: registration_service.ListEndpointsRequest,
+            response: registration_service.ListEndpointsResponse,
+            *,
+            metadata: Sequence[Tuple[str, str]] = ()):
         """Instantiate the pager.
 
         Args:
@@ -338,7 +323,7 @@ class ListEndpointsPager:
             yield from page.endpoints
 
     def __repr__(self) -> str:
-        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+        return '{0}<{1!r}>'.format(self.__class__.__name__, self._response)
 
 
 class ListEndpointsAsyncPager:
@@ -358,15 +343,12 @@ class ListEndpointsAsyncPager:
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
-
-    def __init__(
-        self,
-        method: Callable[..., Awaitable[registration_service.ListEndpointsResponse]],
-        request: registration_service.ListEndpointsRequest,
-        response: registration_service.ListEndpointsResponse,
-        *,
-        metadata: Sequence[Tuple[str, str]] = ()
-    ):
+    def __init__(self,
+            method: Callable[..., Awaitable[registration_service.ListEndpointsResponse]],
+            request: registration_service.ListEndpointsRequest,
+            response: registration_service.ListEndpointsResponse,
+            *,
+            metadata: Sequence[Tuple[str, str]] = ()):
         """Instantiate the pager.
 
         Args:
@@ -404,4 +386,4 @@ class ListEndpointsAsyncPager:
         return async_generator()
 
     def __repr__(self) -> str:
-        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+        return '{0}<{1!r}>'.format(self.__class__.__name__, self._response)
