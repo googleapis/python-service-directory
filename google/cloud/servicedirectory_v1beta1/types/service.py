@@ -51,7 +51,9 @@ class Service(proto.Message):
     """
 
     name = proto.Field(proto.STRING, number=1)
+
     metadata = proto.MapField(proto.STRING, proto.STRING, number=2)
+
     endpoints = proto.RepeatedField(proto.MESSAGE, number=3, message=endpoint.Endpoint)
 
 

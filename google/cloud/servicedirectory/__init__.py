@@ -15,8 +15,14 @@
 # limitations under the License.
 #
 
+from google.cloud.servicedirectory_v1beta1.services.lookup_service.async_client import (
+    LookupServiceAsyncClient,
+)
 from google.cloud.servicedirectory_v1beta1.services.lookup_service.client import (
     LookupServiceClient,
+)
+from google.cloud.servicedirectory_v1beta1.services.registration_service.async_client import (
+    RegistrationServiceAsyncClient,
 )
 from google.cloud.servicedirectory_v1beta1.services.registration_service.client import (
     RegistrationServiceClient,
@@ -102,8 +108,10 @@ __all__ = (
     "ListNamespacesResponse",
     "ListServicesRequest",
     "ListServicesResponse",
+    "LookupServiceAsyncClient",
     "LookupServiceClient",
     "Namespace",
+    "RegistrationServiceAsyncClient",
     "RegistrationServiceClient",
     "ResolveServiceRequest",
     "ResolveServiceResponse",
