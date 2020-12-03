@@ -15,22 +15,10 @@
 # limitations under the License.
 #
 
-from collections import OrderedDict
-from typing import Dict, Type
-
-from .base import LookupServiceTransport
-from .grpc import LookupServiceGrpcTransport
-from .grpc_asyncio import LookupServiceGrpcAsyncIOTransport
-
-
-# Compile a registry of transports.
-_transport_registry = OrderedDict()  # type: Dict[str, Type[LookupServiceTransport]]
-_transport_registry["grpc"] = LookupServiceGrpcTransport
-_transport_registry["grpc_asyncio"] = LookupServiceGrpcAsyncIOTransport
-
+from .client import RegistrationServiceClient
+from .async_client import RegistrationServiceAsyncClient
 
 __all__ = (
-    "LookupServiceTransport",
-    "LookupServiceGrpcTransport",
-    "LookupServiceGrpcAsyncIOTransport",
+    "RegistrationServiceClient",
+    "RegistrationServiceAsyncClient",
 )

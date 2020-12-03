@@ -26,7 +26,7 @@ from google.auth.transport.grpc import SslCredentials  # type: ignore
 
 import grpc  # type: ignore
 
-from google.cloud.servicedirectory_v1beta1.types import lookup_service
+from google.cloud.servicedirectory_v1.types import lookup_service
 
 from .base import LookupServiceTransport, DEFAULT_CLIENT_INFO
 
@@ -237,10 +237,9 @@ class LookupServiceGrpcTransport(LookupServiceTransport):
     ]:
         r"""Return a callable for the resolve service method over gRPC.
 
-        Returns a
-        [service][google.cloud.servicedirectory.v1beta1.Service] and its
-        associated endpoints. Resolving a service is not considered an
-        active developer method.
+        Returns a [service][google.cloud.servicedirectory.v1.Service]
+        and its associated endpoints. Resolving a service is not
+        considered an active developer method.
 
         Returns:
             Callable[[~.ResolveServiceRequest],
@@ -254,7 +253,7 @@ class LookupServiceGrpcTransport(LookupServiceTransport):
         # to pass in the functions for each.
         if "resolve_service" not in self._stubs:
             self._stubs["resolve_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.LookupService/ResolveService",
+                "/google.cloud.servicedirectory.v1.LookupService/ResolveService",
                 request_serializer=lookup_service.ResolveServiceRequest.serialize,
                 response_deserializer=lookup_service.ResolveServiceResponse.deserialize,
             )

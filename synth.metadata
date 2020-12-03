@@ -4,29 +4,29 @@
       "git": {
         "name": ".",
         "remote": "git@github.com:googleapis/python-service-directory",
-        "sha": "f9bfdbad6e5151eabb3e01c109ec64c2056e19e9"
+        "sha": "c5ea54e806ca99aba99933cc63c1193107d6a90c"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "269083b6ed01aa5a1f445462fcc61e05471cd8f8",
-        "internalRef": "345127100"
+        "sha": "539f0d44c80ef331ae1a50d92d61b91e77d500dd",
+        "internalRef": "345358447"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "32af6da519a6b042e3da62008e2a75e991efb6b4"
+        "sha": "f94318521f63085b9ccb43d42af89f153fb39f15"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "32af6da519a6b042e3da62008e2a75e991efb6b4"
+        "sha": "f94318521f63085b9ccb43d42af89f153fb39f15"
       }
     }
   ],
@@ -37,7 +37,16 @@
         "apiName": "servicedirectory",
         "apiVersion": "v1beta1",
         "language": "python",
-        "generator": "gapic-generator-python"
+        "generator": "bazel"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "servicedirectory",
+        "apiVersion": "v1",
+        "language": "python",
+        "generator": "bazel"
       }
     }
   ]

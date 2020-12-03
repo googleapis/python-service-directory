@@ -26,13 +26,13 @@ from google.auth.transport.grpc import SslCredentials  # type: ignore
 
 import grpc  # type: ignore
 
-from google.cloud.servicedirectory_v1beta1.types import endpoint
-from google.cloud.servicedirectory_v1beta1.types import endpoint as gcs_endpoint
-from google.cloud.servicedirectory_v1beta1.types import namespace
-from google.cloud.servicedirectory_v1beta1.types import namespace as gcs_namespace
-from google.cloud.servicedirectory_v1beta1.types import registration_service
-from google.cloud.servicedirectory_v1beta1.types import service
-from google.cloud.servicedirectory_v1beta1.types import service as gcs_service
+from google.cloud.servicedirectory_v1.types import endpoint
+from google.cloud.servicedirectory_v1.types import endpoint as gcs_endpoint
+from google.cloud.servicedirectory_v1.types import namespace
+from google.cloud.servicedirectory_v1.types import namespace as gcs_namespace
+from google.cloud.servicedirectory_v1.types import registration_service
+from google.cloud.servicedirectory_v1.types import service
+from google.cloud.servicedirectory_v1.types import service as gcs_service
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
 from google.iam.v1 import policy_pb2 as policy  # type: ignore
 from google.protobuf import empty_pb2 as empty  # type: ignore
@@ -47,17 +47,16 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
     following resource model:
 
     -  The API has a collection of
-       [Namespace][google.cloud.servicedirectory.v1beta1.Namespace]
+       [Namespace][google.cloud.servicedirectory.v1.Namespace]
        resources, named ``projects/*/locations/*/namespaces/*``.
 
     -  Each Namespace has a collection of
-       [Service][google.cloud.servicedirectory.v1beta1.Service]
-       resources, named
-       ``projects/*/locations/*/namespaces/*/services/*``.
+       [Service][google.cloud.servicedirectory.v1.Service] resources,
+       named ``projects/*/locations/*/namespaces/*/services/*``.
 
     -  Each Service has a collection of
-       [Endpoint][google.cloud.servicedirectory.v1beta1.Endpoint]
-       resources, named
+       [Endpoint][google.cloud.servicedirectory.v1.Endpoint] resources,
+       named
        ``projects/*/locations/*/namespaces/*/services/*/endpoints/*``.
 
     This class defines the same methods as the primary client, so the
@@ -275,7 +274,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "create_namespace" not in self._stubs:
             self._stubs["create_namespace"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/CreateNamespace",
+                "/google.cloud.servicedirectory.v1.RegistrationService/CreateNamespace",
                 request_serializer=registration_service.CreateNamespaceRequest.serialize,
                 response_deserializer=gcs_namespace.Namespace.deserialize,
             )
@@ -304,7 +303,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "list_namespaces" not in self._stubs:
             self._stubs["list_namespaces"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/ListNamespaces",
+                "/google.cloud.servicedirectory.v1.RegistrationService/ListNamespaces",
                 request_serializer=registration_service.ListNamespacesRequest.serialize,
                 response_deserializer=registration_service.ListNamespacesResponse.deserialize,
             )
@@ -330,7 +329,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "get_namespace" not in self._stubs:
             self._stubs["get_namespace"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/GetNamespace",
+                "/google.cloud.servicedirectory.v1.RegistrationService/GetNamespace",
                 request_serializer=registration_service.GetNamespaceRequest.serialize,
                 response_deserializer=namespace.Namespace.deserialize,
             )
@@ -358,7 +357,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "update_namespace" not in self._stubs:
             self._stubs["update_namespace"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/UpdateNamespace",
+                "/google.cloud.servicedirectory.v1.RegistrationService/UpdateNamespace",
                 request_serializer=registration_service.UpdateNamespaceRequest.serialize,
                 response_deserializer=gcs_namespace.Namespace.deserialize,
             )
@@ -385,7 +384,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "delete_namespace" not in self._stubs:
             self._stubs["delete_namespace"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/DeleteNamespace",
+                "/google.cloud.servicedirectory.v1.RegistrationService/DeleteNamespace",
                 request_serializer=registration_service.DeleteNamespaceRequest.serialize,
                 response_deserializer=empty.Empty.FromString,
             )
@@ -411,7 +410,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "create_service" not in self._stubs:
             self._stubs["create_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/CreateService",
+                "/google.cloud.servicedirectory.v1.RegistrationService/CreateService",
                 request_serializer=registration_service.CreateServiceRequest.serialize,
                 response_deserializer=gcs_service.Service.deserialize,
             )
@@ -440,7 +439,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "list_services" not in self._stubs:
             self._stubs["list_services"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/ListServices",
+                "/google.cloud.servicedirectory.v1.RegistrationService/ListServices",
                 request_serializer=registration_service.ListServicesRequest.serialize,
                 response_deserializer=registration_service.ListServicesResponse.deserialize,
             )
@@ -466,7 +465,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "get_service" not in self._stubs:
             self._stubs["get_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/GetService",
+                "/google.cloud.servicedirectory.v1.RegistrationService/GetService",
                 request_serializer=registration_service.GetServiceRequest.serialize,
                 response_deserializer=service.Service.deserialize,
             )
@@ -492,7 +491,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "update_service" not in self._stubs:
             self._stubs["update_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/UpdateService",
+                "/google.cloud.servicedirectory.v1.RegistrationService/UpdateService",
                 request_serializer=registration_service.UpdateServiceRequest.serialize,
                 response_deserializer=gcs_service.Service.deserialize,
             )
@@ -519,7 +518,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "delete_service" not in self._stubs:
             self._stubs["delete_service"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/DeleteService",
+                "/google.cloud.servicedirectory.v1.RegistrationService/DeleteService",
                 request_serializer=registration_service.DeleteServiceRequest.serialize,
                 response_deserializer=empty.Empty.FromString,
             )
@@ -545,7 +544,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "create_endpoint" not in self._stubs:
             self._stubs["create_endpoint"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/CreateEndpoint",
+                "/google.cloud.servicedirectory.v1.RegistrationService/CreateEndpoint",
                 request_serializer=registration_service.CreateEndpointRequest.serialize,
                 response_deserializer=gcs_endpoint.Endpoint.deserialize,
             )
@@ -574,7 +573,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "list_endpoints" not in self._stubs:
             self._stubs["list_endpoints"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/ListEndpoints",
+                "/google.cloud.servicedirectory.v1.RegistrationService/ListEndpoints",
                 request_serializer=registration_service.ListEndpointsRequest.serialize,
                 response_deserializer=registration_service.ListEndpointsResponse.deserialize,
             )
@@ -600,7 +599,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "get_endpoint" not in self._stubs:
             self._stubs["get_endpoint"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/GetEndpoint",
+                "/google.cloud.servicedirectory.v1.RegistrationService/GetEndpoint",
                 request_serializer=registration_service.GetEndpointRequest.serialize,
                 response_deserializer=endpoint.Endpoint.deserialize,
             )
@@ -626,7 +625,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "update_endpoint" not in self._stubs:
             self._stubs["update_endpoint"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/UpdateEndpoint",
+                "/google.cloud.servicedirectory.v1.RegistrationService/UpdateEndpoint",
                 request_serializer=registration_service.UpdateEndpointRequest.serialize,
                 response_deserializer=gcs_endpoint.Endpoint.deserialize,
             )
@@ -652,7 +651,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "delete_endpoint" not in self._stubs:
             self._stubs["delete_endpoint"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/DeleteEndpoint",
+                "/google.cloud.servicedirectory.v1.RegistrationService/DeleteEndpoint",
                 request_serializer=registration_service.DeleteEndpointRequest.serialize,
                 response_deserializer=empty.Empty.FromString,
             )
@@ -679,7 +678,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "get_iam_policy" not in self._stubs:
             self._stubs["get_iam_policy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/GetIamPolicy",
+                "/google.cloud.servicedirectory.v1.RegistrationService/GetIamPolicy",
                 request_serializer=iam_policy.GetIamPolicyRequest.SerializeToString,
                 response_deserializer=policy.Policy.FromString,
             )
@@ -706,7 +705,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "set_iam_policy" not in self._stubs:
             self._stubs["set_iam_policy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/SetIamPolicy",
+                "/google.cloud.servicedirectory.v1.RegistrationService/SetIamPolicy",
                 request_serializer=iam_policy.SetIamPolicyRequest.SerializeToString,
                 response_deserializer=policy.Policy.FromString,
             )
@@ -735,7 +734,7 @@ class RegistrationServiceGrpcTransport(RegistrationServiceTransport):
         # to pass in the functions for each.
         if "test_iam_permissions" not in self._stubs:
             self._stubs["test_iam_permissions"] = self.grpc_channel.unary_unary(
-                "/google.cloud.servicedirectory.v1beta1.RegistrationService/TestIamPermissions",
+                "/google.cloud.servicedirectory.v1.RegistrationService/TestIamPermissions",
                 request_serializer=iam_policy.TestIamPermissionsRequest.SerializeToString,
                 response_deserializer=iam_policy.TestIamPermissionsResponse.FromString,
             )
