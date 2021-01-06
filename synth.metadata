@@ -11,8 +11,8 @@
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "f967ea0c0437a269515665ff9dbb69fcf134ddd9",
-        "internalRef": "347681363"
+        "sha": "520682435235d9c503983a360a2090025aa47cd1",
+        "internalRef": "350246057"
       }
     },
     {
@@ -51,6 +51,7 @@
     }
   ],
   "generatedFiles": [
+    ".coveragerc",
     ".flake8",
     ".github/CONTRIBUTING.md",
     ".github/ISSUE_TEMPLATE/bug_report.md",
@@ -104,8 +105,12 @@
     "docs/_templates/layout.html",
     "docs/conf.py",
     "docs/multiprocessing.rst",
+    "docs/servicedirectory_v1/lookup_service.rst",
+    "docs/servicedirectory_v1/registration_service.rst",
     "docs/servicedirectory_v1/services.rst",
     "docs/servicedirectory_v1/types.rst",
+    "docs/servicedirectory_v1beta1/lookup_service.rst",
+    "docs/servicedirectory_v1beta1/registration_service.rst",
     "docs/servicedirectory_v1beta1/services.rst",
     "docs/servicedirectory_v1beta1/types.rst",
     "google/cloud/servicedirectory/__init__.py",

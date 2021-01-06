@@ -78,6 +78,7 @@ class LookupServiceAsyncClient:
         LookupServiceClient.parse_common_location_path
     )
 
+    from_service_account_info = LookupServiceClient.from_service_account_info
     from_service_account_file = LookupServiceClient.from_service_account_file
     from_service_account_json = from_service_account_file
 
@@ -155,7 +156,7 @@ class LookupServiceAsyncClient:
         considered an active developer method.
 
         Args:
-            request (:class:`~.lookup_service.ResolveServiceRequest`):
+            request (:class:`google.cloud.servicedirectory_v1.types.ResolveServiceRequest`):
                 The request object. The request message for
                 [LookupService.ResolveService][google.cloud.servicedirectory.v1.LookupService.ResolveService].
                 Looks up a service by its name, returns the service and
@@ -168,9 +169,9 @@ class LookupServiceAsyncClient:
                 sent along with the request as metadata.
 
         Returns:
-            ~.lookup_service.ResolveServiceResponse:
+            google.cloud.servicedirectory_v1.types.ResolveServiceResponse:
                 The response message for
-                [LookupService.ResolveService][google.cloud.servicedirectory.v1.LookupService.ResolveService].
+                   [LookupService.ResolveService][google.cloud.servicedirectory.v1.LookupService.ResolveService].
 
         """
         # Create or coerce a protobuf request object.
