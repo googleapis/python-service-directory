@@ -11,8 +11,8 @@
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "810cad37a1d22def3b8e0e2a5593e7a551477058",
-        "internalRef": "365109880"
+        "sha": "c3918feb2415878ac428d728fb473ed4187b7819",
+        "internalRef": "365166289"
       }
     },
     {
@@ -181,6 +181,7 @@
     "scripts/readme-gen/templates/auth_api_key.tmpl.rst",
     "scripts/readme-gen/templates/install_deps.tmpl.rst",
     "scripts/readme-gen/templates/install_portaudio.tmpl.rst",
+    "servicedirectory-v1beta1-py.tar.gz",
     "setup.cfg",
     "testing/.gitignore",
     "tests/unit/gapic/servicedirectory_v1/__init__.py",
