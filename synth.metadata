@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/python-service-directory.git",
-        "sha": "db77e88a44ffdabd284d61775960079309071617"
+        "sha": "7504fee2fef1108b1856bf5efa00799c48c1a4a8"
       }
     },
     {
