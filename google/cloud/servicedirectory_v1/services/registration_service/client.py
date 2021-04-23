@@ -41,7 +41,7 @@ from google.cloud.servicedirectory_v1.types import registration_service
 from google.cloud.servicedirectory_v1.types import service
 from google.cloud.servicedirectory_v1.types import service as gcs_service
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
 
 from .transports.base import RegistrationServiceTransport, DEFAULT_CLIENT_INFO
@@ -1664,7 +1664,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> gi_policy.Policy:
         r"""Gets the IAM Policy for a resource (namespace or
         service only).
 
@@ -1771,7 +1771,7 @@ class RegistrationServiceClient(metaclass=RegistrationServiceClientMeta):
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> gi_policy.Policy:
         r"""Sets the IAM Policy for a resource (namespace or
         service only).
 
