@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/googleapis/python-service-directory/compare/v0.5.0...v0.6.0) (2021-06-26)
+
+
+### Features
+
+* add always_use_jwt_access ([#87](https://www.github.com/googleapis/python-service-directory/issues/87)) ([6104fe4](https://www.github.com/googleapis/python-service-directory/commit/6104fe4e8ee660031562291ac216d6376b33cb73))
+* bump release level to production/stable ([#77](https://www.github.com/googleapis/python-service-directory/issues/77)) ([b267e2f](https://www.github.com/googleapis/python-service-directory/commit/b267e2f326b5247c84800c8f23e47b53540b663a))
+* support self-signed JWT flow for service accounts ([a0387dd](https://www.github.com/googleapis/python-service-directory/commit/a0387dd9d4fd8303e96f2d028b5c450546e26ec0))
+* Update Service Directory v1beta1 protos to include VPC Network field, and create/modify timestamp fields. ([#88](https://www.github.com/googleapis/python-service-directory/issues/88)) ([e7fba11](https://www.github.com/googleapis/python-service-directory/commit/e7fba11e53b85ff25620ba92e8859206fd7884d8))
+
+
+### Bug Fixes
+
+* add async client to %name_%version/init.py ([a0387dd](https://www.github.com/googleapis/python-service-directory/commit/a0387dd9d4fd8303e96f2d028b5c450546e26ec0))
+
+
+### Documentation
+
+* omit mention of Python 2.7 in 'CONTRIBUTING.rst' ([#1127](https://www.github.com/googleapis/python-service-directory/issues/1127)) ([#84](https://www.github.com/googleapis/python-service-directory/issues/84)) ([d9c20bb](https://www.github.com/googleapis/python-service-directory/commit/d9c20bb7dc9f393d0383e69367f5e1ec703ac416))
+
 ## [0.5.0](https://www.github.com/googleapis/python-service-directory/compare/v0.4.1...v0.5.0) (2021-03-31)
 
 
