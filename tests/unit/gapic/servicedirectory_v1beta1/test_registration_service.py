@@ -42,9 +42,6 @@ from google.cloud.servicedirectory_v1beta1.services.registration_service import 
     transports,
 )
 from google.cloud.servicedirectory_v1beta1.services.registration_service.transports.base import (
-    _API_CORE_VERSION,
-)
-from google.cloud.servicedirectory_v1beta1.services.registration_service.transports.base import (
     _GOOGLE_AUTH_VERSION,
 )
 from google.cloud.servicedirectory_v1beta1.types import endpoint
@@ -59,12 +56,14 @@ from google.iam.v1 import options_pb2  # type: ignore
 from google.iam.v1 import policy_pb2  # type: ignore
 from google.oauth2 import service_account
 from google.protobuf import field_mask_pb2  # type: ignore
+from google.protobuf import timestamp_pb2  # type: ignore
 from google.type import expr_pb2  # type: ignore
 import google.auth
 
 
-# TODO(busunkim): Once google-api-core >= 1.26.0 is required:
-# - Delete all the api-core and auth "less than" test cases
+# TODO(busunkim): Once google-auth >= 1.25.0 is required transitively
+# through google-api-core:
+# - Delete the auth "less than" test cases
 # - Delete these pytest markers (Make the "greater than or equal to" tests the default).
 requires_google_auth_lt_1_25_0 = pytest.mark.skipif(
     packaging.version.parse(_GOOGLE_AUTH_VERSION) >= packaging.version.parse("1.25.0"),
@@ -73,16 +72,6 @@ requires_google_auth_lt_1_25_0 = pytest.mark.skipif(
 requires_google_auth_gte_1_25_0 = pytest.mark.skipif(
     packaging.version.parse(_GOOGLE_AUTH_VERSION) < packaging.version.parse("1.25.0"),
     reason="This test requires google-auth >= 1.25.0",
-)
-
-requires_api_core_lt_1_26_0 = pytest.mark.skipif(
-    packaging.version.parse(_API_CORE_VERSION) >= packaging.version.parse("1.26.0"),
-    reason="This test requires google-api-core < 1.26.0",
-)
-
-requires_api_core_gte_1_26_0 = pytest.mark.skipif(
-    packaging.version.parse(_API_CORE_VERSION) < packaging.version.parse("1.26.0"),
-    reason="This test requires google-api-core >= 1.26.0",
 )
 
 
@@ -146,6 +135,31 @@ def test_registration_service_client_from_service_account_info(client_class):
         assert isinstance(client, client_class)
 
         assert client.transport._host == "servicedirectory.googleapis.com:443"
+
+
+@pytest.mark.parametrize(
+    "transport_class,transport_name",
+    [
+        (transports.RegistrationServiceGrpcTransport, "grpc"),
+        (transports.RegistrationServiceGrpcAsyncIOTransport, "grpc_asyncio"),
+    ],
+)
+def test_registration_service_client_service_account_always_use_jwt(
+    transport_class, transport_name
+):
+    with mock.patch.object(
+        service_account.Credentials, "with_always_use_jwt_access", create=True
+    ) as use_jwt:
+        creds = service_account.Credentials(None, None, None)
+        transport = transport_class(credentials=creds, always_use_jwt_access=True)
+        use_jwt.assert_called_once_with(True)
+
+    with mock.patch.object(
+        service_account.Credentials, "with_always_use_jwt_access", create=True
+    ) as use_jwt:
+        creds = service_account.Credentials(None, None, None)
+        transport = transport_class(credentials=creds, always_use_jwt_access=False)
+        use_jwt.assert_not_called()
 
 
 @pytest.mark.parametrize(
@@ -231,6 +245,7 @@ def test_registration_service_client_client_options(
             client_cert_source_for_mtls=None,
             quota_project_id=None,
             client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
         )
 
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS_ENDPOINT is
@@ -247,6 +262,7 @@ def test_registration_service_client_client_options(
                 client_cert_source_for_mtls=None,
                 quota_project_id=None,
                 client_info=transports.base.DEFAULT_CLIENT_INFO,
+                always_use_jwt_access=True,
             )
 
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS_ENDPOINT is
@@ -263,6 +279,7 @@ def test_registration_service_client_client_options(
                 client_cert_source_for_mtls=None,
                 quota_project_id=None,
                 client_info=transports.base.DEFAULT_CLIENT_INFO,
+                always_use_jwt_access=True,
             )
 
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS_ENDPOINT has
@@ -291,6 +308,7 @@ def test_registration_service_client_client_options(
             client_cert_source_for_mtls=None,
             quota_project_id="octopus",
             client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
         )
 
 
@@ -367,6 +385,7 @@ def test_registration_service_client_mtls_env_auto(
                 client_cert_source_for_mtls=expected_client_cert_source,
                 quota_project_id=None,
                 client_info=transports.base.DEFAULT_CLIENT_INFO,
+                always_use_jwt_access=True,
             )
 
     # Check the case ADC client cert is provided. Whether client cert is used depends on
@@ -400,6 +419,7 @@ def test_registration_service_client_mtls_env_auto(
                         client_cert_source_for_mtls=expected_client_cert_source,
                         quota_project_id=None,
                         client_info=transports.base.DEFAULT_CLIENT_INFO,
+                        always_use_jwt_access=True,
                     )
 
     # Check the case client_cert_source and ADC client cert are not provided.
@@ -421,6 +441,7 @@ def test_registration_service_client_mtls_env_auto(
                     client_cert_source_for_mtls=None,
                     quota_project_id=None,
                     client_info=transports.base.DEFAULT_CLIENT_INFO,
+                    always_use_jwt_access=True,
                 )
 
 
@@ -455,6 +476,7 @@ def test_registration_service_client_client_options_scopes(
             client_cert_source_for_mtls=None,
             quota_project_id=None,
             client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
         )
 
 
@@ -489,6 +511,7 @@ def test_registration_service_client_client_options_credentials_file(
             client_cert_source_for_mtls=None,
             quota_project_id=None,
             client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
         )
 
 
@@ -508,6 +531,7 @@ def test_registration_service_client_client_options_from_dict():
             client_cert_source_for_mtls=None,
             quota_project_id=None,
             client_info=transports.base.DEFAULT_CLIENT_INFO,
+            always_use_jwt_access=True,
         )
 
 
@@ -2943,7 +2967,10 @@ def test_create_endpoint(
     with mock.patch.object(type(client.transport.create_endpoint), "__call__") as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_endpoint.Endpoint(
-            name="name_value", address="address_value", port=453,
+            name="name_value",
+            address="address_value",
+            port=453,
+            network="network_value",
         )
         response = client.create_endpoint(request)
 
@@ -2957,6 +2984,7 @@ def test_create_endpoint(
     assert response.name == "name_value"
     assert response.address == "address_value"
     assert response.port == 453
+    assert response.network == "network_value"
 
 
 def test_create_endpoint_from_dict():
@@ -2995,7 +3023,12 @@ async def test_create_endpoint_async(
     with mock.patch.object(type(client.transport.create_endpoint), "__call__") as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_endpoint.Endpoint(name="name_value", address="address_value", port=453,)
+            gcs_endpoint.Endpoint(
+                name="name_value",
+                address="address_value",
+                port=453,
+                network="network_value",
+            )
         )
         response = await client.create_endpoint(request)
 
@@ -3009,6 +3042,7 @@ async def test_create_endpoint_async(
     assert response.name == "name_value"
     assert response.address == "address_value"
     assert response.port == 453
+    assert response.network == "network_value"
 
 
 @pytest.mark.asyncio
@@ -3539,7 +3573,10 @@ def test_get_endpoint(
     with mock.patch.object(type(client.transport.get_endpoint), "__call__") as call:
         # Designate an appropriate return value for the call.
         call.return_value = endpoint.Endpoint(
-            name="name_value", address="address_value", port=453,
+            name="name_value",
+            address="address_value",
+            port=453,
+            network="network_value",
         )
         response = client.get_endpoint(request)
 
@@ -3553,6 +3590,7 @@ def test_get_endpoint(
     assert response.name == "name_value"
     assert response.address == "address_value"
     assert response.port == 453
+    assert response.network == "network_value"
 
 
 def test_get_endpoint_from_dict():
@@ -3591,7 +3629,12 @@ async def test_get_endpoint_async(
     with mock.patch.object(type(client.transport.get_endpoint), "__call__") as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            endpoint.Endpoint(name="name_value", address="address_value", port=453,)
+            endpoint.Endpoint(
+                name="name_value",
+                address="address_value",
+                port=453,
+                network="network_value",
+            )
         )
         response = await client.get_endpoint(request)
 
@@ -3605,6 +3648,7 @@ async def test_get_endpoint_async(
     assert response.name == "name_value"
     assert response.address == "address_value"
     assert response.port == 453
+    assert response.network == "network_value"
 
 
 @pytest.mark.asyncio
@@ -3750,7 +3794,10 @@ def test_update_endpoint(
     with mock.patch.object(type(client.transport.update_endpoint), "__call__") as call:
         # Designate an appropriate return value for the call.
         call.return_value = gcs_endpoint.Endpoint(
-            name="name_value", address="address_value", port=453,
+            name="name_value",
+            address="address_value",
+            port=453,
+            network="network_value",
         )
         response = client.update_endpoint(request)
 
@@ -3764,6 +3811,7 @@ def test_update_endpoint(
     assert response.name == "name_value"
     assert response.address == "address_value"
     assert response.port == 453
+    assert response.network == "network_value"
 
 
 def test_update_endpoint_from_dict():
@@ -3802,7 +3850,12 @@ async def test_update_endpoint_async(
     with mock.patch.object(type(client.transport.update_endpoint), "__call__") as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            gcs_endpoint.Endpoint(name="name_value", address="address_value", port=453,)
+            gcs_endpoint.Endpoint(
+                name="name_value",
+                address="address_value",
+                port=453,
+                network="network_value",
+            )
         )
         response = await client.update_endpoint(request)
 
@@ -3816,6 +3869,7 @@ async def test_update_endpoint_async(
     assert response.name == "name_value"
     assert response.address == "address_value"
     assert response.port == 453
+    assert response.network == "network_value"
 
 
 @pytest.mark.asyncio
@@ -4891,7 +4945,6 @@ def test_registration_service_transport_auth_adc_old_google_auth(transport_class
         (transports.RegistrationServiceGrpcAsyncIOTransport, grpc_helpers_async),
     ],
 )
-@requires_api_core_gte_1_26_0
 def test_registration_service_transport_create_channel(transport_class, grpc_helpers):
     # If credentials and host are not provided, the transport class should use
     # ADC credentials.
@@ -4912,79 +4965,6 @@ def test_registration_service_transport_create_channel(transport_class, grpc_hel
             default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
             scopes=["1", "2"],
             default_host="servicedirectory.googleapis.com",
-            ssl_credentials=None,
-            options=[
-                ("grpc.max_send_message_length", -1),
-                ("grpc.max_receive_message_length", -1),
-            ],
-        )
-
-
-@pytest.mark.parametrize(
-    "transport_class,grpc_helpers",
-    [
-        (transports.RegistrationServiceGrpcTransport, grpc_helpers),
-        (transports.RegistrationServiceGrpcAsyncIOTransport, grpc_helpers_async),
-    ],
-)
-@requires_api_core_lt_1_26_0
-def test_registration_service_transport_create_channel_old_api_core(
-    transport_class, grpc_helpers
-):
-    # If credentials and host are not provided, the transport class should use
-    # ADC credentials.
-    with mock.patch.object(
-        google.auth, "default", autospec=True
-    ) as adc, mock.patch.object(
-        grpc_helpers, "create_channel", autospec=True
-    ) as create_channel:
-        creds = ga_credentials.AnonymousCredentials()
-        adc.return_value = (creds, None)
-        transport_class(quota_project_id="octopus")
-
-        create_channel.assert_called_with(
-            "servicedirectory.googleapis.com:443",
-            credentials=creds,
-            credentials_file=None,
-            quota_project_id="octopus",
-            scopes=("https://www.googleapis.com/auth/cloud-platform",),
-            ssl_credentials=None,
-            options=[
-                ("grpc.max_send_message_length", -1),
-                ("grpc.max_receive_message_length", -1),
-            ],
-        )
-
-
-@pytest.mark.parametrize(
-    "transport_class,grpc_helpers",
-    [
-        (transports.RegistrationServiceGrpcTransport, grpc_helpers),
-        (transports.RegistrationServiceGrpcAsyncIOTransport, grpc_helpers_async),
-    ],
-)
-@requires_api_core_lt_1_26_0
-def test_registration_service_transport_create_channel_user_scopes(
-    transport_class, grpc_helpers
-):
-    # If credentials and host are not provided, the transport class should use
-    # ADC credentials.
-    with mock.patch.object(
-        google.auth, "default", autospec=True
-    ) as adc, mock.patch.object(
-        grpc_helpers, "create_channel", autospec=True
-    ) as create_channel:
-        creds = ga_credentials.AnonymousCredentials()
-        adc.return_value = (creds, None)
-
-        transport_class(quota_project_id="octopus", scopes=["1", "2"])
-
-        create_channel.assert_called_with(
-            "servicedirectory.googleapis.com:443",
-            credentials=creds,
-            credentials_file=None,
-            quota_project_id="octopus",
-            scopes=["1", "2"],
             ssl_credentials=None,
             options=[
                 ("grpc.max_send_message_length", -1),
@@ -5017,7 +4997,7 @@ def test_registration_service_grpc_transport_client_cert_source_for_mtls(
             "squid.clam.whelk:443",
             credentials=cred,
             credentials_file=None,
-            scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            scopes=None,
             ssl_credentials=mock_ssl_channel_creds,
             quota_project_id=None,
             options=[
@@ -5126,7 +5106,7 @@ def test_registration_service_transport_channel_mtls_with_client_cert_source(
                 "mtls.squid.clam.whelk:443",
                 credentials=cred,
                 credentials_file=None,
-                scopes=("https://www.googleapis.com/auth/cloud-platform",),
+                scopes=None,
                 ssl_credentials=mock_ssl_cred,
                 quota_project_id=None,
                 options=[
@@ -5173,7 +5153,7 @@ def test_registration_service_transport_channel_mtls_with_adc(transport_class):
                 "mtls.squid.clam.whelk:443",
                 credentials=mock_cred,
                 credentials_file=None,
-                scopes=("https://www.googleapis.com/auth/cloud-platform",),
+                scopes=None,
                 ssl_credentials=mock_ssl_cred,
                 quota_project_id=None,
                 options=[
@@ -5242,11 +5222,33 @@ def test_parse_namespace_path():
     assert expected == actual
 
 
-def test_service_path():
+def test_network_path():
     project = "oyster"
-    location = "nudibranch"
-    namespace = "cuttlefish"
-    service = "mussel"
+    network = "nudibranch"
+    expected = "projects/{project}/locations/global/networks/{network}".format(
+        project=project, network=network,
+    )
+    actual = RegistrationServiceClient.network_path(project, network)
+    assert expected == actual
+
+
+def test_parse_network_path():
+    expected = {
+        "project": "cuttlefish",
+        "network": "mussel",
+    }
+    path = RegistrationServiceClient.network_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = RegistrationServiceClient.parse_network_path(path)
+    assert expected == actual
+
+
+def test_service_path():
+    project = "winkle"
+    location = "nautilus"
+    namespace = "scallop"
+    service = "abalone"
     expected = "projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}".format(
         project=project, location=location, namespace=namespace, service=service,
     )
@@ -5258,10 +5260,10 @@ def test_service_path():
 
 def test_parse_service_path():
     expected = {
-        "project": "winkle",
-        "location": "nautilus",
-        "namespace": "scallop",
-        "service": "abalone",
+        "project": "squid",
+        "location": "clam",
+        "namespace": "whelk",
+        "service": "octopus",
     }
     path = RegistrationServiceClient.service_path(**expected)
 
@@ -5271,7 +5273,7 @@ def test_parse_service_path():
 
 
 def test_common_billing_account_path():
-    billing_account = "squid"
+    billing_account = "oyster"
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -5281,7 +5283,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "clam",
+        "billing_account": "nudibranch",
     }
     path = RegistrationServiceClient.common_billing_account_path(**expected)
 
@@ -5291,7 +5293,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "whelk"
+    folder = "cuttlefish"
     expected = "folders/{folder}".format(folder=folder,)
     actual = RegistrationServiceClient.common_folder_path(folder)
     assert expected == actual
@@ -5299,7 +5301,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "octopus",
+        "folder": "mussel",
     }
     path = RegistrationServiceClient.common_folder_path(**expected)
 
@@ -5309,7 +5311,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "oyster"
+    organization = "winkle"
     expected = "organizations/{organization}".format(organization=organization,)
     actual = RegistrationServiceClient.common_organization_path(organization)
     assert expected == actual
@@ -5317,7 +5319,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "nudibranch",
+        "organization": "nautilus",
     }
     path = RegistrationServiceClient.common_organization_path(**expected)
 
@@ -5327,7 +5329,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "cuttlefish"
+    project = "scallop"
     expected = "projects/{project}".format(project=project,)
     actual = RegistrationServiceClient.common_project_path(project)
     assert expected == actual
@@ -5335,7 +5337,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "mussel",
+        "project": "abalone",
     }
     path = RegistrationServiceClient.common_project_path(**expected)
 
@@ -5345,8 +5347,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "winkle"
-    location = "nautilus"
+    project = "squid"
+    location = "clam"
     expected = "projects/{project}/locations/{location}".format(
         project=project, location=location,
     )
@@ -5356,8 +5358,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "scallop",
-        "location": "abalone",
+        "project": "whelk",
+        "location": "octopus",
     }
     path = RegistrationServiceClient.common_location_path(**expected)
 
