@@ -3,14 +3,14 @@
 ### [1.0.2](https://www.github.com/googleapis/python-service-directory/compare/v1.0.1...v1.0.2) (2021-07-28)
 
 
-### Features
-
-* add Samples section to CONTRIBUTING.rst ([#97](https://www.github.com/googleapis/python-service-directory/issues/97)) ([195861c](https://www.github.com/googleapis/python-service-directory/commit/195861c821be6a3ba853074d07a609ef67a48bcf))
-
-
 ### Bug Fixes
 
 * enable self signed jwt for grpc ([#101](https://www.github.com/googleapis/python-service-directory/issues/101)) ([b81c721](https://www.github.com/googleapis/python-service-directory/commit/b81c721ccebd363b078f4c6acbe6deef6a70ff7e))
+
+
+### Documentation
+
+* add Samples section to CONTRIBUTING.rst ([#97](https://www.github.com/googleapis/python-service-directory/issues/97)) ([195861c](https://www.github.com/googleapis/python-service-directory/commit/195861c821be6a3ba853074d07a609ef67a48bcf))
 
 
 ### Miscellaneous Chores
