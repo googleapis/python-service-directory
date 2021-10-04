@@ -10,6 +10,6 @@
     "repo": "googleapis/python-service-directory",
     "distribution_name": "google-cloud-service-directory",
     "api_id": "servicedirectory.googleapis.com",
-    "default_version": "",
+    "default_version": "v1",
     "codeowner_team": ""
 }
