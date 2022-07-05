@@ -5589,7 +5589,6 @@ def test_registration_service_transport_auth_adc(transport_class):
     [
         transports.RegistrationServiceGrpcTransport,
         transports.RegistrationServiceGrpcAsyncIOTransport,
-        transports.RegistrationServiceRestTransport,
     ],
 )
 def test_registration_service_transport_auth_gdch_credentials(transport_class):

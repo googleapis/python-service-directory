@@ -1044,7 +1044,6 @@ def test_lookup_service_transport_auth_adc(transport_class):
     [
         transports.LookupServiceGrpcTransport,
         transports.LookupServiceGrpcAsyncIOTransport,
-        transports.LookupServiceRestTransport,
     ],
 )
 def test_lookup_service_transport_auth_gdch_credentials(transport_class):
