@@ -3,7 +3,7 @@ Python Client for Service Directory API
 
 |stable| |pypi| |versions|
 
-`Service Directory API`_: 
+`Service Directory API`_: Allows the registration and lookup of services.
 
 - `Client Library Documentation`_
 - `Product Documentation`_
