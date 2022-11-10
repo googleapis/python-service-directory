@@ -16,7 +16,18 @@
 from collections import OrderedDict
 import os
 import re
-from typing import Dict, Mapping, Optional, Sequence, Tuple, Type, Union, cast
+from typing import (
+    Dict,
+    Mapping,
+    MutableMapping,
+    MutableSequence,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+    cast,
+)
 
 from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
@@ -55,7 +66,7 @@ class LookupServiceClientMeta(type):
 
     def get_transport_class(
         cls,
-        label: str = None,
+        label: Optional[str] = None,
     ) -> Type[LookupServiceTransport]:
         """Returns an appropriate transport class.
 
@@ -358,7 +369,7 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
         self,
         *,
         credentials: Optional[ga_credentials.Credentials] = None,
-        transport: Union[str, LookupServiceTransport, None] = None,
+        transport: Optional[Union[str, LookupServiceTransport]] = None,
         client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
@@ -456,10 +467,10 @@ class LookupServiceClient(metaclass=LookupServiceClientMeta):
 
     def resolve_service(
         self,
-        request: Union[lookup_service.ResolveServiceRequest, dict] = None,
+        request: Optional[Union[lookup_service.ResolveServiceRequest, dict]] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> lookup_service.ResolveServiceResponse:
         r"""Returns a [service][google.cloud.servicedirectory.v1.Service]
