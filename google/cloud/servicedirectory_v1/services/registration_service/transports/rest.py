@@ -14,30 +14,31 @@
 # limitations under the License.
 #
 
-from google.auth.transport.requests import AuthorizedSession  # type: ignore
-import json  # type: ignore
-import grpc  # type: ignore
-from google.auth.transport.grpc import SslCredentials  # type: ignore
-from google.auth import credentials as ga_credentials  # type: ignore
-from google.api_core import exceptions as core_exceptions
-from google.api_core import retry as retries
-from google.api_core import rest_helpers
-from google.api_core import rest_streaming
-from google.api_core import path_template
-from google.api_core import gapic_v1
-
-from google.protobuf import json_format
-from requests import __version__ as requests_version
 import dataclasses
+import json  # type: ignore
 import re
 from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union
 import warnings
+
+from google.api_core import gapic_v1, path_template, rest_helpers, rest_streaming
+from google.api_core import exceptions as core_exceptions
+from google.api_core import retry as retries
+from google.auth import credentials as ga_credentials  # type: ignore
+from google.auth.transport.grpc import SslCredentials  # type: ignore
+from google.auth.transport.requests import AuthorizedSession  # type: ignore
+from google.protobuf import json_format
+import grpc  # type: ignore
+from requests import __version__ as requests_version
 
 try:
     OptionalRetry = Union[retries.Retry, gapic_v1.method._MethodDefault]
 except AttributeError:  # pragma: NO COVER
     OptionalRetry = Union[retries.Retry, object]  # type: ignore
 
+
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+from google.protobuf import empty_pb2  # type: ignore
 
 from google.cloud.servicedirectory_v1.types import endpoint
 from google.cloud.servicedirectory_v1.types import endpoint as gcs_endpoint
@@ -46,12 +47,9 @@ from google.cloud.servicedirectory_v1.types import namespace as gcs_namespace
 from google.cloud.servicedirectory_v1.types import registration_service
 from google.cloud.servicedirectory_v1.types import service
 from google.cloud.servicedirectory_v1.types import service as gcs_service
-from google.iam.v1 import iam_policy_pb2  # type: ignore
-from google.iam.v1 import policy_pb2  # type: ignore
-from google.protobuf import empty_pb2  # type: ignore
 
-from .base import RegistrationServiceTransport, DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
-
+from .base import DEFAULT_CLIENT_INFO as BASE_DEFAULT_CLIENT_INFO
+from .base import RegistrationServiceTransport
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
     gapic_version=BASE_DEFAULT_CLIENT_INFO.gapic_version,
@@ -212,7 +210,12 @@ class RegistrationServiceRestInterceptor:
 
 
     """
-    def pre_create_endpoint(self, request: registration_service.CreateEndpointRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.CreateEndpointRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_create_endpoint(
+        self,
+        request: registration_service.CreateEndpointRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.CreateEndpointRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for create_endpoint
 
         Override in a subclass to manipulate the request or metadata
@@ -220,7 +223,9 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def post_create_endpoint(self, response: gcs_endpoint.Endpoint) -> gcs_endpoint.Endpoint:
+    def post_create_endpoint(
+        self, response: gcs_endpoint.Endpoint
+    ) -> gcs_endpoint.Endpoint:
         """Post-rpc interceptor for create_endpoint
 
         Override in a subclass to manipulate the response
@@ -228,7 +233,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_create_namespace(self, request: registration_service.CreateNamespaceRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.CreateNamespaceRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_create_namespace(
+        self,
+        request: registration_service.CreateNamespaceRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.CreateNamespaceRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for create_namespace
 
         Override in a subclass to manipulate the request or metadata
@@ -236,7 +246,9 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def post_create_namespace(self, response: gcs_namespace.Namespace) -> gcs_namespace.Namespace:
+    def post_create_namespace(
+        self, response: gcs_namespace.Namespace
+    ) -> gcs_namespace.Namespace:
         """Post-rpc interceptor for create_namespace
 
         Override in a subclass to manipulate the response
@@ -244,7 +256,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_create_service(self, request: registration_service.CreateServiceRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.CreateServiceRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_create_service(
+        self,
+        request: registration_service.CreateServiceRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.CreateServiceRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for create_service
 
         Override in a subclass to manipulate the request or metadata
@@ -260,7 +277,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_delete_endpoint(self, request: registration_service.DeleteEndpointRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.DeleteEndpointRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_delete_endpoint(
+        self,
+        request: registration_service.DeleteEndpointRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.DeleteEndpointRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for delete_endpoint
 
         Override in a subclass to manipulate the request or metadata
@@ -268,7 +290,11 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def pre_delete_namespace(self, request: registration_service.DeleteNamespaceRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.DeleteNamespaceRequest, Sequence[Tuple[str, str]]]:
+    def pre_delete_namespace(
+        self,
+        request: registration_service.DeleteNamespaceRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.DeleteNamespaceRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for delete_namespace
 
         Override in a subclass to manipulate the request or metadata
@@ -276,7 +302,11 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def pre_delete_service(self, request: registration_service.DeleteServiceRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.DeleteServiceRequest, Sequence[Tuple[str, str]]]:
+    def pre_delete_service(
+        self,
+        request: registration_service.DeleteServiceRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.DeleteServiceRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for delete_service
 
         Override in a subclass to manipulate the request or metadata
@@ -284,7 +314,11 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def pre_get_endpoint(self, request: registration_service.GetEndpointRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.GetEndpointRequest, Sequence[Tuple[str, str]]]:
+    def pre_get_endpoint(
+        self,
+        request: registration_service.GetEndpointRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.GetEndpointRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for get_endpoint
 
         Override in a subclass to manipulate the request or metadata
@@ -300,7 +334,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_get_iam_policy(self, request: iam_policy_pb2.GetIamPolicyRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[iam_policy_pb2.GetIamPolicyRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_get_iam_policy(
+        self,
+        request: iam_policy_pb2.GetIamPolicyRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[iam_policy_pb2.GetIamPolicyRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for get_iam_policy
 
         Override in a subclass to manipulate the request or metadata
@@ -316,7 +355,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_get_namespace(self, request: registration_service.GetNamespaceRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.GetNamespaceRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_get_namespace(
+        self,
+        request: registration_service.GetNamespaceRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.GetNamespaceRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for get_namespace
 
         Override in a subclass to manipulate the request or metadata
@@ -332,7 +376,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_get_service(self, request: registration_service.GetServiceRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.GetServiceRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_get_service(
+        self,
+        request: registration_service.GetServiceRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.GetServiceRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for get_service
 
         Override in a subclass to manipulate the request or metadata
@@ -348,7 +397,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_list_endpoints(self, request: registration_service.ListEndpointsRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.ListEndpointsRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_list_endpoints(
+        self,
+        request: registration_service.ListEndpointsRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.ListEndpointsRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for list_endpoints
 
         Override in a subclass to manipulate the request or metadata
@@ -356,7 +410,9 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def post_list_endpoints(self, response: registration_service.ListEndpointsResponse) -> registration_service.ListEndpointsResponse:
+    def post_list_endpoints(
+        self, response: registration_service.ListEndpointsResponse
+    ) -> registration_service.ListEndpointsResponse:
         """Post-rpc interceptor for list_endpoints
 
         Override in a subclass to manipulate the response
@@ -364,7 +420,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_list_namespaces(self, request: registration_service.ListNamespacesRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.ListNamespacesRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_list_namespaces(
+        self,
+        request: registration_service.ListNamespacesRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.ListNamespacesRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for list_namespaces
 
         Override in a subclass to manipulate the request or metadata
@@ -372,7 +433,9 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def post_list_namespaces(self, response: registration_service.ListNamespacesResponse) -> registration_service.ListNamespacesResponse:
+    def post_list_namespaces(
+        self, response: registration_service.ListNamespacesResponse
+    ) -> registration_service.ListNamespacesResponse:
         """Post-rpc interceptor for list_namespaces
 
         Override in a subclass to manipulate the response
@@ -380,7 +443,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_list_services(self, request: registration_service.ListServicesRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.ListServicesRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_list_services(
+        self,
+        request: registration_service.ListServicesRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.ListServicesRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for list_services
 
         Override in a subclass to manipulate the request or metadata
@@ -388,7 +456,9 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def post_list_services(self, response: registration_service.ListServicesResponse) -> registration_service.ListServicesResponse:
+    def post_list_services(
+        self, response: registration_service.ListServicesResponse
+    ) -> registration_service.ListServicesResponse:
         """Post-rpc interceptor for list_services
 
         Override in a subclass to manipulate the response
@@ -396,7 +466,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_set_iam_policy(self, request: iam_policy_pb2.SetIamPolicyRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[iam_policy_pb2.SetIamPolicyRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_set_iam_policy(
+        self,
+        request: iam_policy_pb2.SetIamPolicyRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[iam_policy_pb2.SetIamPolicyRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for set_iam_policy
 
         Override in a subclass to manipulate the request or metadata
@@ -412,7 +487,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_test_iam_permissions(self, request: iam_policy_pb2.TestIamPermissionsRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[iam_policy_pb2.TestIamPermissionsRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_test_iam_permissions(
+        self,
+        request: iam_policy_pb2.TestIamPermissionsRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[iam_policy_pb2.TestIamPermissionsRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for test_iam_permissions
 
         Override in a subclass to manipulate the request or metadata
@@ -420,7 +500,9 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def post_test_iam_permissions(self, response: iam_policy_pb2.TestIamPermissionsResponse) -> iam_policy_pb2.TestIamPermissionsResponse:
+    def post_test_iam_permissions(
+        self, response: iam_policy_pb2.TestIamPermissionsResponse
+    ) -> iam_policy_pb2.TestIamPermissionsResponse:
         """Post-rpc interceptor for test_iam_permissions
 
         Override in a subclass to manipulate the response
@@ -428,7 +510,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_update_endpoint(self, request: registration_service.UpdateEndpointRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.UpdateEndpointRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_update_endpoint(
+        self,
+        request: registration_service.UpdateEndpointRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.UpdateEndpointRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for update_endpoint
 
         Override in a subclass to manipulate the request or metadata
@@ -436,7 +523,9 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def post_update_endpoint(self, response: gcs_endpoint.Endpoint) -> gcs_endpoint.Endpoint:
+    def post_update_endpoint(
+        self, response: gcs_endpoint.Endpoint
+    ) -> gcs_endpoint.Endpoint:
         """Post-rpc interceptor for update_endpoint
 
         Override in a subclass to manipulate the response
@@ -444,7 +533,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_update_namespace(self, request: registration_service.UpdateNamespaceRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.UpdateNamespaceRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_update_namespace(
+        self,
+        request: registration_service.UpdateNamespaceRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.UpdateNamespaceRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for update_namespace
 
         Override in a subclass to manipulate the request or metadata
@@ -452,7 +546,9 @@ class RegistrationServiceRestInterceptor:
         """
         return request, metadata
 
-    def post_update_namespace(self, response: gcs_namespace.Namespace) -> gcs_namespace.Namespace:
+    def post_update_namespace(
+        self, response: gcs_namespace.Namespace
+    ) -> gcs_namespace.Namespace:
         """Post-rpc interceptor for update_namespace
 
         Override in a subclass to manipulate the response
@@ -460,7 +556,12 @@ class RegistrationServiceRestInterceptor:
         it is returned to user code.
         """
         return response
-    def pre_update_service(self, request: registration_service.UpdateServiceRequest, metadata: Sequence[Tuple[str, str]]) -> Tuple[registration_service.UpdateServiceRequest, Sequence[Tuple[str, str]]]:
+
+    def pre_update_service(
+        self,
+        request: registration_service.UpdateServiceRequest,
+        metadata: Sequence[Tuple[str, str]],
+    ) -> Tuple[registration_service.UpdateServiceRequest, Sequence[Tuple[str, str]]]:
         """Pre-rpc interceptor for update_service
 
         Override in a subclass to manipulate the request or metadata
@@ -512,20 +613,21 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
     """
 
-    def __init__(self, *,
-            host: str = 'servicedirectory.googleapis.com',
-            credentials: Optional[ga_credentials.Credentials] = None,
-            credentials_file: Optional[str] = None,
-            scopes: Optional[Sequence[str]] = None,
-            client_cert_source_for_mtls: Optional[Callable[[
-                ], Tuple[bytes, bytes]]] = None,
-            quota_project_id: Optional[str] = None,
-            client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
-            always_use_jwt_access: Optional[bool] = False,
-            url_scheme: str = 'https',
-            interceptor: Optional[RegistrationServiceRestInterceptor] = None,
-            api_audience: Optional[str] = None,
-            ) -> None:
+    def __init__(
+        self,
+        *,
+        host: str = "servicedirectory.googleapis.com",
+        credentials: Optional[ga_credentials.Credentials] = None,
+        credentials_file: Optional[str] = None,
+        scopes: Optional[Sequence[str]] = None,
+        client_cert_source_for_mtls: Optional[Callable[[], Tuple[bytes, bytes]]] = None,
+        quota_project_id: Optional[str] = None,
+        client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+        always_use_jwt_access: Optional[bool] = False,
+        url_scheme: str = "https",
+        interceptor: Optional[RegistrationServiceRestInterceptor] = None,
+        api_audience: Optional[str] = None,
+    ) -> None:
         """Instantiate the transport.
 
         Args:
@@ -564,7 +666,9 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         # credentials object
         maybe_url_match = re.match("^(?P<scheme>http(?:s)?://)?(?P<host>.*)$", host)
         if maybe_url_match is None:
-            raise ValueError(f"Unexpected hostname structure: {host}")  # pragma: NO COVER
+            raise ValueError(
+                f"Unexpected hostname structure: {host}"
+            )  # pragma: NO COVER
 
         url_match_items = maybe_url_match.groupdict()
 
@@ -575,10 +679,11 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
             credentials=credentials,
             client_info=client_info,
             always_use_jwt_access=always_use_jwt_access,
-            api_audience=api_audience
+            api_audience=api_audience,
         )
         self._session = AuthorizedSession(
-            self._credentials, default_host=self.DEFAULT_HOST)
+            self._credentials, default_host=self.DEFAULT_HOST
+        )
         if client_cert_source_for_mtls:
             self._session.configure_mtls_channel(client_cert_source_for_mtls)
         self._interceptor = interceptor or RegistrationServiceRestInterceptor()
@@ -588,19 +693,26 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("CreateEndpoint")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-            "endpointId" : "",        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+            "endpointId": "",
+        }
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.CreateEndpointRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> gcs_endpoint.Endpoint:
+        def __call__(
+            self,
+            request: registration_service.CreateEndpointRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> gcs_endpoint.Endpoint:
             r"""Call the create endpoint method over HTTP.
 
             Args:
@@ -622,11 +734,12 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'post',
-                'uri': '/v1/{parent=projects/*/locations/*/namespaces/*/services/*}/endpoints',
-                'body': 'endpoint',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*/namespaces/*/services/*}/endpoints",
+                    "body": "endpoint",
+                },
             ]
             request, metadata = self._interceptor.pre_create_endpoint(request, metadata)
             pb_request = registration_service.CreateEndpointRequest.pb(request)
@@ -635,33 +748,35 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
             # Jsonify the request body
 
             body = json_format.MessageToJson(
-                transcoded_request['body'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True
-            )
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
-
-            # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
+                transcoded_request["body"],
                 including_default_value_fields=False,
                 use_integers_for_enums=True,
-            ))
+            )
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+
+            # Jsonify the query params
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
                 data=body,
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -680,19 +795,26 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("CreateNamespace")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-            "namespaceId" : "",        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+            "namespaceId": "",
+        }
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.CreateNamespaceRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> gcs_namespace.Namespace:
+        def __call__(
+            self,
+            request: registration_service.CreateNamespaceRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> gcs_namespace.Namespace:
             r"""Call the create namespace method over HTTP.
 
             Args:
@@ -716,46 +838,51 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'post',
-                'uri': '/v1/{parent=projects/*/locations/*}/namespaces',
-                'body': 'namespace',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*}/namespaces",
+                    "body": "namespace",
+                },
             ]
-            request, metadata = self._interceptor.pre_create_namespace(request, metadata)
+            request, metadata = self._interceptor.pre_create_namespace(
+                request, metadata
+            )
             pb_request = registration_service.CreateNamespaceRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
             # Jsonify the request body
 
             body = json_format.MessageToJson(
-                transcoded_request['body'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True
-            )
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
-
-            # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
+                transcoded_request["body"],
                 including_default_value_fields=False,
                 use_integers_for_enums=True,
-            ))
+            )
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+
+            # Jsonify the query params
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
                 data=body,
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -774,19 +901,26 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("CreateService")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-            "serviceId" : "",        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+            "serviceId": "",
+        }
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.CreateServiceRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> gcs_service.Service:
+        def __call__(
+            self,
+            request: registration_service.CreateServiceRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> gcs_service.Service:
             r"""Call the create service method over HTTP.
 
             Args:
@@ -809,11 +943,12 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'post',
-                'uri': '/v1/{parent=projects/*/locations/*/namespaces/*}/services',
-                'body': 'service',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{parent=projects/*/locations/*/namespaces/*}/services",
+                    "body": "service",
+                },
             ]
             request, metadata = self._interceptor.pre_create_service(request, metadata)
             pb_request = registration_service.CreateServiceRequest.pb(request)
@@ -822,33 +957,35 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
             # Jsonify the request body
 
             body = json_format.MessageToJson(
-                transcoded_request['body'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True
-            )
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
-
-            # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
+                transcoded_request["body"],
                 including_default_value_fields=False,
                 use_integers_for_enums=True,
-            ))
+            )
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+
+            # Jsonify the query params
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
                 data=body,
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -867,19 +1004,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("DeleteEndpoint")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.DeleteEndpointRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ):
+        def __call__(
+            self,
+            request: registration_service.DeleteEndpointRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ):
             r"""Call the delete endpoint method over HTTP.
 
             Args:
@@ -894,37 +1036,40 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
                     sent along with the request as metadata.
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'delete',
-                'uri': '/v1/{name=projects/*/locations/*/namespaces/*/services/*/endpoints/*}',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/namespaces/*/services/*/endpoints/*}",
+                },
             ]
             request, metadata = self._interceptor.pre_delete_endpoint(request, metadata)
             pb_request = registration_service.DeleteEndpointRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
 
             # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True,
-            ))
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -935,19 +1080,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("DeleteNamespace")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.DeleteNamespaceRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ):
+        def __call__(
+            self,
+            request: registration_service.DeleteNamespaceRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ):
             r"""Call the delete namespace method over HTTP.
 
             Args:
@@ -962,37 +1112,42 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
                     sent along with the request as metadata.
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'delete',
-                'uri': '/v1/{name=projects/*/locations/*/namespaces/*}',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/namespaces/*}",
+                },
             ]
-            request, metadata = self._interceptor.pre_delete_namespace(request, metadata)
+            request, metadata = self._interceptor.pre_delete_namespace(
+                request, metadata
+            )
             pb_request = registration_service.DeleteNamespaceRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
 
             # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True,
-            ))
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1003,19 +1158,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("DeleteService")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.DeleteServiceRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ):
+        def __call__(
+            self,
+            request: registration_service.DeleteServiceRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ):
             r"""Call the delete service method over HTTP.
 
             Args:
@@ -1030,37 +1190,40 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
                     sent along with the request as metadata.
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'delete',
-                'uri': '/v1/{name=projects/*/locations/*/namespaces/*/services/*}',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "delete",
+                    "uri": "/v1/{name=projects/*/locations/*/namespaces/*/services/*}",
+                },
             ]
             request, metadata = self._interceptor.pre_delete_service(request, metadata)
             pb_request = registration_service.DeleteServiceRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
 
             # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True,
-            ))
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1071,19 +1234,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("GetEndpoint")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.GetEndpointRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> endpoint.Endpoint:
+        def __call__(
+            self,
+            request: registration_service.GetEndpointRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> endpoint.Endpoint:
             r"""Call the get endpoint method over HTTP.
 
             Args:
@@ -1107,37 +1275,40 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'get',
-                'uri': '/v1/{name=projects/*/locations/*/namespaces/*/services/*/endpoints/*}',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/namespaces/*/services/*/endpoints/*}",
+                },
             ]
             request, metadata = self._interceptor.pre_get_endpoint(request, metadata)
             pb_request = registration_service.GetEndpointRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
 
             # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True,
-            ))
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1156,19 +1327,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("GetIamPolicy")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: iam_policy_pb2.GetIamPolicyRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> policy_pb2.Policy:
+        def __call__(
+            self,
+            request: iam_policy_pb2.GetIamPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> policy_pb2.Policy:
             r"""Call the get iam policy method over HTTP.
 
             Args:
@@ -1259,16 +1435,17 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'post',
-                'uri': '/v1/{resource=projects/*/locations/*/namespaces/*}:getIamPolicy',
-                'body': '*',
-            },
-{
-                'method': 'post',
-                'uri': '/v1/{resource=projects/*/locations/*/namespaces/*/services/*}:getIamPolicy',
-                'body': '*',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{resource=projects/*/locations/*/namespaces/*}:getIamPolicy",
+                    "body": "*",
+                },
+                {
+                    "method": "post",
+                    "uri": "/v1/{resource=projects/*/locations/*/namespaces/*/services/*}:getIamPolicy",
+                    "body": "*",
+                },
             ]
             request, metadata = self._interceptor.pre_get_iam_policy(request, metadata)
             pb_request = request
@@ -1277,33 +1454,35 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
             # Jsonify the request body
 
             body = json_format.MessageToJson(
-                transcoded_request['body'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True
-            )
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
-
-            # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
+                transcoded_request["body"],
                 including_default_value_fields=False,
                 use_integers_for_enums=True,
-            ))
+            )
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+
+            # Jsonify the query params
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
                 data=body,
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1322,19 +1501,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("GetNamespace")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.GetNamespaceRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> namespace.Namespace:
+        def __call__(
+            self,
+            request: registration_service.GetNamespaceRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> namespace.Namespace:
             r"""Call the get namespace method over HTTP.
 
             Args:
@@ -1358,37 +1542,40 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'get',
-                'uri': '/v1/{name=projects/*/locations/*/namespaces/*}',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/namespaces/*}",
+                },
             ]
             request, metadata = self._interceptor.pre_get_namespace(request, metadata)
             pb_request = registration_service.GetNamespaceRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
 
             # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True,
-            ))
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1407,19 +1594,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("GetService")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.GetServiceRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> service.Service:
+        def __call__(
+            self,
+            request: registration_service.GetServiceRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> service.Service:
             r"""Call the get service method over HTTP.
 
             Args:
@@ -1445,37 +1637,40 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'get',
-                'uri': '/v1/{name=projects/*/locations/*/namespaces/*/services/*}',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{name=projects/*/locations/*/namespaces/*/services/*}",
+                },
             ]
             request, metadata = self._interceptor.pre_get_service(request, metadata)
             pb_request = registration_service.GetServiceRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
 
             # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True,
-            ))
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1494,19 +1689,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("ListEndpoints")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.ListEndpointsRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> registration_service.ListEndpointsResponse:
+        def __call__(
+            self,
+            request: registration_service.ListEndpointsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> registration_service.ListEndpointsResponse:
             r"""Call the list endpoints method over HTTP.
 
             Args:
@@ -1527,37 +1727,40 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'get',
-                'uri': '/v1/{parent=projects/*/locations/*/namespaces/*/services/*}/endpoints',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/namespaces/*/services/*}/endpoints",
+                },
             ]
             request, metadata = self._interceptor.pre_list_endpoints(request, metadata)
             pb_request = registration_service.ListEndpointsRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
 
             # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True,
-            ))
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1576,19 +1779,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("ListNamespaces")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.ListNamespacesRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> registration_service.ListNamespacesResponse:
+        def __call__(
+            self,
+            request: registration_service.ListNamespacesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> registration_service.ListNamespacesResponse:
             r"""Call the list namespaces method over HTTP.
 
             Args:
@@ -1609,37 +1817,40 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'get',
-                'uri': '/v1/{parent=projects/*/locations/*}/namespaces',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*}/namespaces",
+                },
             ]
             request, metadata = self._interceptor.pre_list_namespaces(request, metadata)
             pb_request = registration_service.ListNamespacesRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
 
             # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True,
-            ))
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1658,19 +1869,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("ListServices")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.ListServicesRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> registration_service.ListServicesResponse:
+        def __call__(
+            self,
+            request: registration_service.ListServicesRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> registration_service.ListServicesResponse:
             r"""Call the list services method over HTTP.
 
             Args:
@@ -1691,37 +1907,40 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'get',
-                'uri': '/v1/{parent=projects/*/locations/*/namespaces/*}/services',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "get",
+                    "uri": "/v1/{parent=projects/*/locations/*/namespaces/*}/services",
+                },
             ]
             request, metadata = self._interceptor.pre_list_services(request, metadata)
             pb_request = registration_service.ListServicesRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
 
             # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True,
-            ))
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1740,19 +1959,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("SetIamPolicy")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: iam_policy_pb2.SetIamPolicyRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> policy_pb2.Policy:
+        def __call__(
+            self,
+            request: iam_policy_pb2.SetIamPolicyRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> policy_pb2.Policy:
             r"""Call the set iam policy method over HTTP.
 
             Args:
@@ -1843,16 +2067,17 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'post',
-                'uri': '/v1/{resource=projects/*/locations/*/namespaces/*}:setIamPolicy',
-                'body': '*',
-            },
-{
-                'method': 'post',
-                'uri': '/v1/{resource=projects/*/locations/*/namespaces/*/services/*}:setIamPolicy',
-                'body': '*',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{resource=projects/*/locations/*/namespaces/*}:setIamPolicy",
+                    "body": "*",
+                },
+                {
+                    "method": "post",
+                    "uri": "/v1/{resource=projects/*/locations/*/namespaces/*/services/*}:setIamPolicy",
+                    "body": "*",
+                },
             ]
             request, metadata = self._interceptor.pre_set_iam_policy(request, metadata)
             pb_request = request
@@ -1861,33 +2086,35 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
             # Jsonify the request body
 
             body = json_format.MessageToJson(
-                transcoded_request['body'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True
-            )
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
-
-            # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
+                transcoded_request["body"],
                 including_default_value_fields=False,
                 use_integers_for_enums=True,
-            ))
+            )
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+
+            # Jsonify the query params
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
                 data=body,
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1906,19 +2133,24 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("TestIamPermissions")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: iam_policy_pb2.TestIamPermissionsRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> iam_policy_pb2.TestIamPermissionsResponse:
+        def __call__(
+            self,
+            request: iam_policy_pb2.TestIamPermissionsRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> iam_policy_pb2.TestIamPermissionsResponse:
             r"""Call the test iam permissions method over HTTP.
 
             Args:
@@ -1935,51 +2167,56 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
                     Response message for ``TestIamPermissions`` method.
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'post',
-                'uri': '/v1/{resource=projects/*/locations/*/namespaces/*}:testIamPermissions',
-                'body': '*',
-            },
-{
-                'method': 'post',
-                'uri': '/v1/{resource=projects/*/locations/*/namespaces/*/services/*}:testIamPermissions',
-                'body': '*',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "post",
+                    "uri": "/v1/{resource=projects/*/locations/*/namespaces/*}:testIamPermissions",
+                    "body": "*",
+                },
+                {
+                    "method": "post",
+                    "uri": "/v1/{resource=projects/*/locations/*/namespaces/*/services/*}:testIamPermissions",
+                    "body": "*",
+                },
             ]
-            request, metadata = self._interceptor.pre_test_iam_permissions(request, metadata)
+            request, metadata = self._interceptor.pre_test_iam_permissions(
+                request, metadata
+            )
             pb_request = request
             transcoded_request = path_template.transcode(http_options, pb_request)
 
             # Jsonify the request body
 
             body = json_format.MessageToJson(
-                transcoded_request['body'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True
-            )
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
-
-            # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
+                transcoded_request["body"],
                 including_default_value_fields=False,
                 use_integers_for_enums=True,
-            ))
+            )
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+
+            # Jsonify the query params
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
                 data=body,
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -1998,19 +2235,26 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("UpdateEndpoint")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-            "updateMask" : {},        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+            "updateMask": {},
+        }
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.UpdateEndpointRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> gcs_endpoint.Endpoint:
+        def __call__(
+            self,
+            request: registration_service.UpdateEndpointRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> gcs_endpoint.Endpoint:
             r"""Call the update endpoint method over HTTP.
 
             Args:
@@ -2032,11 +2276,12 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'patch',
-                'uri': '/v1/{endpoint.name=projects/*/locations/*/namespaces/*/services/*/endpoints/*}',
-                'body': 'endpoint',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{endpoint.name=projects/*/locations/*/namespaces/*/services/*/endpoints/*}",
+                    "body": "endpoint",
+                },
             ]
             request, metadata = self._interceptor.pre_update_endpoint(request, metadata)
             pb_request = registration_service.UpdateEndpointRequest.pb(request)
@@ -2045,33 +2290,35 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
             # Jsonify the request body
 
             body = json_format.MessageToJson(
-                transcoded_request['body'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True
-            )
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
-
-            # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
+                transcoded_request["body"],
                 including_default_value_fields=False,
                 use_integers_for_enums=True,
-            ))
+            )
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+
+            # Jsonify the query params
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
                 data=body,
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2090,19 +2337,26 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("UpdateNamespace")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-            "updateMask" : {},        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+            "updateMask": {},
+        }
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.UpdateNamespaceRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> gcs_namespace.Namespace:
+        def __call__(
+            self,
+            request: registration_service.UpdateNamespaceRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> gcs_namespace.Namespace:
             r"""Call the update namespace method over HTTP.
 
             Args:
@@ -2126,46 +2380,51 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'patch',
-                'uri': '/v1/{namespace.name=projects/*/locations/*/namespaces/*}',
-                'body': 'namespace',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{namespace.name=projects/*/locations/*/namespaces/*}",
+                    "body": "namespace",
+                },
             ]
-            request, metadata = self._interceptor.pre_update_namespace(request, metadata)
+            request, metadata = self._interceptor.pre_update_namespace(
+                request, metadata
+            )
             pb_request = registration_service.UpdateNamespaceRequest.pb(request)
             transcoded_request = path_template.transcode(http_options, pb_request)
 
             # Jsonify the request body
 
             body = json_format.MessageToJson(
-                transcoded_request['body'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True
-            )
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
-
-            # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
+                transcoded_request["body"],
                 including_default_value_fields=False,
                 use_integers_for_enums=True,
-            ))
+            )
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+
+            # Jsonify the query params
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
                 data=body,
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2184,19 +2443,26 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("UpdateService")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] =  {
-            "updateMask" : {},        }
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+            "updateMask": {},
+        }
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
-            return {k: v for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items() if k not in message_dict}
+            return {
+                k: v
+                for k, v in cls.__REQUIRED_FIELDS_DEFAULT_VALUES.items()
+                if k not in message_dict
+            }
 
-        def __call__(self,
-                request: registration_service.UpdateServiceRequest, *,
-                retry: OptionalRetry=gapic_v1.method.DEFAULT,
-                timeout: Optional[float]=None,
-                metadata: Sequence[Tuple[str, str]]=(),
-                ) -> gcs_service.Service:
+        def __call__(
+            self,
+            request: registration_service.UpdateServiceRequest,
+            *,
+            retry: OptionalRetry = gapic_v1.method.DEFAULT,
+            timeout: Optional[float] = None,
+            metadata: Sequence[Tuple[str, str]] = (),
+        ) -> gcs_service.Service:
             r"""Call the update service method over HTTP.
 
             Args:
@@ -2219,11 +2485,12 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
 
             """
 
-            http_options: List[Dict[str, str]] = [{
-                'method': 'patch',
-                'uri': '/v1/{service.name=projects/*/locations/*/namespaces/*/services/*}',
-                'body': 'service',
-            },
+            http_options: List[Dict[str, str]] = [
+                {
+                    "method": "patch",
+                    "uri": "/v1/{service.name=projects/*/locations/*/namespaces/*/services/*}",
+                    "body": "service",
+                },
             ]
             request, metadata = self._interceptor.pre_update_service(request, metadata)
             pb_request = registration_service.UpdateServiceRequest.pb(request)
@@ -2232,33 +2499,35 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
             # Jsonify the request body
 
             body = json_format.MessageToJson(
-                transcoded_request['body'],
-                including_default_value_fields=False,
-                use_integers_for_enums=True
-            )
-            uri = transcoded_request['uri']
-            method = transcoded_request['method']
-
-            # Jsonify the query params
-            query_params = json.loads(json_format.MessageToJson(
-                transcoded_request['query_params'],
+                transcoded_request["body"],
                 including_default_value_fields=False,
                 use_integers_for_enums=True,
-            ))
+            )
+            uri = transcoded_request["uri"]
+            method = transcoded_request["method"]
+
+            # Jsonify the query params
+            query_params = json.loads(
+                json_format.MessageToJson(
+                    transcoded_request["query_params"],
+                    including_default_value_fields=False,
+                    use_integers_for_enums=True,
+                )
+            )
             query_params.update(self._get_unset_required_fields(query_params))
 
             query_params["$alt"] = "json;enum-encoding=int"
 
             # Send the request
             headers = dict(metadata)
-            headers['Content-Type'] = 'application/json'
+            headers["Content-Type"] = "application/json"
             response = getattr(self._session, method)(
                 "{host}{uri}".format(host=self._host, uri=uri),
                 timeout=timeout,
                 headers=headers,
                 params=rest_helpers.flatten_query_params(query_params, strict=True),
                 data=body,
-                )
+            )
 
             # In case of error, raise the appropriate core_exceptions.GoogleAPICallError exception
             # subclass.
@@ -2274,148 +2543,164 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
             return resp
 
     @property
-    def create_endpoint(self) -> Callable[
-            [registration_service.CreateEndpointRequest],
-            gcs_endpoint.Endpoint]:
+    def create_endpoint(
+        self,
+    ) -> Callable[[registration_service.CreateEndpointRequest], gcs_endpoint.Endpoint]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateEndpoint(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateEndpoint(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def create_namespace(self) -> Callable[
-            [registration_service.CreateNamespaceRequest],
-            gcs_namespace.Namespace]:
+    def create_namespace(
+        self,
+    ) -> Callable[
+        [registration_service.CreateNamespaceRequest], gcs_namespace.Namespace
+    ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateNamespace(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateNamespace(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def create_service(self) -> Callable[
-            [registration_service.CreateServiceRequest],
-            gcs_service.Service]:
+    def create_service(
+        self,
+    ) -> Callable[[registration_service.CreateServiceRequest], gcs_service.Service]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._CreateService(self._session, self._host, self._interceptor) # type: ignore
+        return self._CreateService(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def delete_endpoint(self) -> Callable[
-            [registration_service.DeleteEndpointRequest],
-            empty_pb2.Empty]:
+    def delete_endpoint(
+        self,
+    ) -> Callable[[registration_service.DeleteEndpointRequest], empty_pb2.Empty]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteEndpoint(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteEndpoint(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def delete_namespace(self) -> Callable[
-            [registration_service.DeleteNamespaceRequest],
-            empty_pb2.Empty]:
+    def delete_namespace(
+        self,
+    ) -> Callable[[registration_service.DeleteNamespaceRequest], empty_pb2.Empty]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteNamespace(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteNamespace(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def delete_service(self) -> Callable[
-            [registration_service.DeleteServiceRequest],
-            empty_pb2.Empty]:
+    def delete_service(
+        self,
+    ) -> Callable[[registration_service.DeleteServiceRequest], empty_pb2.Empty]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._DeleteService(self._session, self._host, self._interceptor) # type: ignore
+        return self._DeleteService(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def get_endpoint(self) -> Callable[
-            [registration_service.GetEndpointRequest],
-            endpoint.Endpoint]:
+    def get_endpoint(
+        self,
+    ) -> Callable[[registration_service.GetEndpointRequest], endpoint.Endpoint]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetEndpoint(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetEndpoint(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def get_iam_policy(self) -> Callable[
-            [iam_policy_pb2.GetIamPolicyRequest],
-            policy_pb2.Policy]:
+    def get_iam_policy(
+        self,
+    ) -> Callable[[iam_policy_pb2.GetIamPolicyRequest], policy_pb2.Policy]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetIamPolicy(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetIamPolicy(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def get_namespace(self) -> Callable[
-            [registration_service.GetNamespaceRequest],
-            namespace.Namespace]:
+    def get_namespace(
+        self,
+    ) -> Callable[[registration_service.GetNamespaceRequest], namespace.Namespace]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetNamespace(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetNamespace(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def get_service(self) -> Callable[
-            [registration_service.GetServiceRequest],
-            service.Service]:
+    def get_service(
+        self,
+    ) -> Callable[[registration_service.GetServiceRequest], service.Service]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._GetService(self._session, self._host, self._interceptor) # type: ignore
+        return self._GetService(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def list_endpoints(self) -> Callable[
-            [registration_service.ListEndpointsRequest],
-            registration_service.ListEndpointsResponse]:
+    def list_endpoints(
+        self,
+    ) -> Callable[
+        [registration_service.ListEndpointsRequest],
+        registration_service.ListEndpointsResponse,
+    ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListEndpoints(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListEndpoints(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def list_namespaces(self) -> Callable[
-            [registration_service.ListNamespacesRequest],
-            registration_service.ListNamespacesResponse]:
+    def list_namespaces(
+        self,
+    ) -> Callable[
+        [registration_service.ListNamespacesRequest],
+        registration_service.ListNamespacesResponse,
+    ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListNamespaces(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListNamespaces(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def list_services(self) -> Callable[
-            [registration_service.ListServicesRequest],
-            registration_service.ListServicesResponse]:
+    def list_services(
+        self,
+    ) -> Callable[
+        [registration_service.ListServicesRequest],
+        registration_service.ListServicesResponse,
+    ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._ListServices(self._session, self._host, self._interceptor) # type: ignore
+        return self._ListServices(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def set_iam_policy(self) -> Callable[
-            [iam_policy_pb2.SetIamPolicyRequest],
-            policy_pb2.Policy]:
+    def set_iam_policy(
+        self,
+    ) -> Callable[[iam_policy_pb2.SetIamPolicyRequest], policy_pb2.Policy]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._SetIamPolicy(self._session, self._host, self._interceptor) # type: ignore
+        return self._SetIamPolicy(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def test_iam_permissions(self) -> Callable[
-            [iam_policy_pb2.TestIamPermissionsRequest],
-            iam_policy_pb2.TestIamPermissionsResponse]:
+    def test_iam_permissions(
+        self,
+    ) -> Callable[
+        [iam_policy_pb2.TestIamPermissionsRequest],
+        iam_policy_pb2.TestIamPermissionsResponse,
+    ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._TestIamPermissions(self._session, self._host, self._interceptor) # type: ignore
+        return self._TestIamPermissions(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def update_endpoint(self) -> Callable[
-            [registration_service.UpdateEndpointRequest],
-            gcs_endpoint.Endpoint]:
+    def update_endpoint(
+        self,
+    ) -> Callable[[registration_service.UpdateEndpointRequest], gcs_endpoint.Endpoint]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateEndpoint(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateEndpoint(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def update_namespace(self) -> Callable[
-            [registration_service.UpdateNamespaceRequest],
-            gcs_namespace.Namespace]:
+    def update_namespace(
+        self,
+    ) -> Callable[
+        [registration_service.UpdateNamespaceRequest], gcs_namespace.Namespace
+    ]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateNamespace(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateNamespace(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
-    def update_service(self) -> Callable[
-            [registration_service.UpdateServiceRequest],
-            gcs_service.Service]:
+    def update_service(
+        self,
+    ) -> Callable[[registration_service.UpdateServiceRequest], gcs_service.Service]:
         # The return type is fine, but mypy isn't sophisticated enough to determine what's going on here.
         # In C++ this would require a dynamic_cast
-        return self._UpdateService(self._session, self._host, self._interceptor) # type: ignore
+        return self._UpdateService(self._session, self._host, self._interceptor)  # type: ignore
 
     @property
     def kind(self) -> str:
@@ -2425,6 +2710,4 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         self._session.close()
 
 
-__all__=(
-    'RegistrationServiceRestTransport',
-)
+__all__ = ("RegistrationServiceRestTransport",)
