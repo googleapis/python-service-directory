@@ -17,7 +17,7 @@
 import dataclasses
 import json  # type: ignore
 import re
-from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 import warnings
 
 from google.api_core import gapic_v1, path_template, rest_helpers, rest_streaming
@@ -693,7 +693,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("CreateEndpoint")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
             "endpointId": "",
         }
 
@@ -795,7 +795,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("CreateNamespace")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
             "namespaceId": "",
         }
 
@@ -901,7 +901,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("CreateService")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
             "serviceId": "",
         }
 
@@ -1004,7 +1004,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("DeleteEndpoint")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1080,7 +1080,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("DeleteNamespace")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1158,7 +1158,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("DeleteService")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1234,7 +1234,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("GetEndpoint")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1327,7 +1327,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("GetIamPolicy")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1501,7 +1501,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("GetNamespace")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1594,7 +1594,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("GetService")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1689,7 +1689,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("ListEndpoints")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1779,7 +1779,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("ListNamespaces")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1869,7 +1869,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("ListServices")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -1959,7 +1959,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("SetIamPolicy")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -2133,7 +2133,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("TestIamPermissions")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {}
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {}
 
         @classmethod
         def _get_unset_required_fields(cls, message_dict):
@@ -2235,7 +2235,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("UpdateEndpoint")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
             "updateMask": {},
         }
 
@@ -2337,7 +2337,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("UpdateNamespace")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
             "updateMask": {},
         }
 
@@ -2443,7 +2443,7 @@ class RegistrationServiceRestTransport(RegistrationServiceTransport):
         def __hash__(self):
             return hash("UpdateService")
 
-        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, str] = {
+        __REQUIRED_FIELDS_DEFAULT_VALUES: Dict[str, Any] = {
             "updateMask": {},
         }
 
